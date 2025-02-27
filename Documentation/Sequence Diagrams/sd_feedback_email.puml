@@ -1,0 +1,47 @@
+
+@startuml
+title : Post-Event Engagement  Gathering Feedback
+
+actor  Organizer
+participant "__:Main Controler__" as mc
+participant "__:Email_Campaigner__" as emailc
+participant "Event_Catalog" as ec_class
+
+participant "__ec:Event_Catalog__" as ec
+collections "__:Event__"  as event
+participant "__e:Event__"  as theevent
+participant "__:Participant_Catalog__" as pc
+collections " __:Participant__" as participant
+collections " __subscribed:User__" as subscribeduser 
+participant " __ pf:Participant_Feedback__" as pf
+collections "__pfcol:Participan_Feedback__ " as pff
+
+participant "Email API" as emailapi
+
+Organizer -> emailc: gatherFeedback()
+emailc ->  ec_class : getInstance()
+ec_class --> emailc : ec: Event_Catalog
+emailc -> ec : getEvent(eid : int)
+ec -> event  : e:  find( eid :  int )
+event --> ec : e: Event
+ec --> emailc : e :Event
+emailc -> theevent : sentToAllParticpants(ff: Feedback_Form)
+theevent -> pc : getAllSubscribed()
+
+loop for each
+        pc -> participant : p:isSubscribed() 
+        pc <-- participant : true 
+        pc -> subscribeduser : add(p)   
+end
+
+
+loop for each subscribed
+      
+        emailc -> pf ** : create(subscribed : Participant , ff: Feedback_Form)
+        emailc -> pff : add(pf)
+ end 
+emailc -> emailapi : sendFeedbackRequestToApi(pfcol)
+emailapi --> emailc :  confirmation
+
+@enduml
+

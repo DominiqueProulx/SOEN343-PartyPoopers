@@ -1,0 +1,30 @@
+@startuml
+title: Event Review Sequence Diagram 
+
+actor Attendee
+participant "__:Event__" as event
+participant "__:Engagement_Manager__" as em
+participant "__:Review_Catalog__" as rc
+participant "__:Participant_Catalog__" as pc
+collections "__p:Participant__" as participant
+participant "__:Review_Form__" as reviewform
+participant "__ra:Review_Answer__" as reviewanswer
+collections "__:Review_Answer__" as reviewanswers
+
+note left : a Participant is an association class \n between a user and an event,but it's contained \nin participan_registry , which is an attribute of Event. \n We have to change this. \nHere I will consider a participant to be a user. 
+
+Attendee -> event : completeReview()
+event -> pc : getParticipant(id:Int)
+pc -> participant : p: find(id : Int)
+participant --> event : p: Participant
+event -> em : fillReview(p)
+em -> reviewanswer  ** : create(p : Participant,rating : Int, reviewTitle  : String , reviewDescription: String , wouldYouComeBack : Boolean, wouldYouShare : Boolean)
+reviewanswer --> em : Confirmation
+em -> reviewanswers : add(ra)
+reviewanswers --> em : Confirmation
+em --> event : Confirmation
+event --> Attendee : Thank you 
+
+
+
+@enduml

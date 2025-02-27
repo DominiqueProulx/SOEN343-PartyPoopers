@@ -1,0 +1,15 @@
+@startuml
+title Pre-Event Engagement Browse all Events
+left to right direction
+actor "Attendee" as Attendee
+rectangle SEES {
+  usecase "Browse Events" as browse
+  usecase "Filter Events" as filter
+}
+
+Attendee -- browse
+Attendee -- filter
+browse .> filter : include
+
+
+@enduml

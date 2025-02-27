@@ -1,0 +1,18 @@
+@startuml
+title Chatroom
+
+left to right direction
+actor "Attendee" as Attendee
+rectangle SEES {
+  usecase "Join Chatroom" as chat_1
+  usecase "Discuss in Chatroom" as chat_2
+}
+
+Attendee -- chat_1
+Attendee -- chat_2
+
+actor "Chat API" as chat_api
+chat_1 -- chat_api
+chat_2 -- chat_api
+chat_1 .> chat_2 : include
+@enduml

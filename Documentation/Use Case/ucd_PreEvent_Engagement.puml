@@ -1,0 +1,34 @@
+@startuml
+title Pre Event Engagement and Networking
+
+left to right direction
+
+actor "Attendees" as attendees
+actor "Organizer" as org
+rectangle SEES {
+  usecase "View Event promotional video" as promo_vid
+  usecase "Share Event Page" as share_event
+  usecase "Discuss In Event Chatroom" as eng1
+  usecase "Get Event Recommendation" as event_recommend
+  usecase "Share event promotional video" as share_vid
+  usecase "Browse All events" as browse
+}
+
+attendees -- eng1
+org -- promo_vid
+attendees -- promo_vid
+attendees -- share_event
+promo_vid .> share_vid : include
+attenddes -- event_recommend
+attendees -- browse
+
+
+actor "Chatroom API" as chatroom_api
+actor "Social Medias" as soc_med
+
+
+eng1 -- chatroom_api
+share_vid -- soc_med
+share_event -- soc_med
+
+@enduml
