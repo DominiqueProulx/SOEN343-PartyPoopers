@@ -1,0 +1,25 @@
+@startuml
+title Post-Event Engagement
+left to right direction
+actor "Attendee" as Attendee
+actor "Organizer" as org
+
+rectangle SEES {
+  usecase "Leave a Review" as review
+  usecase "Share Participation" as share
+  usecase "Ask for feedback" as feedback
+  usecase "See Certificate" as certificate
+
+}
+
+
+
+Attendee -- review
+Attendee -- share
+org -- feedback
+Attendee -- certificate
+
+actor "Email API" as api
+feedback -- api
+
+@enduml

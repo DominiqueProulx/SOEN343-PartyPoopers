@@ -1,0 +1,56 @@
+
+[Edit online] 	
+
+@startuml
+
+actor Timer
+participant "__:Main Controler__" as mc
+participant "__:Email_Campaigner__" as emailc
+participant "User_Catalog" as uc_class
+participant "Event_Catalog" as ec_class
+participant "__uc:User_Catalog__" as uc
+collections " __:User__" as user 
+collections " __subscribed:User__" as subscribeduser 
+participant "__ec:Event_Catalog__" as ec
+collections " __:Category__" as categories 
+collections "__:Event__"  as event
+participant " __ n:Newsletter__" as newNewsletter
+collections " __:Newsletter__" as newsletters
+participant "Email API" as emailapi
+
+Timer -> emailc: weekly_Newsletter()
+emailc -> uc_class : getInstance()
+uc_class --> emailc : uc: User_Catalog
+emailc ->  ec_class : getInstance()
+ec_class --> emailc : ec: Event_Catalog
+emailc -> uc : getSubscribed_User()
+
+loop for each
+        uc -> user : isSubscribed() 
+        uc <-- user : true 
+        uc -> subscribeduser : add()
+    
+end
+uc --> emailc : subscribed : User
+
+loop for each subscribed
+        emailc -> subscribeduser :  get_Categories()
+        subscribeduser --> emailc : c: Category[]
+
+        loop for each Category in c
+            emailc -> ec : getEventFromCategory()
+            ec -> event :  find(c : Category)
+            event --> ec : e:Event 
+            ec -> event : getDescription()
+            event --> ec :  description
+            ec --> emailc : description
+        end
+
+        emailc -> newNewsletter ** : create(subscribed : User, categories : Category[] , description : String[])
+        emailc -> newsletters : add(n)
+ end 
+emailc -> emailapi : sendNewslettersToApi(newsletters : Newsletter)
+emailapi --> emailc :  confirmation
+
+@enduml
+

@@ -1,0 +1,125 @@
+@startuml
+skinparam classAttributeIconSize 0
+enum Category {
+   Mathematics
+    Computer Science
+    Physics
+    Biology
+    Chemistry
+    Engineering
+    Artificial Intelligence
+    Machine Learning
+    Cybersecurity
+    Data Science
+    Economics
+    Philosophy
+    Linguistics
+    Psychology
+    History
+    Literature
+    Political Science
+    Sociology
+    Environmental Science
+    Education
+}
+enum EventType {
+    Conference
+    Workshop
+    Seminar
+    Hackaton
+    Networking Event
+    Career Fair
+    Lectures
+}
+
+class Main_Controller{
+
+}
+
+class User_Catalog{
+
+}
+class User {
+    - FavoriteCategories: Category[4]
+    - uid : Int
+    - email_subscribed  : Boolean
+}
+
+class Email_Campaigner{
+
+}
+
+class User_newsletter{
+    - user : User
+    - categories : Category[4]
+    - event_Description: String[4]
+
+}
+class Participan_Feedback{
+
+}
+class Feedback_Form{
+
+}
+
+class Event_Catalog {
+
+}
+
+class Event {
+- eid : int
+- description  : String 
+
+}
+
+class Participant_Catalog{
+
+}
+
+class Participant
+{ 
+    
+}
+note left: a Participant is an association class \nbetween a user and an event, but it's contained\n in participan_registry , which is an attribute of Event.\n We have to change this. \nHere I will consider a participant to be a user. 
+
+
+class Engagement_Manager {
+
+}
+
+class Chatroom{
+
+}
+class Chatroom_User{
+
+}
+
+class Review_Form{
+
+}
+class Review_Answer{
+
+}
+class Review_Catalog{
+
+}
+
+'Promotion
+Main_Controller  -->"1"User_Catalog
+Main_Controller  -->"1"Event_Catalog
+Main_Controller  -->"1"Email_Campaigner
+User_Catalog *-- User
+Event_Catalog *-- Event
+Email_Campaigner *-- User_newsletter
+'Engagement and Networking
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+Participant_Catalog *-- Participant
+Event  "1"-->"1"Participant_Catalog
+Event -->"1"Engagement_Manager
+Engagement_Manager -->Chatroom
+Chatroom -->"1..*"Chatroom_User
+Engagement_Manager -->Review_Catalog
+Review_Catalog *-- Review_Answer
+Review_Catalog -->"1"Review_Form
+@enduml

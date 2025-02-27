@@ -1,0 +1,19 @@
+@startuml
+title Promotion
+
+left to right direction
+actor "Timer" as timer
+actor "Organizer" as org
+rectangle SEES {
+  usecase "Send Regular Newsletter" as promo_1
+  usecase "Send_event_email" as promo_2
+}
+
+timer -- promo_1
+org -- promo_2
+
+actor "Email API" as email_api
+
+promo_1 -- email_api
+promo_2 -- email_api
+@enduml
