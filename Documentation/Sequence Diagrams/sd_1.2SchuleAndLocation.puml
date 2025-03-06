@@ -1,0 +1,34 @@
+@startuml
+title: Customize Event Page Sequence Diagram
+ 
+actor "Organizer" as organizer
+participant "__:Main_Controller__" as mainctrl
+participant "__:User_Catalog__" as usercat
+participant "__:Event_Catalog__" as eventcat
+participant "__:Event__" as event
+ 
+organizer -> mainctrl : customizeEventPage(organizerID, eID, details)
+note right
+  The Organizer requests to edit the 
+  event page with new details 
+  (e.g., title, sponsor info, banner)
+end note
+ 
+mainctrl -> usercat : checkUserRole(organizerID)
+usercat --> mainctrl : role='Organizer'
+ 
+mainctrl -> eventcat : findEvent(eID)
+eventcat -> event : fetch(eID)
+event --> eventcat : Event object
+eventcat --> mainctrl : return Event
+ 
+mainctrl -> event : updatePage(details)
+event --> mainctrl : updateConfirmation
+ 
+mainctrl --> organizer : updateSuccess
+note left
+  Organizer is notified that the 
+  event page was successfully updated
+end note
+ 
+@enduml

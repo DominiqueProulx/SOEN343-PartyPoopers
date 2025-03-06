@@ -1,0 +1,22 @@
+@startuml
+title Customize Event Page
+left to right direction
+actor "Organizer" as org
+actor "Attendee" as attendee
+ 
+rectangle SEES {
+  usecase "Customize Event Page" as U1
+  usecase "Add Basic Info" as U1a
+  usecase "Add Sponsor Info" as U1b
+  usecase "Upload Event Banner" as U1c
+  usecase "View Event Page" as U1d
+}
+ 
+org -- U1
+attendee -- U1d
+ 
+'U1 "includes" these sub-tasks:
+U1 --> U1a : <<include>>
+U1 --> U1b : <<include>>
+U1 --> U1c : <<include>>
+@enduml

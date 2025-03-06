@@ -1,0 +1,39 @@
+@startuml
+title: Customize Event Page Sequence Diagram
+ 
+actor "Organizer" as org
+participant "__:Main_Controller__" as mc
+participant "__:Event_Catalog__" as ec
+collections "__:Event__" as evt
+ 
+note left
+  This sequence shows how an Organizer customizes 
+  the event page using the Main_Controller, which 
+  interacts with the Event_Catalog to retrieve the 
+  Event object. Once retrieved, the Event object 
+  is updated with the new content.
+end note
+ 
+' 1) Organizer initiates customizing the event page
+org -> mc : editEventPage(eid, newContent)
+ 
+' 2) Main_Controller requests the event from the Event_Catalog
+mc -> ec : findEvent(eid)
+ 
+' 3) Event_Catalog locates the matching Event
+ec -> evt : retrieve(eid)
+evt --> ec : Event reference
+ 
+' 4) Event_Catalog returns Event reference to Main_Controller
+ec --> mc : Event reference
+ 
+' 5) Main_Controller tells Event to update its page content
+mc -> evt : setPageContent(newContent)
+ 
+' 6) Event confirms successful update
+evt -> mc : confirmation
+ 
+' 7) Main_Controller notifies Organizer of success
+mc -> org : confirmation
+ 
+@enduml

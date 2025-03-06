@@ -1,0 +1,33 @@
+@startuml
+title: Customize Event Page (UC-1.3) Sequence Diagram
+ 
+actor Organizer
+participant "__:Main_Controller__" as mc
+participant "__:Event_Catalog__" as ec
+collections "__:Event__" as event
+ 
+note left
+This diagram shows how an Organizer customizes an event page.
+The Main_Controller handles the request and queries the Event_Catalog
+to retrieve the specific Event, then updates its page details.
+end note
+ 
+' 1) Organizer initiates customizing the event page
+Organizer -> mc : customizeEventPage(eid, newPageData)
+ 
+' 2) Main_Controller requests the event from Event_Catalog
+mc -> ec : getEvent(eid)
+ 
+' 3) Event_Catalog finds and returns the Event instance
+ec -> event : e = find(eid)
+event --> ec : e
+ec --> mc : e
+ 
+' 4) Main_Controller updates the Event with new page data
+mc -> event : updatePage(newPageData)
+event --> mc : updateConfirmation
+ 
+' 5) Main_Controller returns confirmation to Organizer
+mc --> Organizer : updateConfirmation
+ 
+@enduml
