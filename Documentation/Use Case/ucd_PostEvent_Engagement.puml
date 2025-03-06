@@ -7,7 +7,7 @@ actor "Organizer" as org
 rectangle SEES {
   usecase "Leave a Review" as review
   usecase "Share Participation" as share
-  usecase "Ask for feedback" as feedback
+  usecase "Gathering feedback" as feedback
   usecase "See Certificate" as certificate
 
 }
