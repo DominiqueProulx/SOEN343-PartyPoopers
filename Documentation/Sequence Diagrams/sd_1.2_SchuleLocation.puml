@@ -1,5 +1,5 @@
 @startuml
-title: Customize Event Page Sequence Diagram
+title: Customize Event Page (IC 1.2) Sequence Diagram
  
 actor "Organizer" as organizer
 participant "__:Main_Controller__" as mainctrl

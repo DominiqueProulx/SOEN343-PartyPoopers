@@ -1,5 +1,5 @@
 @startuml
-title Schedule and Location
+title Customize Event Page -- Schedule and Location
 left to right direction
 actor "Organizer" as org
 actor "Attendee" as attendee
@@ -16,7 +16,8 @@ org -- U2
 attendee -- U2d
  
 'U2 "includes" these sub-tasks:
-U2 --> U2a : <<include>>
-U2 --> U2b : <<include>>
-U2 --> U2c : <<include>>
+U2 --> U2a : <<extend>>
+U2 --> U2b : <<extend>>
+U2 --> U2c : <<extend>>
 @enduml
+

@@ -1,0 +1,22 @@
+@startuml
+title Customize Event Page -- Event Presentation Agenda
+left to right direction
+actor "Organizer" as org
+actor "Attendee" as attendee
+ 
+rectangle SEES {
+  usecase "Manage Presentation Agenda" as U3
+  usecase "Edit Speaker Info" as U3a
+  usecase "Edit Topic Details" as U3b
+  usecase "Edit Presentation Materials" as U3c
+  usecase "View Agenda" as U3d
+}
+ 
+org -- U3
+attendee -- U3d
+ 
+'U3 "includes" these sub-tasks:
+U3 --> U3a : <extend>>
+U3 --> U3b : <<extend>>
+U3 --> U3c : <<extend>>
+@enduml

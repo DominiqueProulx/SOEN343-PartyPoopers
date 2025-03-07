@@ -16,7 +16,7 @@ org -- U1
 attendee -- U1d
  
 'U1 "includes" these sub-tasks:
-U1 --> U1a : <<include>>
-U1 --> U1b : <<include>>
-U1 --> U1c : <<include>>
+U1 --> U1a : <<extend>>
+U1 --> U1b : <<extend>>
+U1 --> U1c : <<extend>>
 @enduml
