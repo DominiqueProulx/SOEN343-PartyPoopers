@@ -1,0 +1,20 @@
+
+@startuml
+
+title Organizer creates events and receives report
+left to right direction
+
+actor Organizer
+rectangle "SEES System" {
+    usecase "Generate report" as report
+    usecase "Publish Event" as publish
+    usecase "Create Event" as create
+}
+
+Organizer --> create
+Organizer --> publish
+Organizer--> report
+
+@enduml
+
+@enduml

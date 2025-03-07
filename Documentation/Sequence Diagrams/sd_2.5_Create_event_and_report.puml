@@ -1,0 +1,34 @@
+
+
+@startuml 
+
+title: Organizer creates events and receives reports
+
+ 
+actor "Organizer" as organizer
+participant "__:MainController__" as mainctrl
+participant "__:Event__" as event
+collections "Events" as events
+participant "__:Report__" as report
+collections "Reports" as reports
+
+organizer --> mainctrl: createEvent(name, startDate, endDate, startTime, endTime)
+mainctrl --> event **: createEvent(name, startDate, endDate, startTime, endTime)
+event --> mainctrl : return e:event
+mainctrl --> events: addEvent(E)
+events --> mainctrl: confirmation
+mainctrl --> organizer: confirmation
+
+organizer --> mainctrl: finishEvent(e)
+mainctrl --> report**: createReport(e, organizer)
+report --> mainctrl: return r:report
+mainctrl --> reports: addReport(r)
+reports --> mainctrl: confirmation
+mainctrl--> organizer: confirmation
+
+
+
+
+
+
+@enduml 

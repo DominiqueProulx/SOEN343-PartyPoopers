@@ -1,0 +1,14 @@
+@startuml
+title Registration
+left to right direction
+actor "User" as user
+
+
+rectangle SEES {
+  usecase "Registration" as registration
+}
+
+
+
+user -- registration
+@enduml

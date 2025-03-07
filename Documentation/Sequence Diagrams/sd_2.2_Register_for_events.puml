@@ -1,0 +1,20 @@
+@startuml 
+
+title: Attendee registers to event
+
+actor "Attendee" as attendee
+participant "__:Main_Controller__" as mainctrl 
+collections "Event Catalog" as events
+collections "Event-Attendees" as event_attendees
+
+attendee --> mainctrl: requestEvents()
+mainctrl --> events: requestEvents()
+events --> mainctrl: return List<Event> allEvents
+mainctrl --> attendee: Display listOfEventsAttendee
+
+attendee --> mainctrl: registerEvent(event)
+mainctrl --> event_attendees: add(Attendee, event)
+event_attendees --> mainctrl: confirmation
+mainctrl --> attendee: Confirmation message
+
+@enduml 

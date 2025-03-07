@@ -1,0 +1,19 @@
+@startuml
+
+title Attendee selects interests
+left to right direction
+
+actor Attendee
+rectangle "SEES System" {
+    usecase "Select Interests" as select
+    usecase "Save Interests" as save
+    usecase "Receive Event Recommendations" as receive
+    usecase "Search interests" as search
+}
+
+Attendee --> select
+select--> save
+save--> receive: "On Saved Interests"
+
+select --> search: <<include>>
+@enduml

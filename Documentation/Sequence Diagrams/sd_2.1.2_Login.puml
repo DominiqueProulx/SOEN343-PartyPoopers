@@ -1,0 +1,34 @@
+@startuml 
+
+title: Registration
+
+actor "User" as user
+
+participant "__:Main_Controller__" as mainctrl 
+
+
+collections "Attendee_catalog" as attendees
+
+collections "Organizer_catalog" as organizers
+
+user --> mainctrl: Login(email, password, role)
+
+
+alt role == "Attendee"
+mainctrl --> attendees: Login(email, name, password)
+attendees --> attendees: validateLogin(email, name, password)
+attendees --> mainctrl: return attendee
+end
+
+alt role == "Organizer"
+mainctrl --> organizers: Login(email, name, password)
+organizers--> organizers: validateLogin(email, name, password)
+organizers --> mainctrl: return organizer
+end
+
+mainctrl --> user: Login user
+
+
+  
+
+@enduml 

@@ -1,0 +1,25 @@
+@startuml 
+
+title: Attendee sets preferences
+
+ 
+actor "Attendee" as attendee
+
+participant "__:Main_Controller__" as mainctrl 
+
+collections "Preferences" as preferences
+
+collections "Preference_attendees" as preferences_attendees
+
+attendee --> mainctrl : requestPreferences()
+mainctrl --> preferences : getAllPreferences()
+preferences --> mainctrl : return preferences:List<Preference>
+mainctrl --> attendee : Display all preferences
+attendee --> mainctrl : addPreference(p)
+mainctrl --> preferences_attendees : addPrefererence(Attendee, p)
+preferences_attendees --> mainctrl : Confirmation
+mainctrl --> attendee: Confirmation message
+
+
+
+@enduml 

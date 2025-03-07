@@ -1,0 +1,14 @@
+@startuml
+title Login
+left to right direction
+rectangle "SEES" {
+    usecase "Browse Events" as browse
+    usecase "Register for Event" as register
+    usecase "Receive Ticket via Email" as email
+}
+
+Attendee --> browse
+Attendee --> register
+email--> Email_api
+register--> email: "On Successful Registration"
+@enduml

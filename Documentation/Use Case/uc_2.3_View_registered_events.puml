@@ -1,0 +1,13 @@
+@startuml
+
+title Attendee view registered events
+left to right direction
+
+actor Attendee
+rectangle "SEES System" {
+    usecase "View Registered Events" as viewEvents
+}
+
+Attendee --> viewEvents
+
+@enduml

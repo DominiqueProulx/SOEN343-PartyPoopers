@@ -1,0 +1,14 @@
+@startuml
+title Login
+left to right direction
+actor "User" as user
+
+
+rectangle SEES {
+  usecase "Login" as login
+}
+
+
+
+user -- login
+@enduml

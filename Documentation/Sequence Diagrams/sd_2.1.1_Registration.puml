@@ -1,0 +1,35 @@
+@startuml 
+
+title: Registration
+
+ 
+actor "User" as user
+
+participant "__:Main_Controller__" as mainctrl 
+
+
+participant "__:Attendee__" as attendee
+collections "Attendee_catalog" as attendees
+
+participant "__:Organizer__" as organizer
+collections "Organizer_catalog" as organizers
+
+user --> mainctrl: Register(email, name, password, role)
+alt role == "Attendee"
+mainctrl --> attendee **: Create(email, name, password)
+attendee --> mainctrl: return a:attendee
+mainctrl --> attendees: add (a)
+attendees --> mainctrl: confirmation
+end
+
+alt role == "Organizer"
+mainctrl --> organizer ** : Create(email, name, password)
+attendee --> mainctrl: return o:organizer
+mainctrl --> organizers: add (o)
+organizers--> mainctrl: confirmation
+end
+
+mainctrl --> user: confirmation
+
+
+@enduml 

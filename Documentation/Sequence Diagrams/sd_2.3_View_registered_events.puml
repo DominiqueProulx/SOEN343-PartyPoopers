@@ -1,0 +1,14 @@
+@startuml 
+
+title: Attendee registered events display
+
+actor "Attendee" as attendee
+participant "__:Main_Controller__" as mainctrl 
+collections "Event Catalog" as events
+
+attendee --> mainctrl: requestEvents()
+mainctrl --> events: requestEvents(attendee)
+events --> mainctrl: return List<Event> listOfEventsAttendee
+mainctrl --> attendee: Display listOfEventsAttendee
+
+@enduml 
