@@ -19,7 +19,7 @@ org -- promo_vid
 attendees -- promo_vid
 attendees -- share_event
 promo_vid .> share_vid : include
-attenddes -- event_recommend
+attendees -- event_recommend
 attendees -- browse
 
 

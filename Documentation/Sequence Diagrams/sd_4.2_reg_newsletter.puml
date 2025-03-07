@@ -1,8 +1,5 @@
-
-[Edit online] 	
-
 @startuml
-
+title : Promotion - Send Weekly Newsletter
 actor Timer
 participant "__:Main Controler__" as mc
 participant "__:Email_Campaigner__" as emailc
