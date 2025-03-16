@@ -34,14 +34,14 @@
 
 1. **Event Planning and Scheduling** - Tanim:
    - **Details**:  
-     1.1 Customizable event page containing event information 
-     ~1.2 Event schedule and location details  
-     ~1.3 Event presentation agenda  
+     1.1 Customizable event page containing event information <br>
+     ~1.2 Event schedule and location details  <br>
+     ~1.3 Event presentation agenda  <br>
    - **Suggested Design Pattern**: **Creational/Factory Method**
 
 2. **Stakeholders and Registration** - Mathieu:
    - **Details**:  
-     2.1 Web application offers a registration portal for users 
+     2.1 Web application offers a registration portal for users <br>
      2.2 Attendees can sign up for events and receive tickets by email 
 
 3. **Networking and Engagement (Pre-event)** - Dominique:
