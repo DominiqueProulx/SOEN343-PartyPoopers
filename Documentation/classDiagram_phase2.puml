@@ -1,0 +1,171 @@
+@startuml
+skinparam classAttributeIconSize 0
+enum Category {
+   Mathematics
+    Computer Science
+    Physics
+    Biology
+    Chemistry
+    Engineering
+    Artificial Intelligence
+    Machine Learning
+    Cybersecurity
+    Data Science
+    Economics
+    Philosophy
+    Linguistics
+    Psychology
+    History
+    Literature
+    Political Science
+    Sociology
+    Environmental Science
+    Education
+}
+enum EventType {
+    Conference
+    Workshop
+    Seminar
+    Hackaton
+    Networking Event
+    Career Fair
+    Lectures
+}
+
+
+
+class Main_Controller{
+- loggedUser : User
+- preferences : List<Category>
+ +editEventPage(eid : int, newContent : Content) : void
+ +customizeEventPage(organizerId: int, eid : int, details :String) :boolean
+ +register(email :String, name :String, password :String ) : boolean
+ +requestEvents()
+ +registerEvent(eid : String, attendee: User) : boolean
+ +requestPreferences()
+ +addPreferences(pref : Category) : boolean
+ +createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time)
+ +finishEvent(eid:String)
+}
+
+class Event_Content{
+    - posts : Map<Date, String>
+}
+class Event_Agenda{
+    - timeSlots: Map<Time, String> |
+}
+
+class User_Catalog{
+    +addUser(user : User) : boolean
+    +login(email : String,  password : String) : User
+    -validateLogin(email : String,  password : String) : boolean
+    +addPreferences(attendee : User, pref : Category) : boolean
+
+}
+class User {
+    - FavoriteCategories: Category[4]
+    - uid : Int
+    - email_subscribed  : Boolean
+    +getAllPreferences() : List<Category>
+    +displayPreferences() : String
+    +addPreferences(pref : Category) : boolean
+}
+
+class Email_Campaigner{
+
+}
+
+class User_newsletter{
+    - user : User
+    - categories : Category[4]
+    - event_Description: String[4]
+
+}
+class Participan_Feedback{
+
+}
+class Feedback_Form{
+
+}
+
+
+class Event_Catalog {
+- findEvent(eid : Int) : Event
++requestEvents() : List<Event>
++add(attendee: User, eid : Int) : boolean
++createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time) : Event
++addEvent(event : Event) : boolean
++createReport(eid : Int) : void
+}
+
+class Event {
+- eid : int
+- description  : String 
+- date : Date
+- location : String
+- category : Category
+- type :EventType
+- organizer: User
++setPageContent(newContent : String) : void
++updatePage(description:String) : boolean
++addContent(newcontent :String) : void
++toString() : String
++addToParticipants(attendee : User) : boolean
++createReport() : boolean
++addReport(report :Report) : boolean
+
+}
+
+class Participant_Catalog{
+    +addParticipant( attendee: User) : void
+
+}
+
+
+class Engagement_Manager {
+
+}
+
+class Chatroom{
+
+}
+class Chatroom_User{
+
+}
+class Report{
+
+}
+class Review_Form{
+
+}
+class Review_Answer{
+
+}
+class Review_Catalog{
+
+}
+
+
+'Promotion
+Main_Controller  -->"1"User_Catalog
+Main_Controller  -->"1"Event_Catalog
+Main_Controller  -->"1"Email_Campaigner
+User_Catalog *-- User
+Event_Catalog *-- Event
+Email_Campaigner *-- User_newsletter
+'Engagement and Networking
+Event -->"1"Event_Agenda
+Event -->"1..*"Event_Content
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+Participant_Catalog *-- User
+Event  "1"-->"1"Participant_Catalog
+Event -->"1"Engagement_Manager
+Engagement_Manager -->Chatroom
+Chatroom -->"1..*"Chatroom_User
+Engagement_Manager -->Review_Catalog
+Review_Catalog *-- Review_Answer
+Review_Catalog -->"1"Review_Form
+'reporting
+Event -->"1..*"Report
+@enduml
