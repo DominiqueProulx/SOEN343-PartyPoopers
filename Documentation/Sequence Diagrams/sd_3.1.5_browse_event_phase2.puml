@@ -6,6 +6,7 @@ actor Attendee
 participant "__:Main_Controller__" as mc
 participant "__:Event_Catalog__" as ec
 collections "__:Event__" as event
+participant "__:FilteringController" as fc
 
 
 == See all events ==

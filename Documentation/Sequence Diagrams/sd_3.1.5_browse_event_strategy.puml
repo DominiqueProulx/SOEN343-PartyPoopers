@@ -1,0 +1,80 @@
+@startuml
+
+title: Browse Events
+
+actor Attendee
+participant "__:Main_Controller__" as mc
+participant "__:Event_Catalog__" as ec
+participant "__:FilteringController__" as fc
+participant "__afs:All_Filter_Strategy__" as afs
+participant "__cfs:Category_Filter_Strategy__" as cfs
+participant "__kfs:Keyword_Filter_Strategy__" as kfs
+participant "__dfs:Date_Filter_Strategy__" as dfs
+collections "__:Event__" as event
+
+== See all events ==
+Attendee -> mc : browseEvents( strategy : String)
+mc -> ec : filterEvents(strategy :String)
+ec ->fc : decideStrategy(strategy :String)
+fc -> afs ** : create
+fc --> ec : afs
+
+ec-> afs : filterEvent()
+loop for each event
+  afs -> event : showEventInGrid()
+  event --> afs : render Event thumbnail in grid
+
+end 
+== Filter by category ==
+Attendee -> mc : browseEvents (c : Category)
+mc -> ec : filterEvents(c :Category)
+
+ec ->fc : decideStrategy(c:Category)
+fc -> cfs ** : create
+fc --> ec : cfs
+ec-> cfs : filterEvent()
+loop for each event
+  cfs -> event : isCategory(c)
+  event --> cfs : true
+  cfs -> event : showEventInGrid()
+  event --> cfs : render Event thumbnail in grid
+
+end 
+
+== Filter by keyword ==
+Attendee -> mc :  browseEvents  (keyword : String)
+mc -> ec : filterEvents(keyword:String)
+
+ec ->fc : decideStrategy(keyword:String)
+fc -> kfs ** : create
+fc --> ec : kfs
+ec-> kfs : filterEvent()
+
+loop for each event
+  kfs -> event : isInDescription(keyword : String)
+  event --> kfs : true
+  kfs -> event : showEventInGrid()
+  event --> kfs : render Event thumbnail in grid
+
+end 
+
+== Filter by Date ==
+Attendee -> mc :  browseEvents(date : Date)
+mc -> ec : filterEvents(date : Date)
+
+ec ->fc : decideStrategy(date : Date)
+fc -> dfs ** : create
+fc --> ec : dfs
+ec-> dfs : filterEvent()
+
+loop for each event
+  dfs -> event : isDate(date : Date)
+  event --> dfs : true
+  dfs -> event : showEventInGrid()
+  event --> dfs : render Event thumbnail in grid
+
+end 
+
+
+
+@enduml
