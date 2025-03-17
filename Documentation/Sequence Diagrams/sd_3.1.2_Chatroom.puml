@@ -2,34 +2,34 @@
 title: Event Chatroom Sequence Diagram 
 
 actor Attendee
+participant "__Main_Controller__" as main
+participant "__Event_Catalog__" as eventCatalog
 participant "__:Event__" as event
 participant "__:Engagement_Manager__" as em
 participant "__:Participant_Catalog__" as pc
 collections "__:Participant__" as participant
 participant "__:Chatroom__" as chatroom
-participant "__cu:Chatroom_User__" as chatroomuser
+
 
 note left : a Participant is an association class \n between a user and an event,but it's contained \nin participan_registry , which is an attribute of Event. \n We have to change this. \nHere I will consider a participant to be a user. 
 
-Attendee -> event : joinChatroom()
-event -> pc : getParticipant(id:Int)
-pc -> participant : p: find(id : Int)
-participant --> event : p: Participant
-event -> em : addParticipantToChatroom(p)
-em -> chatroomuser  ** : create(p : Participant)
-em -> chatroom : add(cu)
-chatroom --> em : Confirmation
+Attendee -> main : joinChatroom(eid :int)
+main -> eventCatalog : joinChatroom(user:User, eid : Int)
+eventCatalog -> event : joinChatroom()
+event -> pc : isParticipant(participant:User)
+pc -> participant : p: find(participant: User)
+participant --> pc : confirm is Participant 
 em --> event : Confirmation
-event --> Attendee : Confirmation
-Attendee -> event : chat()
-event -> em : enterChat(p)
-em -> chatroom : find(p)
-chatroom --> em : cu:Chatroom_User
-em -> chatroom : discuss(cu)
-
-
-
-
+event--> eventCatalog : Confirmation
+eventCatalog --> main : Confirmation
+Attendee ->main : chat(user: User, message:String)
+main -> eventCatalog: sendChatMessahe(user: User, message: String)
+eventCatalog-> event : chat(user: User, message: String)
+event->em: chat(user: User, message:String)
+em-> chatroom : sendMessage(user: User, message: String)
+em --> event : Confirmation
+event--> eventCatalog : Confirmation
+eventCatalog --> main : Confirmation
 
 
 @enduml
