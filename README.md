@@ -2,6 +2,7 @@
 ## Steps for setting up project:
 ### Install requirements:
 1. Download:
+   
     -PostgreSQL
    
     -Node.js
@@ -11,10 +12,15 @@
 You can do this step through pgAdmin4 or command line.
 1. Create a database named appdb
 2. Create tables according to schema:
+   
     -Attendee
+   
     -Organizer
+
     -Event
+   
     -Ticket
+   
 
 ### Run backend
 1. cd to /app_backend
