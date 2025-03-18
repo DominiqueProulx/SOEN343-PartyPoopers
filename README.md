@@ -3,9 +3,10 @@
 ### Install requirements:
 1. Download:
     -PostgreSQL
+   
     -Node.js
 
-2. Install all the dependencies in command line in dependencies.txt (npm install)
+3. Install all the dependencies in command line in dependencies.txt (npm install)
 ### Create database:
 You can do this step through pgAdmin4 or command line.
 1. Create a database named appdb
