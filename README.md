@@ -20,7 +20,9 @@ You can do this step through pgAdmin4 or command line.
     -Event
    
     -Ticket
+3. Modify db.js file if needed, but current configuration:
    
+    -Password: "password"
 
 ### Run backend
 1. cd to /app_backend
