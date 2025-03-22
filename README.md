@@ -21,8 +21,8 @@ You can do this step through pgAdmin4 or command line.
 
 ### Run backend
 1. cd to /app_backend
-2. npm run dev
+2. ```npm run dev```
 ### Run frontend
 1. Open new terminal
 2. cd to /app_frontend/app
-3. npm run dev
+3. ``` npm start ```
