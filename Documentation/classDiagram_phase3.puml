@@ -92,10 +92,16 @@ class Event_Agenda{
     - timeSlots: Map<Time, String> |
 }
 class Filtering_Controller{
+    - eventFilter : Filtering_Strategy
     +decideStrategy(all : String) : Filtering_Strategy
     +decideStrategy(date : Date) : Filtering_Strategy
     +decideStrategy(keyword: String) : Filtering_Strategy
     +decideStrategy(category: Category) : Filtering_Strategy
+}
+
+interface Filtering_Strategy{
+    +filterEvents() : List<Event>
+    
 }
 class Keyword_Filtering_Strategy{
     -keyword: String
@@ -236,10 +242,11 @@ Event_Catalog *-- Event
 Email_Campaigner *-- User_newsletter
 'Engagement and Networking
 Event_Catalog -->"1"Filtering_Controller
-Filtering_Controller -->"1"Keyword_Filtering_Strategy
-Filtering_Controller -->"1"Category_Filtering_Strategy
-Filtering_Controller -->"1"Date_Filtering_Strategy
-Filtering_Controller -->"1"All_Filtering_Strategy
+Filtering_Controller -->"1" Filtering_Strategy
+Filtering_Strategy <|.. Keyword_Filtering_Strategy
+Filtering_Strategy <|.. Category_Filtering_Strategy
+Filtering_Strategy <|.. Date_Filtering_Strategy
+Filtering_Strategy <|.. All_Filtering_Strategy
 Event -->"1"Event_Agenda
 Event -->"1..*"Event_Content
 Email_Campaigner *-- Participant_Feedback
