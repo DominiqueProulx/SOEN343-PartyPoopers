@@ -3,3 +3,4 @@ pg
 react
 nodemon
 cors
+vite
