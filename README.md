@@ -25,4 +25,4 @@ You can do this step through pgAdmin4 or command line.
 ### Run frontend
 1. Open new terminal
 2. cd to /app_frontend/app
-3. ``` npm start ```
+3. ``` npm run dev ```
