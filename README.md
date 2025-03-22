@@ -13,13 +13,8 @@ You can do this step through pgAdmin4 or command line.
 1. Create a database named appdb
 2. Create tables according to schema:
    
-    -Attendee
-   
-    -Organizer
+[app table sql](app_tables.sql)
 
-    -Event
-   
-    -Ticket
 3. Modify db.js file if needed, but current configuration:
    
     -Password: "password"
