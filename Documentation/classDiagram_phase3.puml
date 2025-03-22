@@ -1,0 +1,263 @@
+@startuml
+skinparam classAttributeIconSize 0
+enum Category {
+   Mathematics
+    Computer Science
+    Physics
+    Biology
+    Chemistry
+    Engineering
+    Artificial Intelligence
+    Machine Learning
+    Cybersecurity
+    Data Science
+    Economics
+    Philosophy
+    Linguistics
+    Psychology
+    History
+    Literature
+    Political Science
+    Sociology
+    Environmental Science
+    Education
+}
+enum EventType {
+    Conference
+    Workshop
+    Seminar
+    Hackaton
+    Networking Event
+    Career Fair
+    Lectures
+}
+
+
+
+class Main_Controller{
+
+- loggedUser : User
+- preferences : List<Category>
+ +editEventPage(eid : int, newContent : Content) : void
+ +customizeEventPage(organizerId: int, eid : int, details :String) :boolean
+ +register(email :String, name :String, password :String ) : boolean
+ +requestEvents()
+ +registerEvent(eid : String, attendee: User) : boolean
+ +requestPreferences()
+ +addPreferences(pref : Category) : boolean
+ +createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time)
+ +finishEvent(eid:String)
+ +uploadPromotionalContent(eid : Int, content : File) : boolean
+ -requestFeedback() : void
+ +completeReview()
+ +joinChatroom(eid : Int, user : User) : boolean
+ +chat(eid : Int, user : User, message : String) : boolean
+ +browseEvent()
+ +sendNewsletter()
+}
+class PaymentController{
+    +processPayment(attendee: User, eid: Int) : boolean
+    +refundPayment(attendee: User, eid: Int) : boolean
+    +requestPaymentInfo(attendee: User, eid: Int) : boolean
+   -sendPaymentToGateway(payment : Payment): boolean
+}
+class Payment{
+    - pid :  int
+    - amount : Double
+    - date : Date
+    - attendee : User
+    - event : Event
+}
+
+
+class Promotional_Content{
+    - files: <List>File
+}
+class FileManager{
+    +processFile(eid: int,file:File):boolean
+    +storeFile(eid:int,file: File): boolean
+    -validateFile(file: File): boolean
+}
+class DatabaseController{
+    +requestEventPageInformation(eid:Int)
+    +addNewEvent(e:Event)
+    +storeFile(file: File): boolean
+}
+
+
+class Event_Content{
+    - posts : Map<Date, String>
+}
+class Event_Agenda{
+    - timeSlots: Map<Time, String> |
+}
+class Filtering_Controller{
+    +decideStrategy(all : String) : Filtering_Strategy
+    +decideStrategy(date : Date) : Filtering_Strategy
+    +decideStrategy(keyword: String) : Filtering_Strategy
+    +decideStrategy(category: Category) : Filtering_Strategy
+}
+class Keyword_Filtering_Strategy{
+    -keyword: String
+    +filterEvents() : List<Event>
+    
+}
+class Category_Filtering_Strategy{
+    -category: Category
+    +filterEvents() : List<Event>
+    }
+class All_Filtering_Strategy{
+    +filterEvents() : List<Event>
+    }
+class Date_Filtering_Strategy{
+    -date:Date
+    +filterEvents() : List<Event>
+    }
+
+
+class User_Catalog{
+    +addUser(user : User) : boolean
+    +login(email : String,  password : String) : User
+    -validateLogin(email : String,  password : String) : boolean
+    +addPreferences(attendee : User, pref : Category) : boolean
+    +getSubscribed() : List<User>
+    +getInstance() :  User_Catalog
+
+}
+class User {
+     - uid : Int
+    - FavoriteCategories: Category[4]
+    - name : String
+    - password : String
+    - email : String
+    - email_subscribed  : Boolean
+    +getAllPreferences() : List<Category>
+    +displayPreferences() : String
+    +addPreferences(pref : Category) : boolean
+    +getCategories() : List<Category>
+}
+
+class Email_Campaigner{
+    +getInstance() : Email_Campaigner
+    +createNewsletter(subscribed: User, categories : Category[4], event_Description: String[4]) : User_newsletter
+    +sendNewsletter(newsletter : User_newsletter) : boolean
+}
+
+
+class User_newsletter{
+    - user : User
+    - categories : Category[4]
+    - event_Description: String[4]
+
+}
+class Participan_Feedback{
+
+}
+class Feedback_Form{
+
+}
+
+
+class Event_Catalog {
+
+- findEvent(eid : Int) : Event
++requestEvents() : List<Event>
++add(attendee: User, eid : Int) : boolean
++createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time) : Event
++addEvent(event : Event) : boolean
++createReport(eid : Int) : void
++downloadPromotionalContent(eid :Int): boolean
++registrerToEvent(eid:Int, user:User) : boolean
++removeParticipant(eid:Int, user:User) : boolean
++joinChatroom(eid : Int, user : User) : boolean
++isParticipant(eid : Int, user : User) : boolean
++filterEvents()
++getEventFromCategory(c:Category)
+}
+
+class Event {
+- eid : int
+- title : String
+- description  : String 
+- date : Date
+- location : String
+- category : Category
+- type :EventType
+- organizer: User
++setPageContent(newContent : String) : void
++updatePage(description:String) : boolean
++addContent(newcontent :String) : void
++toString() : String
++addToParticipants(attendee : User) : boolean
++createReport() : boolean
++addReport(report :Report) : boolean
++viewEventPromotional() : boolean
++downloadPromotionalContent() : boolean
++joinChatroom(user : User) : boolean 
++getCategory() : Category
+}
+
+class Participant_Catalog{
+    +addParticipant( attendee: User) : void
+    +getParticipant(eid : Int) : List<User>
+
+}
+
+
+class Engagement_Manager {
++fillReview()
++chat(participant : User, message : String) : boolean
+}
+
+class Chatroom{
++sendMessage(participant : User, message : String) : boolean
+}
+
+class Report{
+
+}
+class Review_Form{
+
+}
+class Review_Answer{
+
+}
+class Review_Catalog{
+
+}
+
+
+'Promotion
+Main_Controller  -->"1"User_Catalog
+Main_Controller  -->"1"Event_Catalog
+Main_Controller  -->"1"Email_Campaigner
+User_Catalog *-- User
+Event_Catalog *-- Event
+Email_Campaigner *-- User_newsletter
+'Engagement and Networking
+Event_Catalog -->"1"Filtering_Controller
+Filtering_Controller -->"1"Keyword_Filtering_Strategy
+Filtering_Controller -->"1"Category_Filtering_Strategy
+Filtering_Controller -->"1"Date_Filtering_Strategy
+Filtering_Controller -->"1"All_Filtering_Strategy
+Event -->"1"Event_Agenda
+Event -->"1..*"Event_Content
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+Participant_Catalog *-- User
+Event  "1"-->"1"Participant_Catalog
+Event -->"1"Engagement_Manager
+Engagement_Manager -->Chatroom
+Engagement_Manager -->Review_Catalog
+Review_Catalog *-- Review_Answer
+Review_Catalog -->"1"Review_Form
+'Ressource management
+Main_Controller -->FileManager
+FileManager -->"1"DatabaseController
+Event -->"1..*"Promotional_Content
+'reporting
+Event -->"1..*"Report
+'payment management
+Main_Controller -->PaymentController
+PaymentController -->"1..*"Payment
+@enduml
