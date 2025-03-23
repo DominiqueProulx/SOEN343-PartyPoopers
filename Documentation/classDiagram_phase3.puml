@@ -177,8 +177,7 @@ class Event_Catalog {
 +removeParticipant(eid:Int, user:User) : boolean
 +joinChatroom(eid : Int, user : User) : boolean
 +isParticipant(eid : Int, user : User) : boolean
-+filterEvents()
-+getEventFromCategory(c:Category)
++filterEvents(eventDetails) : List<Event>
 }
 
 class Event {

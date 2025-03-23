@@ -5,66 +5,103 @@ import useEventFilter  from '../hooks/useEventFilter'
 
 
 
-// Using fetch in a browser
-const { events, error, fetchFilteredEvents } = useEventFilter();
-
 
 
 function BrowseEvents() {
-    // Move the state declaration outside of useEffect
-    const [events, setEvents] = useState([]);
+    // custom hook to fetch and update set of events
+    const { events, error, setEvents, fetchFilteredEvents } = useEventFilter();
     
+    //create a constants to hold and update the filter details 
+    const [filterDetails, setFilterDetails] = useState({
+        keyword: '',
+        category: '',
+        eventType: '',
+        date: ''
+      });
+
+
+
+   //Handle change to any of the filters
+
+   //change keyword
+  const updateKeyword = (newKeyword) => {
+    setFilterDetails(prevDetails => ({
+      ...prevDetails,//keep all the other ones 
+      keyword: newKeyword //change only keyword
+    }));
+  }; 
+  
+
+   const resetKeyword = () => {
+    setFilterDetails(prevDetails => ({
+      ...prevDetails,
+      keyword: ''
+    }));
+  }; 
+  
+   //change Date
+   const updateDate = (newDate) => {
+    setFilterDetails(prevDetails => ({
+      ...prevDetails,
+      date: newDate 
+    }));
+  }; 
+  
+     const resetDate = () => {
+        setFilterDetails(prevDetails => ({
+          ...prevDetails,
+          date: '' 
+        }));
+      }; 
+
+  //change category
+    const updateCategory = (newCategory) => {
+        setFilterDetails(prevDetails => ({
+          ...prevDetails,//keep all the other ones 
+          category: newCategory //change only Category
+        }));
+      }; 
+    
+    const resetCategory = () => {
+        setFilterDetails(prevDetails => ({
+          ...prevDetails,//keep all the other ones 
+          category: ''
+        }));
+      }; 
+
+    //change type
+    const updateType = (newType) => {
+        setFilterDetails(prevDetails => ({
+          ...prevDetails, 
+          eventType: newType 
+        }));
+      }; 
+      
+    const resetType = () => {
+        setFilterDetails(prevDetails => ({
+          ...prevDetails,
+          eventType: '' 
+        }));
+      }; 
+
+       //reset all the filters
+    const resetAllFilters = () => {
+        setFilterDetails({
+            keyword: '',
+            category: '',
+            eventType: '',
+            date: ''
+                    });
+      }; 
+
+
+
+       
     useEffect(() => {
         console.log("BrowseEvents component mounted!");
-       const events =  fetchFilteredEvents()
-        // For demonstration, we'll use mock data
-        const mockData = [
-            {
-                title: "Event1",
-                eid: 12,
-                description: "blabla1",
-                date: "2025-12-25",
-                category : "Mathematics"
-            },
-            {
-                title: "Event2",
-                eid: 1,
-                description: "blabla6",
-                date: "2025-12-31",
-                category : "Mathematics"
-            },
-            {
-                title: "Event3",
-                eid: 12,
-                description: "blabla1",
-                date: "2025-12-25",
-                 category : "AI"
-            },
-            {
-                title: "Event4",
-                eid: 12,
-                description: "blabla1",
-                date: "2025-12-25",
-                category : "Arts"
-            },
-            {
-                title: "Event5",
-                eid: 12,
-                description: "blabla1",
-                date: "2025-12-25",
-                 category : "Biology"
-            },
-            {
-                title: "Event6",
-                eid: 12,
-                description: "blabla1",
-                date: "2025-12-25",
-                category : "Physics"
-            },
-        ];
-        
-        setEvents(events);
-    }, []);
+        console.log('Browse event sending filterDetails to fetFilteredEvents in hook. the details: ', filterDetails )
+      fetchFilteredEvents(filterDetails)
+    }, [filterDetails]);
     
     return (
         <div >
