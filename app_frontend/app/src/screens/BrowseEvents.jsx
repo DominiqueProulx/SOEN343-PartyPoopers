@@ -3,6 +3,7 @@ import { Typography } from '@mui/material';
 import EventGrid from '../components/EventGrid';
 import useEventFilter  from '../hooks/useEventFilter'
 import Searchbar from '../components/searchbar';
+import Header from '../components/Header';
 
 
 function BrowseEvents() {
@@ -22,6 +23,7 @@ function BrowseEvents() {
     
     return (
         <div >
+          <Header/>
           {/* filter criteria bar*/}
             <Searchbar 
              setFilterDetails={setFilterDetails}

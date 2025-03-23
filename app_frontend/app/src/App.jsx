@@ -1,13 +1,12 @@
 
 import React, { useState } from 'react' 
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'// npm install react-router-dom
 import HomePage from './screens/Homepage'
 import LoginPage from './screens/LoginPage'
 import EventsPage from './screens/EventsPage'
 import AboutPage from './screens/AboutPage'
-import BrowseEvents from './pages/BrowseEvents'
+import BrowseEvents from './screens/BrowseEvents'
 
 export default function App() {
   return (
