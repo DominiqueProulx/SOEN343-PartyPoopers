@@ -3,13 +3,14 @@ import { Router } from 'express';
 const router = Router();
 import pool from '../db.js';
 import FilteringController from '../controllers/FilteringController.js';
+import Main_Controller from '../controllers/Main_Controller.js';
 
 // Get a single event by ID
 router.get('/:eid', async (req, res) => {
   try {
     const eventId = req.params.eid;
     const filteringController = FilteringController.getInstance();
-    //const filteringController =  new FilteringController();
+    
     const event = await filteringController.findSingleEvent(eventId);
     
     if (!event) {
@@ -43,10 +44,10 @@ router.post('/filter', async (req, res) => {
       return res.status(400).json({ error: 'Missing filter details' });
     }
    
-    const filteringController = FilteringController.getInstance();
-   //const filteringController = new FilteringController();
-    const events = await filteringController.getEvents(filterDetails);
-   
+    const mainController = Main_Controller.getInstance();
+   //const events = await filteringController.getEvents(filterDetails);
+   const events = await mainController.browseEvents(filterDetails);
+
     res.json({
       success: true,
       count: events.length,

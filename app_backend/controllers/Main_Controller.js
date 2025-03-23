@@ -1,18 +1,25 @@
-import * as Event_Catalog from  './Event_Catalog.js'
+import Event_Catalog from './Event_Catalog.js';
+
+
 class Main_Controller{
 
+      // Lazy initialization for the singleton pattern
+   static instance = null;
+   
+   static getInstance() {
+       if (!Main_Controller.instance) {
+        Main_Controller.instance = new Main_Controller();
+       }
+       return Main_Controller.instance;
+     }
 
-main =  new Main_Controller;
 
-constructor() {
-    //TODO:  Same as filtering_Controller, how to make private
-    throw console.error("The constructor should not be used as this is a singleton");
+async browseEvents(filterDetails){
+        const eventCatalog = Event_Catalog.getInstance();
+        const events = await eventCatalog.filterEvents(filterDetails);
+        
+        return events;
+    }
 }
 
-browseEvent(filterDetails){
-
-Event_Catalog.getEvents(filterDetails);
-}
-
-
-}
+export default Main_Controller;
