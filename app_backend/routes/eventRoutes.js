@@ -1,17 +1,14 @@
-import express from 'express';
 import { Router } from 'express';
 const router = Router();
-import pool from '../db.js';
-import FilteringController from '../controllers/FilteringController.js';
 import Main_Controller from '../controllers/Main_Controller.js';
 
 // Get a single event by ID
 router.get('/:eid', async (req, res) => {
   try {
     const eventId = req.params.eid;
-    const filteringController = FilteringController.getInstance();
-    
-    const event = await filteringController.findSingleEvent(eventId);
+    const mainController = Main_Controller.getInstance();
+   const event = await mainController.findSingleEvent(eventId);
+  
     
     if (!event) {
       return res.status(404).json({
@@ -36,7 +33,6 @@ router.get('/:eid', async (req, res) => {
 
 // Filter events
 router.post('/filter', async (req, res) => {
-  console.log('Inside the eventRoutes')
   try {
     const filterDetails = req.body;
    

@@ -20,8 +20,6 @@ class BaseFilter extends EventFilter {
       sql: `SELECT * FROM ${this.tableName} WHERE event_date >= $1`,
       values: [this.today]
     };
-    
-    console.log('BaseFilter Query:', query);
     return query;
   }
  
@@ -62,8 +60,6 @@ class Keyword_EventFilterDecorator extends EventFilterDecorator {
       sql: `${baseQuery.sql} AND description LIKE $${paramIndex}`,
       values: [...baseQuery.values, `%${this.keyword}%`]
     };
-    
-    console.log('After Keyword Filter:', query);
     return query;
   }
  
@@ -86,8 +82,6 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
       sql: `${baseQuery.sql} AND event_category = $${paramIndex}`,
       values: [...baseQuery.values, this.category]
     };
-    
-    console.log('After Category Filter:', query);
     return query;
   }
  
@@ -110,8 +104,6 @@ class Date_EventFilterDecorator extends EventFilterDecorator {
       sql: `${baseQuery.sql} AND event_date = $${paramIndex}`,
       values: [...baseQuery.values, this.eventDate]
     };
-    
-    console.log('After Date Filter:', query);
     return query;
   }
  
@@ -133,9 +125,7 @@ class EventType_EventFilterDecorator extends EventFilterDecorator {
     const query = {
       sql: `${baseQuery.sql} AND type = $${paramIndex}`,
       values: [...baseQuery.values, this.type]
-    };
-    
-    console.log('After EventType Filter:', query);
+    };   
     return query;
   }
  

@@ -17,18 +17,15 @@ function BrowseEvents() {
     });
     
     useEffect(() => {
-        console.log("BrowseEvents component mounted!");
-        console.log('Browse event sending filterDetails to fetFilteredEvents in hook. the details: ', filterDetails )
       fetchFilteredEvents(filterDetails)
     }, [filterDetails]);
     
     return (
         <div >
-          {/* filter criteria*/}
+          {/* filter criteria bar*/}
             <Searchbar 
-             filterDetails={filterDetails} 
              setFilterDetails={setFilterDetails}
-             fetchFilteredEvents={fetchFilteredEvents} />
+              />
 
             <Typography variant="h3" component="h1" sx={{ p: 3 , color : '#235784'}}>
                 Upcoming Events

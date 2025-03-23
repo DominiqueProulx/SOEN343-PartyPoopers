@@ -14,7 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import useEventFilter from '../hooks/useEventFilter';
 
-export default function Searchbar({ filterDetails, setFilterDetails, fetchFilteredEvents }) {
+export default function Searchbar({ setFilterDetails}) {
   const categories = [
     'Mathematics',
     'Computer Science',
@@ -49,25 +49,28 @@ export default function Searchbar({ filterDetails, setFilterDetails, fetchFilter
   ];
 
 
-   //reset all the filters
-const resetAllFilters = () => {
-    setFormValues({
-        keyword: '',
-        category: '',
-        eventType: '',
-        date: ''
-                });
-  }; 
+
   const [formValues, setFormValues] = useState({
     keyword: '',
     category: '',
     eventType: '',
     date: ''
   });
-
+   //reset all the filters
+   const resetAllFilters = () => {
+    const resetValues = {
+      keyword: '',
+      category: '',
+      eventType: '',
+      date: ''
+    };
+    
+    setFormValues(resetValues);
+    setFilterDetails(resetValues);     
+  }; 
   //search button click event
   const searchButton = () => {
-    // Update parent state
+    
     setFilterDetails(formValues);
   };
 
