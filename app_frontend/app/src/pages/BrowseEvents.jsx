@@ -1,24 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import EventGrid from '../components/EventGrid';
+import useEventFilter  from '../hooks/useEventFilter'
 
 
 
 // Using fetch in a browser
-async function getFilteredEvents() {
-    const response = await fetch('/api/events/filter', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        keyword: 'concert',
-        category: 'music',
-        eventType: 'live',
-        date: { start: '2025-04-01', end: '2025-04-30' }
-      })
-    }};
-
+const { events, error, fetchFilteredEvents } = useEventFilter();
 
 
 
@@ -28,7 +16,7 @@ function BrowseEvents() {
     
     useEffect(() => {
         console.log("BrowseEvents component mounted!");
-        
+       const events =  fetchFilteredEvents()
         // For demonstration, we'll use mock data
         const mockData = [
             {
@@ -75,7 +63,7 @@ function BrowseEvents() {
             },
         ];
         
-        setEvents(mockData);
+        setEvents(events);
     }, []);
     
     return (

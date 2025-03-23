@@ -18,9 +18,9 @@ class BaseFilter extends EventFilter {
     }
     
     buildFilter() {
-      // Return the base query as an object with SQL and params
+      // Return the base query as an object with SQL and values
       return {
-        sqlText: `SELECT * FROM ${this.tableName} WHERE date >= ?`,
+        sql: `SELECT * FROM ${this.tableName} WHERE date >= ?`,
         values: [this.today]
       };
     }
@@ -35,7 +35,7 @@ class BaseFilter extends EventFilter {
     constructor(filter) {
       super();
       // Store the wrapped filter component
-      if (!(filter instanceof Filter)) {
+      if (!(filter instanceof EventFilter)) {
         throw new Error('FilterDecorator must wrap a Filter instance');
       }
       this.filter = filter;
@@ -64,12 +64,12 @@ class Keyword_EventFilterDecorator extends EventFilterDecorator {
       
       // Add keyword filtering
       return {
-        sqlText: `${baseQuery.sql} AND description LIKE ?`,
-        values: [...baseQuery.params, `%${this.keyword}%`]
+        sql: `${baseQuery.sql} AND description LIKE ?`,
+        values: [...baseQuery.values, `%${this.keyword}%`]
       };
     }
     
-    //returns the parameter of the wrapped object as well as the keyword
+    //returns the valueseter of the wrapped object as well as the keyword
     getParameters() {
       return [...super.getParameters(), `%${this.keyword}%`];
     }
@@ -86,8 +86,8 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
       const baseQuery = this.filter.buildFilter();
       
       return {
-        sql: `${baseQuery.sql} AND category = ?`,
-        params: [...baseQuery.params, this.category]
+        sqltext: `${baseQuery.sql} AND category = ?`,
+        values: [...baseQuery.values, this.category]
       };
     }
     
@@ -96,7 +96,7 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
     }
   }
 
-  class Date_EventFilterDecorator extends EventFilter{
+  class Date_EventFilterDecorator extends EventFilterDecorator{
         constructor(filter,date){
             super(filter)
             this.eventDate = date;
@@ -107,7 +107,7 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
             
             return {
               sql: `${baseQuery.sql} AND date = ?`,
-              params: [...baseQuery.params, this.eventDate]
+              values: [...baseQuery.values, this.eventDate]
             };
           }
           getParameters() {
@@ -115,7 +115,7 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
           }
   }
 
-  class EventType_EventFilterDecorator extends EventFilter{
+  class EventType_EventFilterDecorator extends EventFilterDecorator{
     constructor(filter,type){
         super(filter)
         this.type = type;
@@ -126,7 +126,7 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
         
         return {
           sql: `${baseQuery.sql} AND type = ?`,
-          params: [...baseQuery.params, this.type]
+          values: [...baseQuery.values, this.type]
         };
       }
       getParameters() {
@@ -134,12 +134,13 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
       }
 }
 
-  module.export ={
+export {
     EventFilter,
     EventFilterDecorator,
     BaseFilter,
     Keyword_EventFilterDecorator,
     Category_EventFilterDecorator,
     EventType_EventFilterDecorator,
+    Date_EventFilterDecorator,
 
-  }
+  };

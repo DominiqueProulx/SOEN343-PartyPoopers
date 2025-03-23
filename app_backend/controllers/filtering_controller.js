@@ -1,4 +1,4 @@
-import * as eventfilter from '../components/eventfilter';
+import * as eventfilter from '../components/eventfilter.js';
 
 
 class Filtering_Controller{
@@ -54,5 +54,4 @@ const result = await pool.query(finalQuery.query, finalQuery.params);
   return result.rows;
 
 } } 
-
-module.exports = FilteringController;
+export default Filtering_Controller;
