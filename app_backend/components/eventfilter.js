@@ -1,97 +1,96 @@
 class EventFilter {
-  // The base method that all filters will implement
   buildFilter() {
     throw new Error('Method buildFilter() must be implemented by the concrete classes, this is modeled as an interface');
   }
-  // Helper method to get query parameters
+  
   getParameters() {
     return [];
   }
 }
 
-//Base Filter (shows all the events that are today and in the future)
 class BaseFilter extends EventFilter {
   constructor() {
     super();
     this.tableName = 'app_event';
     this.today = new Date();
   }
-  
+ 
   buildFilter() {
-    // Return the base query as an object with SQL and values
-    return {
-
+    const query = {
       sql: `SELECT * FROM ${this.tableName} WHERE event_date >= $1`,
       values: [this.today]
     };
+    
+    console.log('BaseFilter Query:', query);
+    return query;
   }
-  
+ 
   getParameters() {
     return [this.today];
   }
 }
 
-//Abstract decorator for the Filter
 class EventFilterDecorator extends EventFilter {
   constructor(filter) {
     super();
-    // Store the wrapped filter component
     if (!(filter instanceof EventFilter)) {
       throw new Error('FilterDecorator must wrap a Filter instance');
     }
     this.filter = filter;
   }
-  
-  // Default implementation that delegates to the wrapped filter
+ 
   buildFilter() {
     return this.filter.buildFilter();
   }
-  
+ 
   getParameters() {
     return this.filter.getParameters();
   }
 }
 
-//Keyword Filter Decorator
 class Keyword_EventFilterDecorator extends EventFilterDecorator {
   constructor(filter, keyword) {
     super(filter);
     this.keyword = keyword;
   }
-  
+ 
   buildFilter() {
-    // Get the base query from the wrapped filter
     const baseQuery = this.filter.buildFilter();
+    const paramIndex = baseQuery.values.length + 1;
     
-    // Add keyword filtering
-    return {
-      sql: `${baseQuery.sql} AND description LIKE ?`,
+    const query = {
+      sql: `${baseQuery.sql} AND description LIKE $${paramIndex}`,
       values: [...baseQuery.values, `%${this.keyword}%`]
     };
+    
+    console.log('After Keyword Filter:', query);
+    return query;
   }
-  
-  //returns the parameter of the wrapped object as well as the keyword
+ 
   getParameters() {
     return [...super.getParameters(), `%${this.keyword}%`];
   }
-} 
+}
 
-// Category Filter decorator
 class Category_EventFilterDecorator extends EventFilterDecorator {
   constructor(filter, category) {
     super(filter);
     this.category = category;
   }
-  
+ 
   buildFilter() {
     const baseQuery = this.filter.buildFilter();
+    const paramIndex = baseQuery.values.length + 1;
     
-    return {
-      sql: `${baseQuery.sql} AND category = $${paramIndex}`,
+    const query = {
+      sql: `${baseQuery.sql} AND event_category = $${paramIndex}`,
       values: [...baseQuery.values, this.category]
     };
+    
+    console.log('After Category Filter:', query);
+    return query;
   }
-  
+ 
   getParameters() {
     return [...super.getParameters(), this.category];
   }
@@ -102,16 +101,20 @@ class Date_EventFilterDecorator extends EventFilterDecorator {
     super(filter);
     this.eventDate = date;
   }
-  
+ 
   buildFilter() {
     const baseQuery = this.filter.buildFilter();
+    const paramIndex = baseQuery.values.length + 1;
     
-    return {
-      sql: `${baseQuery.sql} AND date = $${paramIndex}`,
+    const query = {
+      sql: `${baseQuery.sql} AND event_date = $${paramIndex}`,
       values: [...baseQuery.values, this.eventDate]
     };
+    
+    console.log('After Date Filter:', query);
+    return query;
   }
-  
+ 
   getParameters() {
     return [...super.getParameters(), this.eventDate];
   }
@@ -122,21 +125,24 @@ class EventType_EventFilterDecorator extends EventFilterDecorator {
     super(filter);
     this.type = type;
   }
-  
+ 
   buildFilter() {
     const baseQuery = this.filter.buildFilter();
+    const paramIndex = baseQuery.values.length + 1;
     
-    return {
+    const query = {
       sql: `${baseQuery.sql} AND type = $${paramIndex}`,
       values: [...baseQuery.values, this.type]
     };
+    
+    console.log('After EventType Filter:', query);
+    return query;
   }
-  
+ 
   getParameters() {
     return [...super.getParameters(), this.type];
   }
 }
-
 
 export {
   EventFilter,

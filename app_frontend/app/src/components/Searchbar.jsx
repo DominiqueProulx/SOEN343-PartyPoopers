@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Box,
   TextField,
@@ -51,15 +51,25 @@ export default function Searchbar({ filterDetails, setFilterDetails, fetchFilter
 
    //reset all the filters
 const resetAllFilters = () => {
-    setFilterDetails({
+    setFormValues({
         keyword: '',
         category: '',
         eventType: '',
         date: ''
                 });
   }; 
+  const [formValues, setFormValues] = useState({
+    keyword: '',
+    category: '',
+    eventType: '',
+    date: ''
+  });
 
-
+  //search button click event
+  const searchButton = () => {
+    // Update parent state
+    setFilterDetails(formValues);
+  };
 
   
   return (
@@ -67,8 +77,8 @@ const resetAllFilters = () => {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
         {/* Text input for keyword */}
         <TextField
-          value={filterDetails.keyword}
-             onChange={(e) => setFilterDetails({...filterDetails, keyword: e.target.value})}
+          value={formValues.keyword}
+               onChange={(e) => setFormValues({...formValues, keyword: e.target.value})}
           label="Keyword"
           variant="outlined"
           fullWidth
@@ -80,8 +90,8 @@ const resetAllFilters = () => {
           <InputLabel>Category</InputLabel>
           <Select
             label="Category" 
-            value={filterDetails.category}
-    onChange={(e) => setFilterDetails({...filterDetails, category: e.target.value})} >
+            value={formValues.category}
+            onChange={(e) => setFormValues({...formValues, category: e.target.value})}>
             {categories.map((cat) => (
               <MenuItem key={cat} value={cat}>{cat}</MenuItem>
             ))}
@@ -93,8 +103,8 @@ const resetAllFilters = () => {
           <InputLabel>Type</InputLabel>
           <Select
             label="Type"
-            value={filterDetails.eventType}  
-    onChange={(e) => setFilterDetails({...filterDetails, eventType: e.target.value})}
+            value={formValues.eventType}  
+            onChange={(e) => setFormValues({...formValues, eventType: e.target.value})}
           >
             {types.map((t) => (
               <MenuItem key={t} value={t}>{t}</MenuItem>
@@ -108,13 +118,14 @@ const resetAllFilters = () => {
           type="date"
           InputLabelProps={{ shrink: true }}
           sx={{ minWidth: '150px' }}
+          onChange={(e) => setFormValues({...formValues, date: e.target.value})}
         />
 
         {/* Button group with search and reset */}
         <Stack direction="row" spacing={1}>
           <Button
             variant="contained"
-            onClick={() => fetchFilteredEvents(filterDetails)}
+            onClick={searchButton}
             startIcon={<SearchIcon />}
             sx={{ height: '56px', backgroundColor: '#F7AA00', color:'#235784' }}
           >
