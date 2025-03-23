@@ -1,5 +1,7 @@
+import { useState } from "react";
+
 // hooks/useEventFilter.js
-function useEventFilter() {
+export default function useEventFilter() {
     const [events, setEvents] = useState([]);
     const [error, setError] = useState(null);
   
