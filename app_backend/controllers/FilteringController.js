@@ -47,9 +47,12 @@ class FilteringController {
         
         // Get the completed query
         const finalQuery = filter.buildFilter();
+        // Debug - log the SQL and values to help identify issues
+    console.log('Final SQL query:', finalQuery.sql);
+    console.log('Query parameters:', finalQuery.values);
         
         // Execute the query
-        const result = await pool.query(finalQuery.query, finalQuery.params);
+        const result = await pool.query(finalQuery.sql, finalQuery.values);
         
         // Return the events
         return result.rows;

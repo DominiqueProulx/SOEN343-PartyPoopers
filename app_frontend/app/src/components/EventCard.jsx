@@ -11,12 +11,34 @@ import { format } from 'date-fns';
 // The EventCard component displays information for a single event
 const EventCard = ({ event }) => {
   // Convert the date string to a Date object and format it
-  const formattedDate = format(new Date(event.date), 'MMMM dd, yyyy');
+  // Use event_date field from API response, with a fallback to date for flexibility
+  const eventDate = event.event_date || event.date;
+  
+  // Add error handling for date formatting
+  let formattedDate = "Date unavailable";
+  try {
+    if (eventDate) {
+      formattedDate = format(new Date(eventDate), 'MMMM dd, yyyy');
+    }
+  } catch (error) {
+    console.error("Error formatting date:", eventDate, error);
+  }
+
+  //truncate the text description 
+    // Truncate description to 50 characters
+    const truncateText = (text, maxLength) => {
+      if (text && text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+      }
+      return text;
+    };
  
   return (
+    
     <Card
       sx={{
         height: '100%',
+        width: 250,
         display: 'flex',
         flexDirection: 'column',
         transition: '0.3s',
@@ -28,24 +50,33 @@ const EventCard = ({ event }) => {
       }}
     >
       <CardContent sx={{ flexGrow: 1 }}>
-        <Typography gutterBottom variant="h5" component="h2">
+        <Typography gutterBottom variant="h5" component="h2" >
           {event.title}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
           {formattedDate}
         </Typography>
-        <Typography variant="body1">
-          {event.description}
+        <Typography variant="body1"sx={{color:'grey'}}>
+          {event.event_category}
+          </Typography>
+          <Typography variant="body1" sx={{color:'grey'}}>
+          {event.type}
         </Typography>
         <Typography variant="body1">
-          {event.category}
+        {truncateText(event.description, 50)}
         </Typography>
+
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
+      <CardActions sx={{ 
+   backgroundColor: '#f5f5f5', 
+  borderTop: '1px solid #e0e0e0',
+  justifyContent: 'space-between',
+  padding: '16px'
+}}>
+        <Button size="small" sx={{color:'#235784'}}>
           View Details
         </Button>
-        <Button size="small" color="secondary">
+        <Button size="small" sx={{backgroundColor: '#F7AA00', color:'#235784', padding : 1.5}}>
           Register
         </Button>
       </CardActions>

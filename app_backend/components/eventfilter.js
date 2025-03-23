@@ -13,14 +13,15 @@ class EventFilter {
 class BaseFilter extends EventFilter {
   constructor() {
     super();
-    this.tableName = 'events';
+    this.tableName = 'app_event';
     this.today = new Date();
   }
   
   buildFilter() {
     // Return the base query as an object with SQL and values
     return {
-      sql: `SELECT * FROM ${this.tableName} WHERE date >= ?`,
+
+      sql: `SELECT * FROM ${this.tableName} WHERE event_date >= $1`,
       values: [this.today]
     };
   }
@@ -86,7 +87,7 @@ class Category_EventFilterDecorator extends EventFilterDecorator {
     const baseQuery = this.filter.buildFilter();
     
     return {
-      sql: `${baseQuery.sql} AND category = ?`,
+      sql: `${baseQuery.sql} AND category = $${paramIndex}`,
       values: [...baseQuery.values, this.category]
     };
   }
@@ -106,7 +107,7 @@ class Date_EventFilterDecorator extends EventFilterDecorator {
     const baseQuery = this.filter.buildFilter();
     
     return {
-      sql: `${baseQuery.sql} AND date = ?`,
+      sql: `${baseQuery.sql} AND date = $${paramIndex}`,
       values: [...baseQuery.values, this.eventDate]
     };
   }
@@ -126,7 +127,7 @@ class EventType_EventFilterDecorator extends EventFilterDecorator {
     const baseQuery = this.filter.buildFilter();
     
     return {
-      sql: `${baseQuery.sql} AND type = ?`,
+      sql: `${baseQuery.sql} AND type = $${paramIndex}`,
       values: [...baseQuery.values, this.type]
     };
   }
