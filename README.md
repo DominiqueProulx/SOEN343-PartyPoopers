@@ -14,6 +14,7 @@ You can do this step through pgAdmin4 or command line.
 2. Create tables according to schema:
    
 [app table sql](app_tables.sql)
+[some app data to populate the tables](app_data.sql)
 
 3. Modify db.js file if needed, but current configuration:
    
