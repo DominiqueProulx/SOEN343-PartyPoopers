@@ -2,6 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import EventGrid from '../components/EventGrid';
 
+
+
+// Using fetch in a browser
+async function getFilteredEvents() {
+    const response = await fetch('/api/events/filter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        keyword: 'concert',
+        category: 'music',
+        eventType: 'live',
+        date: { start: '2025-04-01', end: '2025-04-30' }
+      })
+    }};
+
+
+
+
 function BrowseEvents() {
     // Move the state declaration outside of useEffect
     const [events, setEvents] = useState([]);

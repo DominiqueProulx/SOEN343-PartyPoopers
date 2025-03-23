@@ -13,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+//mount the routes
 app.use('/api/attendee', attendeeRoutes);
 app.use('/api/organizer', organizerRoutes);
 app.use('/api/event', eventRoutes);
