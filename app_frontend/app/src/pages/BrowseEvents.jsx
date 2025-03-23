@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography } from '@mui/material';
 import EventGrid from '../components/EventGrid';
 import useEventFilter  from '../hooks/useEventFilter'
+import Searchbar from '../components/searchbar';
 
 
 
@@ -105,6 +106,9 @@ function BrowseEvents() {
     
     return (
         <div >
+          {/* filter criteria*/}
+            <Searchbar />
+
             <Typography variant="h3" component="h1" sx={{ p: 3 , color : '#235784'}}>
                 Upcoming Events
             </Typography>
