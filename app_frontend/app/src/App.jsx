@@ -1,40 +1,25 @@
-import React, { useState } from 'react' // Capitalize "React"
+
+import React, { useState } from 'react' 
 import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import BrowseEvents from './pages/BrowseEvents'
 import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'// npm install react-router-dom
+import HomePage from './screens/Homepage'
+import LoginPage from './screens/LoginPage'
+import EventsPage from './screens/EventsPage'
+import AboutPage from './screens/AboutPage'
 
-
-function App() {
+export default function App() {
   return (
     <Router>
-      <div className="app">
-        <h1>Event App</h1>
-        <img src={reactLogo} alt="React Logo" />
-       
-        {/* Navigation Menu */}
-        <nav className="navbar">
-          <ul>
-            <li>
-              <Link to="/browse-events">Browse Events</Link>
-            </li>
-            <li>
-              <Link to="/">Homepage</Link>
-            </li>
-          </ul>
-        </nav>
-       
-        {/* Route Definitions */}
-        <div className="content">
-          <Routes>
-            <Route path="/browse-events" element={<BrowseEvents />} />
-            <Route path="/" element={<div>Home Page Content</div>} />
-          </Routes>
-        </div>
-      </div>
+      <Routes>
+        <Route path='/' element={<HomePage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/events' element={<EventsPage />} />
+        <Route path="/browse-events" element={<BrowseEvents />} />
+        <Route path='/about' element={<AboutPage />} />
+      </Routes>
     </Router>
   )
 }
 
-export default App
