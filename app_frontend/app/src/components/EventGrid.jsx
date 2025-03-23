@@ -4,14 +4,14 @@ import EventCard from './eventCard';
 import {   Box  } from '@mui/material';
 
 
-// The EventGrid component displays multiple events in a responsive grid
+// The EventGrid displays all the eent cards
 const  EventGrid = ({ events }) => {
     return (
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid 
           container 
-          spacing={3} // Space between grid items
-          columns={{ xs: 4, sm: 8, md: 12 }} // Responsive columns setup
+          spacing={3} // Space between event cards
+          columns={{ xs: 4, sm: 8, md: 12 }} 
         >
           {events.map((event) => (
             <Grid xs={4} sm={4} md={4} key={event.eid}>

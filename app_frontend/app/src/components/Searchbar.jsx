@@ -12,8 +12,9 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import useEventFilter from '../hooks/useEventFilter';
 
-export default function Searchbar() {
+export default function Searchbar({ filterDetails, setFilterDetails, fetchFilteredEvents }) {
   const categories = [
     'Mathematics',
     'Computer Science',
@@ -46,12 +47,28 @@ export default function Searchbar() {
     'CareerFair',
     'Lectures'
   ];
+
+
+   //reset all the filters
+const resetAllFilters = () => {
+    setFilterDetails({
+        keyword: '',
+        category: '',
+        eventType: '',
+        date: ''
+                });
+  }; 
+
+
+
   
   return (
     <Paper elevation={3} sx={{ p: 3, maxWidth: '800px', margin: '0 auto' }}>
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
         {/* Text input for keyword */}
         <TextField
+          value={filterDetails.keyword}
+             onChange={(e) => setFilterDetails({...filterDetails, keyword: e.target.value})}
           label="Keyword"
           variant="outlined"
           fullWidth
@@ -62,8 +79,9 @@ export default function Searchbar() {
         <FormControl sx={{ minWidth: '150px' }}>
           <InputLabel>Category</InputLabel>
           <Select
-            label="Category"
-          >
+            label="Category" 
+            value={filterDetails.category}
+    onChange={(e) => setFilterDetails({...filterDetails, category: e.target.value})} >
             {categories.map((cat) => (
               <MenuItem key={cat} value={cat}>{cat}</MenuItem>
             ))}
@@ -75,6 +93,8 @@ export default function Searchbar() {
           <InputLabel>Type</InputLabel>
           <Select
             label="Type"
+            value={filterDetails.eventType}  
+    onChange={(e) => setFilterDetails({...filterDetails, eventType: e.target.value})}
           >
             {types.map((t) => (
               <MenuItem key={t} value={t}>{t}</MenuItem>
@@ -82,7 +102,7 @@ export default function Searchbar() {
           </Select>
         </FormControl>
 
-        {/* Basic date input */}
+        {/* date input */}
         <TextField
           label="Date"
           type="date"
@@ -94,6 +114,7 @@ export default function Searchbar() {
         <Stack direction="row" spacing={1}>
           <Button
             variant="contained"
+            onClick={() => fetchFilteredEvents(filterDetails)}
             startIcon={<SearchIcon />}
             sx={{ height: '56px', backgroundColor: '#F7AA00', color:'#235784' }}
           >
@@ -103,6 +124,7 @@ export default function Searchbar() {
           <Button
             variant="outlined"
             startIcon={<RestartAltIcon />}
+            onClick={resetAllFilters}
             sx={{ height: '56px' }}
           >
             Reset
