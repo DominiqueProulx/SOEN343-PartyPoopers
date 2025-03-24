@@ -37,7 +37,9 @@ enum EventType {
 class Main_Controller{
 
 - loggedUser : User
+- instance : Main_Controller
 - preferences : List<Category>
++ getinstance()  : Main_Controller
  +editEventPage(eid : int, newContent : Content) : void
  +customizeEventPage(organizerId: int, eid : int, details :String) :boolean
  +register(email :String, name :String, password :String ) : boolean
@@ -52,7 +54,7 @@ class Main_Controller{
  +completeReview()
  +joinChatroom(eid : Int, user : User) : boolean
  +chat(eid : Int, user : User, message : String) : boolean
- +browseEvent()
+ +browseEvent(filteringDetails)
  +sendNewsletter()
 }
 class PaymentController{
@@ -84,7 +86,6 @@ class DatabaseController{
     +storeFile(file: File): boolean
 }
 
-
 class Event_Content{
     - posts : Map<Date, String>
 }
@@ -92,32 +93,36 @@ class Event_Agenda{
     - timeSlots: Map<Time, String> |
 }
 class Filtering_Controller{
-    - eventFilter : Filtering_Strategy
-    +decideStrategy(all : String) : Filtering_Strategy
-    +decideStrategy(date : Date) : Filtering_Strategy
-    +decideStrategy(keyword: String) : Filtering_Strategy
-    +decideStrategy(category: Category) : Filtering_Strategy
+    - instance : Filtering_Controller
+    + getinstance()  :  Filtering_Controller
+    +getEvents(filteringDetails) : List<Event>
+    +findSingleEvent(eid: int) : Event
 }
 
-interface Filtering_Strategy{
-    +filterEvents() : List<Event>
-    
+interface EventFilter{
+    +buildFilter() : List<Event>
 }
-class Keyword_Filtering_Strategy{
-    -keyword: String
-    +filterEvents() : List<Event>
-    
+class BaseFilter{
+    -tableName: String
+    -today: Date
+    +buildFilter() : List<Event>  
 }
-class Category_Filtering_Strategy{
-    -category: Category
-    +filterEvents() : List<Event>
+
+class EventFilterDecorator{
+    -filter : EventFilter
+    +buildFilter() : List<Event>
+}
+class Keyword_EventFilterDecorator{
+      +buildFilter() : List<Event>
+}
+class Category_EventFilterDecorator{
+      +buildFilter() : List<Event>
+     }
+class EventType_EventFilterDecorator{
+      +buildFilter() : List<Event>
     }
-class All_Filtering_Strategy{
-    +filterEvents() : List<Event>
-    }
-class Date_Filtering_Strategy{
-    -date:Date
-    +filterEvents() : List<Event>
+class Date_EventFilterDecorator{
+      +buildFilter() : List<Event>
     }
 
 
@@ -165,7 +170,8 @@ class Feedback_Form{
 
 
 class Event_Catalog {
-
+- instance : Event_Catalog
++ getinstance()  : Event_Catalog
 - findEvent(eid : Int) : Event
 +requestEvents() : List<Event>
 +add(attendee: User, eid : Int) : boolean
@@ -241,11 +247,13 @@ Event_Catalog *-- Event
 Email_Campaigner *-- User_newsletter
 'Engagement and Networking
 Event_Catalog -->"1"Filtering_Controller
-Filtering_Controller -->"1" Filtering_Strategy
-Filtering_Strategy <|.. Keyword_Filtering_Strategy
-Filtering_Strategy <|.. Category_Filtering_Strategy
-Filtering_Strategy <|.. Date_Filtering_Strategy
-Filtering_Strategy <|.. All_Filtering_Strategy
+Filtering_Controller -->"1"EventFilter
+EventFilter <|.. BaseFilter
+EventFilter <|.. EventFilterDecorator
+EventFilterDecorator <|-- Keyword_EventFilterDecorator
+EventFilterDecorator <|-- Category_EventFilterDecorator
+EventFilterDecorator <|-- EventType_EventFilterDecorator
+EventFilterDecorator <|-- Date_EventFilterDecorator
 Event -->"1"Event_Agenda
 Event -->"1..*"Event_Content
 Email_Campaigner *-- Participant_Feedback
