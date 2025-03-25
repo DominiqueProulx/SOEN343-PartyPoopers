@@ -20,10 +20,20 @@ class UserController{
         try {
             const {email, user_password} = req.body;
             const user = await User.login(email, user_password);
-            res.status(201).json({message: 'User login successfully'})
+            req.session.user = user;
+
+            res.status(201).json({message: 'User login successfully', user: user})
         }
         catch (err){
             res.status(500).json({ message: err.message });
+        }
+    }
+    async getSession(req, res) {
+        try {
+            res.status(201).json({message: req.session.user})
+        }
+        catch(err) {
+
         }
     }
 

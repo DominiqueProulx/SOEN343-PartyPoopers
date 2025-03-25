@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session'
 import pool from './db.js';
 import attendeeRoutes from './routes/attendeeRoutes.js';
 import organizerRoutes from './routes/organizerRoutes.js';
@@ -10,8 +11,18 @@ import testRoutes from './routes/testRoutes.js';
 
 const app = express();
 
+//middleware
 app.use(cors());
 app.use(express.json());
+app.use(
+  session({
+    secret: 'your_secret_key', 
+    resave: false,           
+    saveUninitialized: true,   
+    cookie: { secure: false }  
+  })
+);
+
 
 // mount the routes
 app.use('/api/attendee', attendeeRoutes);
