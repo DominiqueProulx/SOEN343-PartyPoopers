@@ -1,17 +1,10 @@
 import express from 'express';
+import UserController from '../controllers/UserController.js';
 import pool from '../db.js';
 
 const router = express.Router();
 
-router.get('/test', async (req, res) => {
-    try{
-        const result = await pool.query('SELECT * FROM app_event');
-        res.json(result.rows);
-    }
-    catch(err) {
-        console.err(err)
-    }
-});
+router.post('/register', UserController.register);
 
 export default router;
 
