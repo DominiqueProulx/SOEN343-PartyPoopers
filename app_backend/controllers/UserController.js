@@ -16,10 +16,16 @@ class UserController{
             res.status(500).json({ message: err.message });
         }
     }
-
-
-    login(req, res) {
-
+    async login(req, res) {
+        try {
+            const {email, user_password} = req.body;
+            const user = await User.login(email, user_password);
+            res.status(201).json({message: 'User login successfully'})
+        }
+        catch (err){
+            res.status(500).json({ message: err.message });
+        }
     }
+
 }
 export default new UserController();

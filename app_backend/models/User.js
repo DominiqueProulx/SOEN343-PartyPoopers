@@ -20,6 +20,27 @@ class User {
         }
     }
 
+    static async login(email, user_password) {
+        try {
+            const query = 'SELECT * FROM app_user WHERE email = $1';
+            const result = await pool.query(query, [email]);
+            if (result.rows.length === 0) {
+                throw new Error('User not found');
+            }
+            const user = result.rows[0];
+            const isMatch = await bcrypt.compare(user_password, user.user_password);
+            
+            if (!isMatch) {
+                throw new Error('Incorrect password');
+            }
+            return user;
+        }
+        catch (error) {
+            
+            throw new Error('Error logging in: ' + error.message);
+        }
+    }
+
 }
   
 export default User;
