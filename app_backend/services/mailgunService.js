@@ -10,7 +10,7 @@ class mailgunService{
           username: 'api',
           key: process.env.MAILGUN_API_KEY, 
         }); 
-      }
+    }
     async sendTicketEmail(user_name, email, message) {
       try {
         const data = await client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
