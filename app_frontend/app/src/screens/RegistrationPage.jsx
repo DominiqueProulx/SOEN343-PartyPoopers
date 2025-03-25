@@ -1,12 +1,12 @@
 import React from "react";
 import Header from "../components/Header";
-export default function LoginPage() {
+export default function RegistrationPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
       {/* Header */}
       <Header/>
 
-
+      
 
       {/* Footer */}
       <footer className="bg-[var(--color-navy)] text-white py-6">
