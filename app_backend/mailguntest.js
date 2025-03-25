@@ -5,7 +5,7 @@ async function sendSimpleMessage() {
   const mailgun = new Mailgun(FormData);
   const mg = mailgun.client({
     username: "api",
-    key: process.env.API_KEY || "67857245e990fcba117fc975c0b9eeee-f6202374-a83fcc0f",
+    key: process.env.MAILGUN_API_KEY || "Your api key",
     // When you have an EU-domain, you must specify the endpoint:
     // url: "https://api.eu.mailgun.net/v3"
   });
