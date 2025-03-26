@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User from '../components/User.js';
 import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 class User_Catalog{
@@ -37,6 +37,7 @@ class User_Catalog{
             res.status(500).json({message: err.message})
         }
     }
+
 
 
 }

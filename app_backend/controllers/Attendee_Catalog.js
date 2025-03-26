@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User from '../components/User.js';
 import pool from '../db.js'
 
 
