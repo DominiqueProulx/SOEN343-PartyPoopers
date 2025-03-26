@@ -49,7 +49,8 @@ constructor(title, description, date, location, category, type, uid, eid = null)
   }
 
 async addEvent(){
-    if (!this.eid){//make sure you create an event that is not already in the database
+
+    if (!this.eid){//make sure you create an event that is not already in system
         const newID = await Event.event_TDG.addEvent(this);
         this.eid =newID;
         return newID;

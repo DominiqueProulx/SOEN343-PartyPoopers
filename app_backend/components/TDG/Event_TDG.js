@@ -19,6 +19,17 @@ async addEvent(event) {
       throw new TypeError('I can only add events.');
     }
     
+    const eventExist = await pool.query(
+        'SELECT * FROM app_event WHERE title = $1 AND description = $2 AND location = $3 AND event_date = $4',
+        [event.title, event.description, event.location, event.date]
+      );
+   // Check if event already exists  before creating a new one
+   if (eventExist.rowCount > 0) {
+    // Event already exists, return the eid
+      return eventExist.rows[0].eid;
+}
+
+    //If it doenst exist we create the event in the database to get a new eid
     const query = `
       INSERT INTO app_event (title, description, event_date, location, event_category, type, organizer_id)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -34,7 +45,7 @@ async addEvent(event) {
       event.type,
       event.uid
     ];
-    
+   
     // Execute query and return the inserted ID
     try {
       const result = await pool.query(query, params);
