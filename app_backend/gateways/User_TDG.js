@@ -1,19 +1,18 @@
-const pool = require('../db.js');  // PostgreSQL client
-
+import pool from "../db.js"
 class User_TDG {
-    async getAllUsers() {
-        const query = 'SELECT * FROM users';
+    async getAllapp_user() {
+        const query = 'SELECT * FROM app_user';
         try {
             const res = await pool.query(query);
             return res.rows;
         } catch (err) {
-            console.error('Error fetching users:', err);
+            console.error('Error fetching app_user:', err);
             throw err;
         }
     }
 
     async getUserByUid(uid) {
-        const query = 'SELECT * FROM users WHERE uid = $1';
+        const query = 'SELECT * FROM app_user WHERE uid = $1';
         try {
             const res = await pool.query(query, [uid]);
             return res.rows[0]; 
@@ -24,7 +23,7 @@ class User_TDG {
     }
 
     async getUserByEmail(email) {
-        const query = 'SELECT * FROM users WHERE email = $1';
+        const query = 'SELECT * FROM app_user WHERE email = $1';
         try {
             const res = await pool.query(query, [email]);
             return res.rows[0]; 
@@ -35,7 +34,7 @@ class User_TDG {
     }
 
     async createUser(user_name, email, user_password) {
-        const query = 'INSERT INTO users (user_name, email, user_password) VALUES ($1, $2, $3) RETURNING *';
+        const query = 'INSERT INTO app_user (user_name, email, user_password) VALUES ($1, $2, $3) RETURNING *';
         try {
             const res = await pool.query(query, [user_name, email, user_password]);
             return res.rows[0];
@@ -45,7 +44,7 @@ class User_TDG {
         }
     }
     async updateUser(uid, user_name, email, user_password) {
-        const query = 'UPDATE users SET user_name = $1, email = $2, user_password = $3 WHERE uid = $4 RETURNING *';
+        const query = 'UPDATE app_user SET user_name = $1, email = $2, user_password = $3 WHERE uid = $4 RETURNING *';
         try {
             const res = await pool.query(query, [user_name, email, user_password ,uid]);
             return res.rows[0];
@@ -55,10 +54,10 @@ class User_TDG {
         }
     }
     async deleteUserByEmail(email) {
-        const query = 'DELETE FROM users WHERE email = $1 RETURNING *';
+        const query = 'DELETE FROM app_user WHERE email = $1 RETURNING *';
         try {
             const res = await pool.query(query, [email]);
-            return res.rows[0]; // Return the deleted user
+            return res.rows[0]; 
         } catch (err) {
             console.error('Error deleting user:', err);
             throw err;
@@ -66,15 +65,33 @@ class User_TDG {
     }
 
     async deleteUserByUid(uid) {
-        const query = 'DELETE FROM users WHERE uid = $1 RETURNING *';
+        const query = 'DELETE FROM app_user WHERE uid = $1 RETURNING *';
         try {
             const res = await pool.query(query, [uid]);
-            return res.rows[0]; // Return the deleted user
+            return res.rows[0]; 
         } catch (err) {
             console.error('Error deleting user:', err);
             throw err;
         }
     }
+
+    async loginUser(email, user_password) {
+        try {
+            const query = 'SELECT * FROM app_user WHERE email = $1';
+            const result = await pool.query(query, [email]);
+            if (result.rows.length === 0) {
+                throw new Error('User not found');
+            }
+            const user = result.rows[0];
+            if (user_password != user.user_password) {
+                throw new Error('Incorrect password');
+            }
+            return user;
+        }
+        catch (error) {
+            throw new Error('Error logging in: ' + error.message);
+        }
+    }
 }
 
-module.exports = new UserTableGateway();
+export default new User_TDG();
