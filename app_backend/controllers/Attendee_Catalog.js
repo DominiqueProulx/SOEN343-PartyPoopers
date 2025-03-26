@@ -25,5 +25,5 @@ class Attendee_Catalog{
     }
 }
 
-export default AttendeeController;
+export default Attendee_Catalog;
 

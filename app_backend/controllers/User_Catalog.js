@@ -1,7 +1,7 @@
 import User from '../models/User.js';
 import pool from '../db.js'
-
-class UserController{
+import Attendee_Catalog from './Attendee_Catalog.js';
+class User_Catalog{
 
     async register(req, res) {
         console.log(req.body);
@@ -37,8 +37,7 @@ class UserController{
             res.status(500).json({message: err.message})
         }
     }
-    
 
 
 }
-export default new UserController();
+export default new User_Catalog;

@@ -1,11 +1,11 @@
 import express from 'express';
-import UserController from '../controllers/UserController.js';
+import User_Catalog from '../controllers/User_Catalog.js';
 import pool from '../db.js';
 
 const router = express.Router();
 
-router.post('/register', UserController.register);
-router.post('/login', UserController.login);
-router.get('/getCurrentUser', UserController.getCurrentUser)
+router.post('/register', User_Catalog.register);
+router.post('/login', User_Catalog.login);
+router.get('/getCurrentUser', User_Catalog.getCurrentUser)
 export default router;
 
