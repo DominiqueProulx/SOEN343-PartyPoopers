@@ -1,4 +1,4 @@
-import pool from "../db.js"
+import pool from "../../db.js"
 class User_TDG {
     async getAllapp_user() {
         const query = 'SELECT * FROM app_user';

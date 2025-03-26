@@ -1,6 +1,6 @@
 import pool from '../db.js';
 
-import User_TDG from '../gateways/User_TDG.js';
+import User_TDG from '../components/TDG/User_TDG.js';
 class User {
     constructor(user_user_name, email, user_user_password) {
       this.user_name = user_name;
