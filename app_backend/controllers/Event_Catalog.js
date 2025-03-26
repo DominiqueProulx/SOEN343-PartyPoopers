@@ -15,7 +15,7 @@ class Event_Catalog{
         }
 
         async filterEvents(filterDetails) {
-            Event_Catalog.sees_events = [];
+          
             const filteringController = FilteringController.getInstance();
             const events = await filteringController.getEvents(filterDetails);
         
@@ -36,7 +36,13 @@ class Event_Catalog{
                 let uid = e.organizer_id;
                 
                 //create the event only if it doesnt exist already in the system 
-                const existingEvent= Event_Catalog.sees_events.find(event => event.uid === uid);
+                const existingEvent = Event_Catalog.sees_events.find(event => 
+                    event.uid === uid && 
+                    event.title === title && 
+                    event.description === description && 
+                    event.location === location && 
+                    event.date.getTime() === date.getTime()
+                );
                 if(existingEvent){
                     filtered_eventsArray.push(existingEvent);
                     console.log('Event already exist')
