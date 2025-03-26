@@ -14,6 +14,7 @@ class User {
             const values = [user_name, email, hashed_user_password];
 
             const result = await pool.query(query, values);
+            
             return new User(result.rows[0].id, result.rows[0].user_name, result.rows[0].email);
         } catch (error) {
             throw new Error('Error registering user: ' + error.message);

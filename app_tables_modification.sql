@@ -5,3 +5,13 @@ ALTER TABLE public.app_user
 
 -- If you've already run the table data population, uncomment next line
 -- ALTER SEQUENCE app_user_uid_seq RESTART WITH 5;
+
+
+--attendee_event
+CREATE TABLE attendee_event (
+    uid INT NOT NULL,
+    eid INT NOT NULL,
+    PRIMARY KEY (uid, eid),
+    FOREIGN KEY (uid) REFERENCES app_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (eid) REFERENCES app_event(id) ON DELETE CASCADE
+);

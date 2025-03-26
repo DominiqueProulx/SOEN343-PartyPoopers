@@ -28,14 +28,7 @@ class UserController{
             res.status(500).json({ message: err.message });
         }
     }
-    async getSession(req, res) {
-        try {
-            res.status(201).json({message: req.session.user})
-        }
-        catch(err) {
 
-        }
-    }
 
 }
 export default new UserController();
