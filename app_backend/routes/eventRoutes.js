@@ -59,4 +59,25 @@ router.post('/filter', async (req, res) => {
   }
 });
 
+// Creating a new event
+router.post('/create', async (req, res) => {
+  try {
+    const eventData = req.body
+    const mainController = Main_Controller.getInstance()
+    const result = await mainController.createEvent(eventData)
+
+    res.status(201).json({
+      success: true,
+      data: result,
+    })
+  } catch (error) {
+    console.error('Error creating event:', error)
+    res.status(500).json({
+      success: false,
+      error: 'Server error while creating event',
+      message: error.message,
+    })
+  }
+})
+
 export default router;

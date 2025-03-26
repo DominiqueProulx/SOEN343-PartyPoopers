@@ -1,4 +1,6 @@
-import FilteringController from "./FilteringController.js";
+import FilteringController from "./FilteringController.js"
+import EventFactory from "./EventFactory.js"
+
 class Event_Catalog{
 
       // Lazy initialization for the singleton pattern
@@ -18,6 +20,11 @@ async filterEvents(filterDetails){
     return events;
 }
 
+async createEvent(eventData) {
+    const event = EventFactory.createEvent(eventData)
+    const eid = await event.saveToDatabase()
+    return { eid, message: 'Event created successfully.' }
+  }
 
 }
 
