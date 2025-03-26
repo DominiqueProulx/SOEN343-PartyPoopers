@@ -3,8 +3,24 @@ import pool from '../db.js'
 
 
 class Attendee_Catalog{
-    async addParticipation(event_attendee) {
-        
+    async addAttendees(req, res) {
+        try {
+
+        }
+        catch (err) {
+
+        }
+    }
+
+    async getAttendees(req, res) {
+        try {
+            const user = req.body.eid;
+            const query = "SELECT * FROM app_user WHERE uid IN (SELECT uid FROM event_attendee WHERE eid = $1)"
+            const result = await pool.query(query, [eid]);
+
+        }
+        catch(err) {
+        }
 
     }
 }

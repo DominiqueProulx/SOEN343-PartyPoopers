@@ -29,6 +29,15 @@ class UserController{
             res.status(500).json({ message: err.message });
         }
     }
+    async getCurrentUser(req, res) {
+        try {
+            res.status(201).json({message: "User logged in", user:req.session.user})
+        }
+        catch(err) {
+            res.status(500).json({message: err.message})
+        }
+    }
+    
 
 
 }

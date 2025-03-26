@@ -1,6 +1,5 @@
 import pool from '../db.js';
 
-
 import User_TDG from '../gateways/User_TDG.js';
 class User {
     constructor(user_user_name, email, user_user_password) {
@@ -26,11 +25,6 @@ class User {
             throw error;
         }
     }
-
-    async sendTicket(){
-
-    }
-
 
 }
   
