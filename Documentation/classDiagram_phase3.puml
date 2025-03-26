@@ -201,7 +201,7 @@ class Event {
 - location : String
 - category : Category
 - type :EventType
-- organizer: User
+- organizer: String
 +setPageContent(newContent : String) : void
 +updatePage(description:String) : boolean
 +addContent(newcontent :String) : void

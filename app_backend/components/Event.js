@@ -1,5 +1,5 @@
 import Event_TDG from "./TDG/Event_TDG.js";
-import User from "../components/User.js"
+
 
 class Event {
 
@@ -24,19 +24,17 @@ static possibleTypes = [
   ];
 
 
-constructor(title, description, date, location, category, type, organizer, eid = null) {
+constructor(title, description, date, location, category, type, uid, eid = null) {
     // Type checking
-    if (!Event.possibleCategories.includes(category)) {
-      throw new TypeError('category is not accepted');
-    }
+   // if (!Event.possibleCategories.includes(category)) {
+   //   throw new TypeError('category is not accepted');
+  //  }
     
-    if (!Event.possibleTypes.includes(type)) {
-      throw new TypeError('type is not accepted');
-    }
+   // if (!Event.possibleTypes.includes(type)) {
+  ////    throw new TypeError('type is not accepted');
+  //  }
     
-    if (!(organizer instanceof User)) {
-      throw new TypeError('organizer must be an instance of User');
-    }
+    
     
     this.eid = eid;
     this.title = title;
@@ -45,7 +43,7 @@ constructor(title, description, date, location, category, type, organizer, eid =
     this.location = location;
     this.category = category;
     this.type = type;
-    this.organizer = organizer;
+    this.uid = uid;
 
     this.addEvent();
   }
@@ -74,8 +72,8 @@ getdate(){
 getLocation(){
     return this.location;
 }
-getOrganizer(){
-    return this.organizer;
+getOrganizerID(){
+    return this.uid;
 }
 getTitle(){
     return this.title;
@@ -85,9 +83,7 @@ getDescription(){
 }
 
 toString() {
-    return `Event [ID: ${this.eid || "N/A"}, Title: "${this.title}", Type: ${this.type}, 
-    Category: ${this.category}, Date: ${this.date}, Location: ${this.location}, 
-    Organizer: ${this.organizer.name}]`;
+    return 'Event [ID: ${this.eid || "N/A"}, Title: "${this.title}", Type: ${this.type},Category: ${this.category}, Date: ${this.date}, Location: ${this.location};' 
   }
 }
 export default Event;

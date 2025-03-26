@@ -13,14 +13,14 @@ class Event_TDG {
         }
       }
 
-async create(event) {
+async addEvent(event) {
     // Fixed condition: check if event is an instance of Event and if it exists
     if (!(event instanceof Event) || !event) {
       throw new TypeError('I can only add events.');
     }
     
     const query = `
-      INSERT INTO events (title, description, event_date, location, event_category, type, organizer_id)
+      INSERT INTO app_event (title, description, event_date, location, event_category, type, organizer_id)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING eid
     `;
@@ -32,7 +32,7 @@ async create(event) {
       event.location,
       event.category,
       event.type,
-      event.organizer.uid
+      event.uid
     ];
     
     // Execute query and return the inserted ID
