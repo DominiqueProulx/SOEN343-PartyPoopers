@@ -27,6 +27,11 @@ class User {
         }
     }
 
+    async sendTicket(){
+
+    }
+
+
 }
   
 export default User;

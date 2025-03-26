@@ -4,6 +4,7 @@ import pool from '../db.js'
 class UserController{
 
     async register(req, res) {
+        console.log(req.body);
         try {
             const {user_name, email, user_password} = req.body;
             if(!user_name || !email || !user_password) {

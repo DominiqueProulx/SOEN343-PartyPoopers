@@ -12,6 +12,6 @@ CREATE TABLE attendee_event (
     uid INT NOT NULL,
     eid INT NOT NULL,
     PRIMARY KEY (uid, eid),
-    FOREIGN KEY (uid) REFERENCES app_user(id) ON DELETE CASCADE,
-    FOREIGN KEY (eid) REFERENCES app_event(id) ON DELETE CASCADE
+    FOREIGN KEY (uid) REFERENCES app_user(uid) ON DELETE CASCADE,
+    FOREIGN KEY (eid) REFERENCES app_event(eid) ON DELETE CASCADE
 );
