@@ -2,10 +2,13 @@ import pool from '../db.js';
 
 import User_TDG from '../components/TDG/User_TDG.js';
 class User {
-    constructor(user_user_name, email, user_user_password) {
+    constructor(user_name, email, user_password) {
       this.user_name = user_name;
       this.email = email;
       this.user_password = user_password;
+    }
+    constructor(user) {
+        
     }
 
     static async register(user_name, email, user_password) {

@@ -1,6 +1,6 @@
 import pool from "../../db.js"
 class User_TDG {
-    async getAllapp_user() {
+    async getAllUsers() {
         const query = 'SELECT * FROM app_user';
         try {
             const res = await pool.query(query);

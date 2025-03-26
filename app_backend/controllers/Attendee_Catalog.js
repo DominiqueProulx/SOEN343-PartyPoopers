@@ -5,7 +5,9 @@ import pool from '../db.js'
 class Attendee_Catalog{
     async addAttendees(req, res) {
         try {
-
+            const uid = req.session.user.uid;
+            const eid = req.body.eid;
+            
         }
         catch (err) {
 
