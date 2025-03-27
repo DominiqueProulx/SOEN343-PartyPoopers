@@ -1,20 +1,43 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session'
 import pool from './db.js';
 import attendeeRoutes from './routes/attendeeRoutes.js';
 import organizerRoutes from './routes/organizerRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import testRoutes from './routes/testRoutes.js';
 
 const app = express();
 
-app.use(cors());
+//middleware
 app.use(express.json());
+app.use(
+  cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+  })
+);
+app.use(
+  session({
+    secret: 'your_secret_key', 
+    resave: false,           
+    saveUninitialized: true,   
+    cookie: {
+      secure: false,  // Set to true if using HTTPS
+      httpOnly: true,
+      sameSite: "lax",  // Important for cross-site cookie handling
+      maxAge: 1000 * 60 * 60 * 24, // Session cookie lasts 1 day
+    }
+  })
+);
+
 
 // mount the routes
 app.use('/api/attendee', attendeeRoutes);
 app.use('/api/organizer', organizerRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/event', eventRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/test', testRoutes);
