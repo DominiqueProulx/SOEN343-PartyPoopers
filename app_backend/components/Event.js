@@ -1,3 +1,4 @@
+
 // Event.js
 import pool from '../db.js'
 import Event_TDG from './TDG/Event_TDG.js'
@@ -6,6 +7,7 @@ class Event {
   static event_TDG = new Event_TDG()
 
   static possibleCategories = [
+   
     'Mathematics', 'Computer Science', 'Physics', 'Biology', 'Chemistry',
     'Engineering', 'Artificial Intelligence', 'Machine Learning', 'Cybersecurity',
     'Data Science', 'Economics', 'Philosophy', 'Linguistics', 'Psychology',

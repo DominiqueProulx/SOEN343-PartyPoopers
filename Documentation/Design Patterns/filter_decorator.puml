@@ -1,0 +1,107 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+
+class Filtering_Controller{
+    - instance : Filtering_Controller
+    + getinstance()  :  Filtering_Controller
+    +getEvents(filteringDetails) : List<Event>
+    +findSingleEvent(eid: int) : Event
+}
+
+interface EventFilter{
+    +buildFilter() : List<Event>
+}
+class BaseFilter{
+    -tableName: String
+    -today: Date
+    +buildFilter() : List<Event>  
+}
+
+class EventFilterDecorator{
+    -filter : EventFilter
+    +buildFilter() : List<Event>
+}
+class Keyword_EventFilterDecorator{
+      +buildFilter() : List<Event>
+}
+class Category_EventFilterDecorator{
+      +buildFilter() : List<Event>
+     }
+class EventType_EventFilterDecorator{
+      +buildFilter() : List<Event>
+    }
+class Date_EventFilterDecorator{
+      +buildFilter() : List<Event>
+    }
+
+
+class Event_Catalog {
+- instance : Event_Catalog
++ getinstance()  : Event_Catalog
+- findEvent(eid : Int) : Event
++requestEvents() : List<Event>
++add(attendee: User, eid : Int) : boolean
++createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time) : Event
++addEvent(event : Event) : boolean
++createReport(eid : Int) : void
++downloadPromotionalContent(eid :Int): boolean
++registrerToEvent(eid:Int, user:User) : boolean
++removeParticipant(eid:Int, user:User) : boolean
++joinChatroom(eid : Int, user : User) : boolean
++isParticipant(eid : Int, user : User) : boolean
++filterEvents(eventDetails) : List<Event>
+}
+
+class Event {
+{static} eventT_TDG : Event_TDG
+- eid : int
+- title : String
+- description  : String 
+- date : Date
+- location : String
+- category : Category
+- type :EventType
+- organizer: String
++setPageContent(newContent : String) : void
++updatePage(description:String) : boolean
++addContent(newcontent :String) : void
++toString() : String
++createReport() : boolean
++addReport(report :Report) : boolean
++viewEventPromotional() : boolean
++downloadPromotionalContent() : boolean
++joinChatroom(user : User) : boolean 
++getCategory() : Category
+}
+
+class Event_TDG{
+    + getLatest(): int
+     + addEvent(event: Event): void
+     + getEvents() : List<Event>
+}
+
+
+
+
+
+'Promotion
+Main_Controller  -->"1"Event_Catalog
+
+'Event
+Event_Catalog *-- Event
+Event -->"1"Event_TDG
+
+'Engagement and Networking
+Event_Catalog -->"1"Filtering_Controller
+Filtering_Controller -->"1"EventFilter
+EventFilter <|.. BaseFilter
+EventFilter <|.. EventFilterDecorator
+EventFilterDecorator <|-- Keyword_EventFilterDecorator
+EventFilterDecorator <|-- Category_EventFilterDecorator
+EventFilterDecorator <|-- EventType_EventFilterDecorator
+EventFilterDecorator <|-- Date_EventFilterDecorator
+
+
+
+@enduml
