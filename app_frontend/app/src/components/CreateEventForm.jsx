@@ -103,7 +103,7 @@ export default function CreateEventForm() {
       setBannerFile(null)
     } catch (err) {
       console.error(err)
-      setMessage('FAILURE' + err.message)
+      setMessage('FAILURE ' + err.message)
     }
   }
 

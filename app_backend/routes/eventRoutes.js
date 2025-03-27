@@ -97,31 +97,44 @@ router.post('/agenda/:eid', async (req, res) => {
 // Get a single event by ID
 router.get('/:eid', async (req, res) => {
   try {
-    const eventId = req.params.eid;
-    const mainController = Main_Controller.getInstance();
-   const event = await mainController.findSingleEvent(eventId);
-  
-    
+    const eventId = req.params.eid
+
+    // Get base event
+    const mainController = Main_Controller.getInstance()
+    const event = await mainController.findSingleEvent(eventId)
+
     if (!event) {
       return res.status(404).json({
         success: false,
         error: 'Event not found'
-      });
+      })
     }
-    
+
+    // Get sponsor & speaker info from event_detail
+    const detailResult = await pool.query(
+      'SELECT sponsor_infos, speaker_infos FROM event_detail WHERE eid = $1',
+      [eventId]
+    )
+
+    const details = detailResult.rows[0] || {}
+
     res.json({
       success: true,
-      data: event
-    });
+      data: {
+        ...event,
+        sponsor_infos: details.sponsor_infos || '',
+        speaker_infos: details.speaker_infos || ''
+      }
+    })
   } catch (error) {
-    console.error('Error finding event:', error);
+    console.error('Error finding event:', error)
     res.status(500).json({
       success: false,
       error: 'Server error while finding event',
       message: error.message
-    });
+    })
   }
-});
+})
 
 // Filter events
 router.post('/filter', async (req, res) => {

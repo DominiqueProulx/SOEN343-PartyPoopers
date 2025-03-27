@@ -100,7 +100,7 @@ function BrowseEvents() {
         )}
         <Typography variant="subtitle1"><strong>Date:</strong> {selectedEvent?.event_date}</Typography>
         <Typography variant="subtitle1"><strong>Location:</strong> {selectedEvent?.location}</Typography>
-        <Typography variant="subtitle1"><strong>Category:</strong> {selectedEvent?.event_category}</Typography>
+        <Typography variant="subtitle1"><strong>Category:</strong> {selectedEvent?.category}</Typography>
         <Typography variant="subtitle1"><strong>Type:</strong> {selectedEvent?.type}</Typography>
         <Typography variant="body1" sx={{ mt: 2 }}>{selectedEvent?.description}</Typography>
 
@@ -130,4 +130,4 @@ function BrowseEvents() {
   )
 }
 
-export default BrowseEvents
+export default BrowseEvents;
