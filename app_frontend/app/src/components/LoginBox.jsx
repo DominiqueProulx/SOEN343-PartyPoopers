@@ -38,8 +38,7 @@ function RegistrationBox() {
                 user_password:password
             }
             setHelperText("")
-            await login(loginBody).then((response) => {
-            })
+            login(loginBody)
     
             setEmail('');
             setPassword('');

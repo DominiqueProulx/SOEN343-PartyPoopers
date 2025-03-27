@@ -2,14 +2,21 @@ import React from 'react'
 import { useState, useEffect } from "react";
 
 export default function Header() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/user/getCurrentUser", { credentials: "include" })
+    fetch("http://localhost:5000/api/user/getCurrentUser", {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+      },
+      credentials: "include",  
+  })
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          setUser(data.user); // Set user if logged in
+          setUser(data.user);
+          console.log(data.user);
         }
       })
       .catch((err) => console.error("Error fetching session:", err));
@@ -26,7 +33,6 @@ export default function Header() {
           <a href="/about" className="hover:text-[var(--color-orange)]">About Us</a>
           {user ? (
             <>
-              <span>Welcome, {user.name}</span>
               <a href="http://localhost:5000/dashboard" className="hover:text-[var(--color-orange)]">Dashboard</a>
               <button
                 onClick={() => {
@@ -34,7 +40,7 @@ export default function Header() {
                     .then(() => setUser(null))
                     .catch((err) => console.error("Logout failed:", err));
                 }}
-                className="bg-[var(--color-orange)] text-[var(--color-navy)] px-4 py-2 rounded hover:bg-[var(--color-blue)]"
+                 className="hover:text-[var(--color-orange)]"
               >
                 Logout
               </button>

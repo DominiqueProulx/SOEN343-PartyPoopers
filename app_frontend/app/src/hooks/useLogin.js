@@ -12,12 +12,11 @@ export default function useLogin() {
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(register_body)
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Failed to login');
-        setUser(data.data);
-        return data.data || [];
+          body: JSON.stringify(register_body),
+          credentials: 'include',
+        }).then((response) => response.json()).then((data) =>console.log(data));
+
+        if (!response.ok) throw new Error(data.error || 'Failed to login'); 
       }
       
       catch (err) {

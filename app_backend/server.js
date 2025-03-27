@@ -12,14 +12,24 @@ import testRoutes from './routes/testRoutes.js';
 const app = express();
 
 //middleware
-app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+  })
+);
 app.use(
   session({
     secret: 'your_secret_key', 
     resave: false,           
     saveUninitialized: true,   
-    cookie: { secure: false }  
+    cookie: {
+      secure: false,  // Set to true if using HTTPS
+      httpOnly: true,
+      sameSite: "lax",  // Important for cross-site cookie handling
+      maxAge: 1000 * 60 * 60 * 24, // Session cookie lasts 1 day
+    }
   })
 );
 

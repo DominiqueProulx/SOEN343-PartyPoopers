@@ -2,6 +2,7 @@ import User from '../components/User.js';
 import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 import User_TDG from '../components/TDG/User_TDG.js';
+import session from 'express-session';
 class User_Catalog{
 
     async register(req, res) {
@@ -23,7 +24,8 @@ class User_Catalog{
             const {email, user_password} = req.body;
             const user = await User.login(email, user_password);
             req.session.user = user;
-
+            req.session.save((err) => {});
+            console.log(req.session.user)
             res.status(201).json({message: 'User login successfully', user: user})
         }
         catch (err){
@@ -32,8 +34,9 @@ class User_Catalog{
     }
     async getCurrentUser(req, res) {
         try {
+            console.log(req.session)
             if(req.session.user) {
-                res.status(201).json({message: "User logged in", user:req.session.user})
+                res.status(201).json({message: "User logged in", user:req.session})
             }
             else{
                 res.status(400).json({message: "User not logged in"})

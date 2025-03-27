@@ -40,7 +40,7 @@ function RegistrationBox() {
                 user_password:password
             }
             setHelperText("")
-            await register(registerBody);
+            await register(registerBody)
             setUsername('');
             setEmail('');
             setPassword('');
