@@ -1,12 +1,11 @@
 import { useState } from "react";
-
+import apiUrl from "./apiUrl";
 export default function useRegisterForEvent() {
     const [error, setError] = useState(null);
   
     const registerForEvent = async (register_body) => {
         setError(null);
       try {
-        const apiUrl = 'http://localhost:5001/api/user/registerEvent';
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
