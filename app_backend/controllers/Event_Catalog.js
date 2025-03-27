@@ -64,7 +64,6 @@ class Event_Catalog{
 
 createEvent(title, description, date, location, category, type, uid, eid = null) {
     const newEvent = new Event(title, description, date, location, category, type,   uid, eid = null);
-    console.log(newEvent)
     Event_Catalog.sees_events.push(newEvent);
     return newEvent;
   }

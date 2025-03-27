@@ -73,7 +73,8 @@ class Payment{
 
 
 class Promotional_Content{
-    - files: <List>File
+    - file_path : String
+    - updloaded_at : Date
 }
 class FileManager{
     +processFile(eid: int,file:File):boolean
@@ -220,6 +221,9 @@ class Event_TDG{
      + getEvents() : List<Event>
 
 }
+class Event_Factory{
+     + createEvent(...): boolean
+}
 
 class Participant_Catalog{
     +addParticipant( attendee: User) : void
@@ -231,7 +235,10 @@ class Event_Attendee{
     - attendee: User
     - event :  Event
 }
-
+class Event_Detail{
+    - sponsorInfo: String
+    - speakerInf :  String
+}
 
 
 class Engagement_Manager {
@@ -261,11 +268,22 @@ class Review_Catalog{
 Main_Controller  -->"1"User_Catalog
 Main_Controller  -->"1"Event_Catalog
 Main_Controller  -->"1"Email_Campaigner
+Email_Campaigner *-- User_newsletter
 'users
 User_Catalog *-- User
 User-->"1"User_TDG
+
+'Event
 Event_Catalog *-- Event
-Email_Campaigner *-- User_newsletter
+Event_Catalog -->"1"Event_Factory
+Event_Factory ..>Event
+Event -->"1"Event_Agenda
+Event -->"1"Event_TDG
+Event -->"1"Event_Detail
+Event -->"1..*"Event_Content
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+
 'Engagement and Networking
 Event_Catalog -->"1"Filtering_Controller
 Filtering_Controller -->"1"EventFilter
@@ -275,14 +293,9 @@ EventFilterDecorator <|-- Keyword_EventFilterDecorator
 EventFilterDecorator <|-- Category_EventFilterDecorator
 EventFilterDecorator <|-- EventType_EventFilterDecorator
 EventFilterDecorator <|-- Date_EventFilterDecorator
-'Event
-Event -->"1"Event_Agenda
-Event -->"1"Event_TDG
-Event -->"1..*"Event_Content
-Email_Campaigner *-- Participant_Feedback
-Email_Campaigner -->"1"Feedback_Form
+
 'attendees and events'
-Participant_Catalog *-- Event_Attendees
+Participant_Catalog *-- Event_Attendee
 Event_Attendee-->"1"User
 Event_Attendee-->"1"Event
 User_Catalog"1"-->"1"Participant_Catalog
@@ -294,7 +307,7 @@ Review_Catalog -->"1"Review_Form
 'Ressource management
 Main_Controller -->FileManager
 FileManager -->"1"DatabaseController
-Event -->"1..*"Promotional_Content
+Event -->"1"Promotional_Content
 'reporting
 Event -->"1..*"Report
 'payment management
