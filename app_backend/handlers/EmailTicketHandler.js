@@ -1,10 +1,10 @@
 import Handler from "./handler.js";
-import mailgunService from "../services/mailgunService";
+import mailgunService from "../services/mailgunService.js";
 
 class TicketEmailHandler extends Handler {
     handle(user, eid) {
-      mailgunService.sendTicketEmail(user, eid)
-      console.log("Sending email to user ", user, " for ticket")
+      mailgunService.sendTicketEmail(user.user_name, user.email, eid)
+      console.log("Sending email to user ", user, " for ticket", eid)
       super.handle(user, eid);
     }
   }

@@ -1,9 +1,9 @@
-import Handler from "./handler";
-import pool from "../db";
+import Handler from "./Handler.js";
+import pool from "../db.js";
 
 class RegistrationHandler extends Handler {
     async handle(user, eid) {
-        const query = 'INSERT INTO event_attendee (uid, eid) VALUES ($1, $2) RETURNING *';
+        const query = 'INSERT INTO attendee_event (uid, eid) VALUES ($1, $2) RETURNING *';
         try {
             const res = await pool.query(query, [user.uid, eid]);
             console.log("Registering user in db", res.rows[0]);
@@ -13,8 +13,8 @@ class RegistrationHandler extends Handler {
         } catch (err) {
             console.error('Error registering user to event:', err);
             throw err;
-        }  
+        }
     }
-  }
+}
 
 export default RegistrationHandler;

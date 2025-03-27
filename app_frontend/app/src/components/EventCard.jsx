@@ -7,13 +7,29 @@ import {
   Button,
 } from '@mui/material';
 import { format } from 'date-fns';
+import useRegisterForEvent from '../hooks/useRegisterForEvent';
 
 // The EventCard component displays information for a single event
 const EventCard = ({ event }) => {
   // Convert the date string to a Date object and format it
   // Use event_date field from API response, with a fallback to date for flexibility
   const eventDate = event.event_date || event.date;
-  
+  const {error, registerForEvent} = useRegisterForEvent();
+
+  const handleRegisterForEvent = async () => {
+    const register_body = {
+      eid: event.eid
+    }
+
+    try {
+      registerForEvent(register_body)
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+
+
   // Add error handling for date formatting
   let formattedDate = "Date unavailable";
   try {
@@ -76,7 +92,7 @@ const EventCard = ({ event }) => {
         <Button size="small" sx={{color:'#235784'}}>
           View Details
         </Button>
-        <Button size="small" sx={{backgroundColor: '#F7AA00', color:'#235784', padding : 1.5}}>
+        <Button size="small" sx={{backgroundColor: '#F7AA00', color:'#235784', padding : 1.5}} onClick = {handleRegisterForEvent}>
           Register
         </Button>
       </CardActions>

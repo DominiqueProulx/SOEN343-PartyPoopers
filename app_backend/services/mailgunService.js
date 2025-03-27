@@ -17,7 +17,7 @@ class mailgunService{
     }
     static async sendTicketEmail(user_name, email, message) {
       try {
-        const data = await client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
+        const data = await this.client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
           from: "Mailgun Sandbox <postmaster@sandboxb35e96234b634069a2452247883c8e20.mailgun.org>",
           to: [`${user_name} <${email}>`],
           subject: `Ticket to ${user_name}`,
