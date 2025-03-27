@@ -36,6 +36,7 @@ app.use(
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.listen(5001, () => {
   console.log('Server running on http://localhost:5001');
 });
@@ -46,6 +47,8 @@ app.listen(PORT, () => {
 });
 >>>>>>> dee2d54ccb72410597e7eb3987582f9fab80ef31
 =======
+=======
+>>>>>>> parent of a0625f8 (Changed port to 5001 because 5000 is already in use on macs. Added db.js to gitignore for security reasons)
 // mount the routes
 app.use('/api/attendee', attendeeRoutes);
 app.use('/api/organizer', organizerRoutes);
@@ -56,5 +59,9 @@ app.use('/api/test', testRoutes);
 
 app.listen(5000, () => {
   console.log('Server running on http://localhost:5000');
+<<<<<<< HEAD
+});
+>>>>>>> parent of a0625f8 (Changed port to 5001 because 5000 is already in use on macs. Added db.js to gitignore for security reasons)
+=======
 });
 >>>>>>> parent of a0625f8 (Changed port to 5001 because 5000 is already in use on macs. Added db.js to gitignore for security reasons)
