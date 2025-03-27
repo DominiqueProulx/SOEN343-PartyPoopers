@@ -1,6 +1,7 @@
 import User from '../components/User.js';
 import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
+import User_TDG from '../components/TDG/User_TDG.js';
 class User_Catalog{
 
     async register(req, res) {
@@ -31,14 +32,26 @@ class User_Catalog{
     }
     async getCurrentUser(req, res) {
         try {
-            res.status(201).json({message: "User logged in", user:req.session.user})
+            if(req.session.user) {
+                res.status(201).json({message: "User logged in", user:req.session.user})
+            }
+            else{
+                res.status(400).json({message: "User not logged in"})
+            }
         }
         catch(err) {
             res.status(500).json({message: err.message})
         }
     }
-
-
-
+    async getAllUser(req,res) {
+        try {
+            const users = await User_TDG.getAllUsers();
+            res.status(201).json({message: "All users", users: users})
+        }
+        catch(err) {
+            res.status(500).json({message: err.message})
+        }
+    }
 }
+
 export default new User_Catalog;
