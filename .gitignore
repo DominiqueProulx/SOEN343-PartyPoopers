@@ -1,5 +1,4 @@
 /app_frontend/node_modules/
 /app_backend/node_modules/
-/app_backend/db.js
 /node_modules/
 /app_backend/.env 
