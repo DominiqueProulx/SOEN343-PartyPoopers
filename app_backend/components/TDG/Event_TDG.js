@@ -1,5 +1,5 @@
 import pool from "../../db.js"
-import Event from "../../controllers/Event.js"
+import Event from "../Event.js"
 
 class Event_TDG {
 

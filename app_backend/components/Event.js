@@ -1,6 +1,6 @@
 // Event.js
 import pool from '../db.js'
-import Event_TDG from '../components/TDG/Event_TDG.js'
+import Event_TDG from './TDG/Event_TDG.js'
 
 class Event {
   static event_TDG = new Event_TDG()

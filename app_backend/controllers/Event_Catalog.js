@@ -1,6 +1,6 @@
-import Event from './Event.js'
+import Event from '../components/Event.js'
 import pool from '../db.js'
-import EventFactory from './EventFactory.js'
+import EventFactory from '../components/EventFactory.js'
 
 class Event_Catalog {
   static instance = null
