@@ -9,6 +9,7 @@ export default function useRegister() {
     setError(null);
 
     try {
+      const apiUrl = "http://localhost:5001/api/user/register";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
