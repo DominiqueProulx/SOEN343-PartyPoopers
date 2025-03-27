@@ -1,16 +1,19 @@
 import User from '../components/User.js';
 import pool from '../db.js'
-
+import TicketEmailHandler from '../handlers/EmailTicketHandler.js';
+import RegistrationHandler from '../handlers/RegistrationHandler.js';
 
 class Attendee_Catalog{
     async addAttendees(req, res) {
         try {
-            const uid = req.session.user.uid;
+            const user = req.session.user;
             const eid = req.body.eid;
-            
+            const handlerChain = new RegistrationHandler(new TicketEmailHandler());
+            handlerChain.handle(user, eid);
+            res.status(200).json({message: "Successful event added"})
         }
         catch (err) {
-
+            res.status(400).json({message: "Error", error: err});
         }
     }
 

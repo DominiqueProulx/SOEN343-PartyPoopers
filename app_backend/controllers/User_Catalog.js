@@ -3,6 +3,9 @@ import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 import User_TDG from '../components/TDG/User_TDG.js';
 import session from 'express-session';
+
+
+
 class User_Catalog{
 
     async register(req, res) {
@@ -13,6 +16,7 @@ class User_Catalog{
                 return res.status(400).json({message: "Missing user_name, email or user_password"})
             }
             const newUser = await User.register(user_name, email, user_password);
+            console.log("Sending newly created user to frontend", newUser)
             res.status(201).json({ message: 'User registered successfully', user: newUser });
         }
         catch(err) {
@@ -25,7 +29,7 @@ class User_Catalog{
             const user = await User.login(email, user_password);
             req.session.user = user;
             req.session.save((err) => {});
-            console.log(req.session.user)
+            console.log("Handling user login for frontend cookies", req.session.user)
             res.status(201).json({message: 'User login successfully', user: user})
         }
         catch (err){

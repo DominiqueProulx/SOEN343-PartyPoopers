@@ -37,6 +37,7 @@ class User_TDG {
         const query = 'INSERT INTO app_user (user_name, email, user_password) VALUES ($1, $2, $3) RETURNING *';
         try {
             const res = await pool.query(query, [user_name, email, user_password]);
+            console.log("Creating user in db", res.rows[0]);
             return res.rows[0];
         } catch (err) {
             console.error('Error creating user:', err);
@@ -83,6 +84,7 @@ class User_TDG {
                 throw new Error('User not found');
             }
             const user = result.rows[0];
+            console.log("Validating user login", user);
             if (user_password != user.user_password) {
                 throw new Error('Incorrect password');
             }

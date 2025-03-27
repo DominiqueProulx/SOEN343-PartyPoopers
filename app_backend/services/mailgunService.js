@@ -5,11 +5,15 @@ dotenv.config();
 
 class mailgunService{
     constructor() {
+        if (mailgunService.instance) {
+          return mailgunService.instance;
+        }
         this.mailgun = new Mailgun(FormData);
         this.client = this.mailgun.client({
           username: 'api',
           key: process.env.MAILGUN_API_KEY, 
         }); 
+        mailgunService.instance = this;
     }
     static async sendTicketEmail(user_name, email, message) {
       try {

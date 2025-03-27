@@ -2,16 +2,16 @@ import pool from '../db.js';
 
 import User_TDG from './TDG/User_TDG.js';
 class User {
-    constructor(user_name, email, user_password, gender = "M", FavoriteCategories = null) {
+    constructor(user_name, email, user_password, gender = "M", FavoriteCategories = null, email_subscribed = null) {
       this.user_name = user_name;
       this.email = email;
       this.user_password = user_password;
       this.gender = gender;
     }
-    static copyConstructor(user) {
-        return new User(user.user_name, user.email, user.user_password, user.gender, user.FavoriteCategories);
+    clone() {
+        return new User(user.user_name, user.email, user.user_password, user.gender, user.FavoriteCategories, user.email_subscribed);
     }
-
+    
     static async register(user_name, email, user_password, gender) {
         try {
             return await User_TDG.createUser(user_name, email, user_password);
