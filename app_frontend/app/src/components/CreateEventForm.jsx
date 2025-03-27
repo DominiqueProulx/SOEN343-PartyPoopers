@@ -93,7 +93,7 @@ export default function CreateEventForm() {
         }
       }
 
-      setMessage('✅ Event created successfully!')
+      setMessage('Event created successfully!')
       setFormData({
         title: '', description: '', date: '', location: '',
         category: '', type: '', sponsor_infos: '', speaker_infos: '',
@@ -103,7 +103,7 @@ export default function CreateEventForm() {
       setBannerFile(null)
     } catch (err) {
       console.error(err)
-      setMessage('❌ ' + err.message)
+      setMessage('FAILURE' + err.message)
     }
   }
 
@@ -177,10 +177,10 @@ export default function CreateEventForm() {
           <Button onClick={addAgendaItem} startIcon={<AddCircleIcon />}>Add Agenda Item</Button>
         </Box>
 
-        <Box>
+        {/* <Box>
           <Typography fontWeight="bold" sx={{ mb: 1 }}>Upload Banner</Typography>
           <input type="file" accept="image/*" onChange={(e) => setBannerFile(e.target.files[0])} />
-        </Box>
+        </Box> */}
 
         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
           <Button type="submit" variant="contained" startIcon={<AddCircleIcon />} sx={{ backgroundColor: '#F7AA00', color: '#235784' }}>Create Event</Button>

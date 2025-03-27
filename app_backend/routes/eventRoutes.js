@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import Main_Controller from '../controllers/Main_Controller.js';
-import multer from 'multer'; // npm install multer
+import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import pool from '../db.js';
