@@ -8,8 +8,6 @@ export default function Dashboard() {
       {/* Header */}
       <Header/>
         <DashboardGrid/>
-
-
       {/* Footer */}
       <Footer/>
     </div>
