@@ -221,6 +221,9 @@ class Event_TDG{
      + getEvents() : List<Event>
 
 }
+class Event_Factory{
+     + createEvent(...): boolean
+}
 
 class Participant_Catalog{
     +addParticipant( attendee: User) : void
@@ -265,11 +268,22 @@ class Review_Catalog{
 Main_Controller  -->"1"User_Catalog
 Main_Controller  -->"1"Event_Catalog
 Main_Controller  -->"1"Email_Campaigner
+Email_Campaigner *-- User_newsletter
 'users
 User_Catalog *-- User
 User-->"1"User_TDG
+
+'Event
 Event_Catalog *-- Event
-Email_Campaigner *-- User_newsletter
+Event_Catalog -->"1"Event_Factory
+Event_Factory ..>Event
+Event -->"1"Event_Agenda
+Event -->"1"Event_TDG
+Event -->"1"Event_Detail
+Event -->"1..*"Event_Content
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+
 'Engagement and Networking
 Event_Catalog -->"1"Filtering_Controller
 Filtering_Controller -->"1"EventFilter
@@ -279,15 +293,9 @@ EventFilterDecorator <|-- Keyword_EventFilterDecorator
 EventFilterDecorator <|-- Category_EventFilterDecorator
 EventFilterDecorator <|-- EventType_EventFilterDecorator
 EventFilterDecorator <|-- Date_EventFilterDecorator
-'Event
-Event -->"1"Event_Agenda
-Event -->"1"Event_TDG
-Event -->"1"Event_Detail
-Event -->"1..*"Event_Content
-Email_Campaigner *-- Participant_Feedback
-Email_Campaigner -->"1"Feedback_Form
+
 'attendees and events'
-Participant_Catalog *-- Event_Attendees
+Participant_Catalog *-- Event_Attendee
 Event_Attendee-->"1"User
 Event_Attendee-->"1"Event
 User_Catalog"1"-->"1"Participant_Catalog
