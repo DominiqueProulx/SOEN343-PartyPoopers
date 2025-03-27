@@ -10,8 +10,13 @@ class Attendee_Catalog{
             const eid = req.body.eid;
             const handlerChain = new RegistrationHandler(new EmailTicketHandler());
             console.log(user)
-            handlerChain.handle(user, eid);
-            res.status(200).json({message: "Successful event added"})
+            if(eid) {
+                handlerChain.handle(user, eid);
+                res.status(200).json({message: "Successful event added"})
+            }
+            else{
+                res.status(400).json({message: "No uid"})
+            }
         }
         catch (err) {
             res.status(400).json({message: "Error", error: err});

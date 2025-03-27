@@ -11,10 +11,12 @@ class RegistrationHandler extends Handler {
             super.handle(user, eid);
             return res.rows[0];
         } catch (err) {
-            console.error('Error registering user to event:', err);
+            console.log('Error registering user to event:', err);
             throw err;
         }
     }
 }
 
+
+console.log("hello")
 export default RegistrationHandler;

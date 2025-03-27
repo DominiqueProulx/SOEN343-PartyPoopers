@@ -1,7 +1,9 @@
 import Handler from "./handler.js";
 import mailgunService from "../services/mailgunService.js";
 
-class TicketEmailHandler extends Handler {
+class EmailTicketHandler extends Handler {
+
+
     handle(user, eid) {
       mailgunService.sendTicketEmail(user.user_name, user.email, eid)
       console.log("Sending email to user ", user, " for ticket", eid)
@@ -9,4 +11,5 @@ class TicketEmailHandler extends Handler {
     }
   }
 
-export default TicketEmailHandler;
+
+export default EmailTicketHandler;

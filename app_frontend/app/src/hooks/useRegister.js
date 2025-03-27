@@ -7,9 +7,11 @@ export default function useRegister() {
   
     const register = async (register_body) => {
         setError(null);
+
+      
       
       try {
-        const apiUrl = 'http://localhost:5000/api/user/register';
+        const apiUrl = 'http://localhost:5001/api/user/register';
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -20,7 +22,6 @@ export default function useRegister() {
         if (!response.ok) throw new Error(data.error || 'Failed to Register');
         
         setUser(data.data);
-        console.log(data.data)
         return data.data || [];
       }
       

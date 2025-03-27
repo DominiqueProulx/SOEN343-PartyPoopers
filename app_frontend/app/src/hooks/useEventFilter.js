@@ -9,7 +9,7 @@ export default function useEventFilter() {
         setError(null);
       
       try {
-         const apiUrl = 'http://localhost:5000/api/event/filter';
+         const apiUrl = 'http://localhost:5001/api/event/filter';
         const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

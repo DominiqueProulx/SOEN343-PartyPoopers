@@ -8,15 +8,21 @@ class mailgunService{
         if (mailgunService.instance) {
           return mailgunService.instance;
         }
+        console.log(process.env.MAILGUN_API_KEY)
         this.mailgun = new Mailgun(FormData);
         this.client = this.mailgun.client({
           username: 'api',
-          key: process.env.MAILGUN_API_KEY, 
+          key: "3d21ba47d697823a7cdb8ee914154c76-f6202374-c9bc205c", 
         }); 
+
         mailgunService.instance = this;
     }
-    static async sendTicketEmail(user_name, email, message) {
+    async sendTicketEmail(user_name, email, message) {
+      console.log(message, " FROM mgsv")
+      console.log(email, " FROM mgsv")
+      console.log(user_name, " FROM mgsv")
       try {
+        console.log(this.client)
         const data = await this.client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
           from: "Mailgun Sandbox <postmaster@sandboxb35e96234b634069a2452247883c8e20.mailgun.org>",
           to: [`${user_name} <${email}>`],
@@ -32,4 +38,4 @@ class mailgunService{
     }
 }
 
-export default mailgunService;
+export default new mailgunService();
