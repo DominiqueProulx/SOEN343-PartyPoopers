@@ -5,7 +5,7 @@ export default function Header() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/user/getCurrentUser", {
+    fetch("http://localhost:5001/api/user/getCurrentUser", {
       method: "GET",
       headers: {
           "Content-Type": "application/json",
@@ -18,6 +18,7 @@ export default function Header() {
           setUser(data.user);
           console.log(data.user);
         }
+        console.log(data.user);
       })
       .catch((err) => console.error("Error fetching session:", err));
   }, []);
@@ -33,10 +34,10 @@ export default function Header() {
           <a href="/about" className="hover:text-[var(--color-orange)]">About Us</a>
           {user ? (
             <>
-              <a href="http://localhost:5000/dashboard" className="hover:text-[var(--color-orange)]">Dashboard</a>
+              <a href="/dashboard" className="hover:text-[var(--color-orange)]">Dashboard</a>
               <button
                 onClick={() => {
-                  fetch("http://localhost:5000/api/user/logout", { method: "POST", credentials: "include" })
+                  fetch("http://localhost:5001/api/user/logout", { method: "POST", credentials: "include" })
                     .then(() => setUser(null))
                     .catch((err) => console.error("Logout failed:", err));
                 }}

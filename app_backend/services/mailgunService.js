@@ -8,7 +8,6 @@ class mailgunService{
         if (mailgunService.instance) {
           return mailgunService.instance;
         }
-        console.log(process.env.MAILGUN_API_KEY)
         this.mailgun = new Mailgun(FormData);
         this.client = this.mailgun.client({
           username: 'api',
@@ -18,9 +17,6 @@ class mailgunService{
         mailgunService.instance = this;
     }
     async sendTicketEmail(user_name, email, message) {
-      console.log(message, " FROM mgsv")
-      console.log(email, " FROM mgsv")
-      console.log(user_name, " FROM mgsv")
       try {
         console.log(this.client)
         const data = await this.client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
@@ -30,7 +26,6 @@ class mailgunService{
           text: message,
         });
     
-        console.log(data); // logs response data
     
       } catch (error) {
         console.log(error); //logs any error

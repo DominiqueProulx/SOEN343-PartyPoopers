@@ -17,6 +17,4 @@ class RegistrationHandler extends Handler {
     }
 }
 
-
-console.log("hello")
 export default RegistrationHandler;

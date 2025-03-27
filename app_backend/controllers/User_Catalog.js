@@ -2,6 +2,7 @@ import User from '../components/User.js';
 import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 import User_TDG from '../components/TDG/User_TDG.js';
+import Event_Attendee_TDG from '../components/TDG/Event_Attendee_TDG.js';
 import session from 'express-session';
 
 
@@ -67,6 +68,20 @@ class User_Catalog{
             res.clearCookie("connect.sid");
             res.json({ message: "Logged out successfully" });
         });
+    }
+    async getUserEvents(req, res){
+        try {
+            if(req.session.user) {
+                const events = await Event_Attendee_TDG.getAllEvent(req.session.user.uid);
+                res.status(200).json({events: events})
+            }
+            else{
+                res.status(401).json({message: "User not logged in"})
+            }
+        }
+        catch(err) {
+            res.status(400).json({message: err.message})
+        }
     }
 }
 

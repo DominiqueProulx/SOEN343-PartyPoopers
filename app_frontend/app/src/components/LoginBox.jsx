@@ -1,83 +1,93 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   TextField,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
   Button,
   Paper,
-  Stack,
-  Typography
+  Typography,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import useLogin from '../hooks/useLogin';
+import { useNavigate } from "react-router-dom";
 
+function LoginBox() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [helperText, setHelperText] = useState('');
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { login } = useLogin();
+  const navigate = useNavigate();
 
-function RegistrationBox() {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [helperText, setHelperText] = useState("");
-    const [err, setErr] = useState(false);
-    const {user, error, login} = useLogin();
+  const validateEmail = (email) => {
+    let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+  };
 
-    const validateEmail = (email) => {
-      let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      return regex.test(email);
-    };
-
-    const handleLogin = async (e) => {
-      e.preventDefault(); 
-      if(!validateEmail(email)){
-        setHelperText("Invalid email")
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!validateEmail(email)) {
+      setHelperText('Invalid email');
+    } else {
+      try {
+        const loginBody = {
+          email: email,
+          user_password: password
+        };
+        setHelperText('');
+        await login(loginBody).then(
+          setOpenSnackbar(true)
+        );
+        setEmail('');
+        setPassword('');
+        
+        setTimeout(() => {
+          navigate('/');
+        }, 1000);
+        if(openSnackbar){
+        }
+      } catch (err) {
+        console.error('Login failed:', err);
       }
-      else{
-          try {
-            const loginBody = {
-                email:email,
-                user_password:password
-            }
-            setHelperText("")
-            login(loginBody)
-    
-            setEmail('');
-            setPassword('');
-          } catch (err) {
-            console.error('login failed:', err);
-          }
-      }
-    };
-    return (
-    <Paper elevation={3} sx={{ p: 3, maxWidth: '400px', margin: '0 auto', marginTop: '100px'}}>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }} component ="form" onSubmit={handleLogin}>
-            <Typography variant="h6" align="center" gutterBottom>
-                Login
-            </Typography>
-            <TextField
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                    sx={{ flexGrow: 1, minWidth: '200px' }}
-                    value={email}
-                    type="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    helperText={helperText}
-            />
-            <TextField
-                    label="Password"
-                    variant="outlined"
-                    fullWidth
-                    sx={{ flexGrow: 1, minWidth: '200px' }}
-                    value={password}
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-            />
-            <Button onClick ={handleLogin}>
-                Login
-            </Button>
-        </Box>
+    }
+  };
+
+  return (
+    <Paper elevation={3} sx={{ p: 3, maxWidth: '400px', margin: '0 auto', marginTop: '100px' }}>
+      <Box component="form" onSubmit={handleLogin} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Typography variant="h6" align="center" gutterBottom>
+          Login
+        </Typography>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          value={email}
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          helperText={helperText}
+        />
+        <TextField
+          label="Password"
+          variant="outlined"
+          fullWidth
+          value={password}
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+      </Box>
+      
+      {/* Snackbar for success message */}
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)}>
+        <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
+          Login successful!
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }
 
-export default RegistrationBox;
+export default LoginBox;

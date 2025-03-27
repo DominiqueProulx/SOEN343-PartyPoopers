@@ -11,5 +11,6 @@ router.get('/getCurrentUser', User_Catalog.getCurrentUser);
 router.post('/logout', User_Catalog.logout);
 router.get('/all', User_Catalog.getAllUser);
 router.post('/registerEvent', Attendee_Catalog.addAttendee);
+router.get('/getUserEvents', User_Catalog.getUserEvents)
 export default router;
 

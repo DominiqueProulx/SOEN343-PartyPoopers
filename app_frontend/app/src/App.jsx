@@ -8,6 +8,7 @@ import EventsPage from './screens/EventsPage'
 import AboutPage from './screens/AboutPage'
 import BrowseEvents from './screens/BrowseEvents'
 import RegistrationPage from './screens/RegistrationPage'
+import Dashboard from './screens/Dashboard'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/browse-events" element={<BrowseEvents />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/register' element={<RegistrationPage />} />
+        <Route path='/dashboard' element={<Dashboard />} />
       </Routes>
     </Router>
   )
