@@ -1,5 +1,4 @@
 import { useState } from "react";
-import apiUrl from "./apiUrl";
 // hooks/useEventFilter.js
 export default function useEventFilter() {
   const [events, setEvents] = useState([]);
@@ -9,6 +8,7 @@ export default function useEventFilter() {
     setError(null);
 
     try {
+      const apiUrl = "http://localhost:5001/api/event/filter";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

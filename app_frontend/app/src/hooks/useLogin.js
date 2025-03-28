@@ -1,5 +1,4 @@
 import { useState } from "react";
-import apiUrl from "./apiUrl";
 
 export default function useLogin() {
   const [user, setUser] = useState();
@@ -9,6 +8,7 @@ export default function useLogin() {
     setError(null);
 
     try {
+      const apiUrl = "http://localhost:5001/api/user/login";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
