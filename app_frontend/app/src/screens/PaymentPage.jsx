@@ -11,11 +11,14 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import { CreditCard, PayPal, ApplePay } from "./PaymentMethods"; // Import forms
+import { CreditCard, PayPal, ApplePay } from "./PaymentMethods";
+import { useLocation } from "react-router-dom";
 
-const PaymentPage = ({ eventName, ticketPrice }) => {
+const PaymentPage = () => {
+    const location = useLocation();
+  const { eventName, ticketPrice } = location.state || {};
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Controls snackbar visibility
+  const [openSnackbar, setOpenSnackbar] = useState(false); 
 
   // Handles form submission
   const handlePayment = (e) => {

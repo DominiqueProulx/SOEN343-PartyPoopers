@@ -21,12 +21,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/pay"
-          element={
-            <PaymentPage eventName="Tech Conference 2025" ticketPrice={49.99} />
-          }
-        />
+        <Route path="/pay" element={<PaymentPage/>} />
       </Routes>
     </Router>
   );
