@@ -61,7 +61,8 @@ CREATE TABLE IF NOT EXISTS app_event (
     event_date TIMESTAMP NOT NULL,
     location VARCHAR(200),
     max_attendees INTEGER,
-    type event_type
+    type event_type,
+    ticket_price DECIMAL(10, 2)
 );
 
 -- Create Payment table
