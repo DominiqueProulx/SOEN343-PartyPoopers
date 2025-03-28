@@ -128,6 +128,7 @@ class Date_EventFilterDecorator{
 
 
 class User_Catalog{
+    - user_catalog :  User_Catalog
     +addPreferences(attendee : User, pref : Category) : boolean
     +getSubscribed() : List<User>
     +getInstance() :  User_Catalog
@@ -136,7 +137,9 @@ class User_Catalog{
   	+getCurrentUser(uid : Int) : User
   	+getAllUser() : User
   	+logout() : boolean
+    +getInstance() : User_Catalog
   	+getUserEvents(uid : Int) : List<Event> 
+    + setPreferences(Categories[4])
 
 }
 class User {
@@ -345,7 +348,7 @@ Attendee_Catalog *-- Handler
 Handler <|-- EmailTicketHandler
 Handler <|-- RegistrationHandler 
 EmailTicketHandler --> Mailgun_Service
-Event_Attendee -->"1"Attendee_TDG 
+Attendee_Catalog -->"1"Attendee_TDG 
 Event -->"1"Engagement_Manager
 Engagement_Manager -->Chatroom
 Engagement_Manager -->Review_Catalog
