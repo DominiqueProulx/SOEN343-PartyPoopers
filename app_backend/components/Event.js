@@ -25,8 +25,8 @@ static possibleTypes = [
 
 
 constructor(title, description, date, location, category, type, uid, eid = null) {
-    // Type checking
-   // if (!Event.possibleCategories.includes(category)) {
+// Type checking
+  // if (!Event.possibleCategories.includes(category)) {
    //   throw new TypeError('category is not accepted');
   //  }
     

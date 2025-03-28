@@ -1,0 +1,13 @@
+@startuml
+participant "__:Main_controller__" as MainController
+participant "__:Attendee_Catalog__" as AttendeeCatalog
+participant "__:RegistrationHandler__" as RegistrationHandler
+participant "__:TicketEmailHandler__" as TicketEmailHandler
+
+MainController -> AttendeeCatalog: addAttendee(user, eid)
+AttendeeCatalog -> TicketEmailHandler **: create()
+AttendeeCatalog -> RegistrationHandler **: create(__:TicketEmailHandler__)
+AttendeeCatalog -> RegistrationHandler: handle(user, eid)
+RegistrationHandler -> TicketEmailHandler: handler(user, eid)
+
+@enduml
