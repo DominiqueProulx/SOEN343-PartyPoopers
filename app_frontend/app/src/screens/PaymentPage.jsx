@@ -13,12 +13,15 @@ import {
 } from "@mui/material";
 import { CreditCard, PayPal, ApplePay } from "./PaymentMethods";
 import { useLocation } from "react-router-dom";
+import useRegisterForEvent from '../hooks/useRegisterForEvent';
 
 const PaymentPage = () => {
     const location = useLocation();
-  const { eventName, ticketPrice } = location.state || {};
+    const { eventName, ticketPrice, eventEID } = location.state || {};
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [openSnackbar, setOpenSnackbar] = useState(false); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const {error, registerForEvent} = useRegisterForEvent();
+  
 
   // Handles form submission
   const handlePayment = (e) => {
@@ -27,7 +30,20 @@ const PaymentPage = () => {
 
     // Show success message
     setOpenSnackbar(true);
+
+    const register_body = {
+      eid: eventEID
+    }
+
+    try {
+      registerForEvent(register_body)
+    }
+    catch(err) {
+      console.log(err);
+    }
   };
+
+
 
   // Render the selected payment form dynamically
   const renderPaymentForm = () => {
