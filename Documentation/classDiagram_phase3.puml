@@ -187,9 +187,7 @@ class User_newsletter{
     - event_Description: String[4]
 
 }
-class Participan_Feedback{
 
-}
 class Feedback_Form{
 
 }
@@ -268,10 +266,9 @@ class Event_Attendee{
     - attendee: User
     - event :  Event
 }
-class Event_Attendee_TDG{
+class Attendee_TDG{
     +addAttendee(uid, eid): JSON
  	+getAllEvent(uid) :  JSON
-
 }
 
 
