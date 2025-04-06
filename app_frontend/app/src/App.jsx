@@ -8,6 +8,7 @@ import EventsPage from './screens/EventsPage'
 import AboutPage from './screens/AboutPage'
 import BrowseEvents from './screens/BrowseEvents'
 import RegistrationPage from './screens/RegistrationPage'
+import MyAccount from './screens/MyAccount'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "./styles/theme.js";
 
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/browse-events" element={<BrowseEvents />} />
         <Route path='/about' element={<AboutPage />} />
         <Route path='/register' element={<RegistrationPage />} />
+        <Route path='/myaccount' element={<MyAccount />} />
       </Routes>
     </Router>
     </ThemeProvider>
