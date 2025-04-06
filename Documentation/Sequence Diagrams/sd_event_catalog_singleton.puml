@@ -1,0 +1,23 @@
+@startuml 
+
+title: Event_Catalog Singleton
+
+participant "__:Main_Controller__" as mainctrl 
+participant "Event_Catalog" as ecClass
+participant "__ec:Event_Catalog__" as ec
+
+
+mainctrl -> ecClass : getInstance()
+
+alt instance== null
+ecClass ->  ec **: create 
+ecClass --> mainctrl : ec
+end
+
+alt insance != null
+ ecClass --> mainctrl : ec
+end
+
+  
+
+@enduml 

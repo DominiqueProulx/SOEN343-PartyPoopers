@@ -1,0 +1,50 @@
+@startuml
+
+title: Browse Events
+
+actor Attendee
+participant "__:Main_Controller__" as mc
+participant "Event_Catalog" as ecc
+participant "__:Event_Catalog__" as ec
+collections "__sees_events:Event__" as event
+collections "__filteredEvents:Event__" as fevent
+participant "__:FilteringController__" as fc
+participant "__:EventFilter__" as ef
+participant "__:FilterDecorator__" as fd
+
+Attendee -> mc : browseEvents(filterDetails)
+mc -> ecc : getInstance()
+ecc --> mc : event_catalog
+mc -> ec : filterEvents(filterDetails)
+ec -> fc : getEvents(filterDetails)
+
+fc-> ef ** : filter: create()
+alt constraint
+fc-> fd ** : create(filter)
+end
+
+fc --> ec : filteredEvents 
+
+
+
+loop for each event 
+ec -> event : existEvent : find(event)
+event --> ec : [existEvent] e: Event 
+alt existingEvent
+    ec -> fevent : add(e)
+    
+end
+alt !existingEvent
+    ec -> ec : e : createEvent()
+    ec -> event : add(e)
+    ec -> fevent : add(e)
+end
+end 
+
+ec --> mc : filteredEvents 
+mc --> Attendee : filteredEvents
+
+
+
+
+@enduml

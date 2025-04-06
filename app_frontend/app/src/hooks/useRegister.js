@@ -1,33 +1,33 @@
 import { useState } from "react";
 import apiUrl from "./apiUrl";
 // hooks/useEventFilter.js
-export default function useEventFilter() {
-  const [events, setEvents] = useState([]);
+export default function useRegister() {
+  const [user, setUser] = useState();
   const [error, setError] = useState(null);
 
-  const fetchFilteredEvents = async (filters) => {
+  const register = async (register_body) => {
     setError(null);
 
     try {
-      const apiUrl = "http://localhost:5001/api/event/filter";
+      const apiUrl = "http://localhost:5001/api/user/register";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(filters),
+        body: JSON.stringify(register_body),
       });
 
       const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Failed to Register");
 
-      if (!response.ok) throw new Error(data.error || "Failed to fetch events");
-
-      setEvents(data.data || []);
+      setUser(data.data);
+      console.log(data.data);
       return data.data || [];
     } catch (err) {
-      console.error("Error in fetchFilteredEvents:", err);
+      console.error("Error in registering:", err);
       setError(err.message || "An unknown error occurred");
       return [];
     }
   };
 
-  return { events, error, fetchFilteredEvents, setEvents };
+  return { user, error, register };
 }

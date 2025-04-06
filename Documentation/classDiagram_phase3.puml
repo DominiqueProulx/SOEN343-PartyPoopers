@@ -73,7 +73,8 @@ class Payment{
 
 
 class Promotional_Content{
-    - files: <List>File
+    - file_path : String
+    - updloaded_at : Date
 }
 class FileManager{
     +processFile(eid: int,file:File):boolean
@@ -127,25 +128,50 @@ class Date_EventFilterDecorator{
 
 
 class User_Catalog{
-    +addUser(user : User) : boolean
-    +login(email : String,  password : String) : User
-    -validateLogin(email : String,  password : String) : boolean
+    - user_catalog :  User_Catalog
     +addPreferences(attendee : User, pref : Category) : boolean
     +getSubscribed() : List<User>
     +getInstance() :  User_Catalog
+    +register(user_name : String , password : String, gender : Enum , email: String, email_subscribed: boolean) : boolean
+  	+login(user_name : String , password : String) : User
+  	+getCurrentUser(uid : Int) : User
+  	+getAllUser() : User
+  	+logout() : boolean
+    +getInstance() : User_Catalog
+  	+getUserEvents(uid : Int) : List<Event> 
+    + setPreferences(Categories[4])
 
 }
 class User {
+    {static} user_TDG : User_TDG
      - uid : Int
     - FavoriteCategories: Category[4]
-    - name : String
+    - user_name : String
     - password : String
+    - gender: Enum 
     - email : String
     - email_subscribed  : Boolean
     +getAllPreferences() : List<Category>
     +displayPreferences() : String
     +addPreferences(pref : Category) : boolean
     +getCategories() : List<Category>
+    +register(user_name, email, user_password, gender):boolean
+ 	+login(email, user_password) : boolean
+ 	+get_user_name() : String
+  	+get_email() : String
+ 	+get_password() : String
+
+}
+class User_TDG{
+     + getLatest(): int
+ 	 +getUserByUid(uid) : JSON
+ 	 +getUserByEmail(email): JSON
+ 	 +createUser(user_name, email, user_password): boolean
+	 +updateUser(uid, user_name, email, user_password): boolean
+	 +deleteUserByEmail(email): JSON
+	 +deleteUserByUid(uid): boolean
+	 +loginUser(email, user_password): boolean
+
 }
 
 class Email_Campaigner{
@@ -161,9 +187,7 @@ class User_newsletter{
     - event_Description: String[4]
 
 }
-class Participan_Feedback{
 
-}
 class Feedback_Form{
 
 }
@@ -187,6 +211,7 @@ class Event_Catalog {
 }
 
 class Event {
+{static} eventT_TDG : Event_TDG
 - eid : int
 - title : String
 - description  : String 
@@ -194,12 +219,11 @@ class Event {
 - location : String
 - category : Category
 - type :EventType
-- organizer: User
+- organizer: String
 +setPageContent(newContent : String) : void
 +updatePage(description:String) : boolean
 +addContent(newcontent :String) : void
 +toString() : String
-+addToParticipants(attendee : User) : boolean
 +createReport() : boolean
 +addReport(report :Report) : boolean
 +viewEventPromotional() : boolean
@@ -208,10 +232,50 @@ class Event {
 +getCategory() : Category
 }
 
-class Participant_Catalog{
-    +addParticipant( attendee: User) : void
-    +getParticipant(eid : Int) : List<User>
+class Event_TDG{
+    + getLatest(): int
+     + addEvent(event: Event): void
+     + getEvents() : List<Event>
 
+}
+class Event_Factory{
+     + createEvent(...): boolean
+}
+
+class Attendee_Catalog{
+    +addAttendee(attendee: User, event: Event ) : boolean
+  	+getAttendees(eid : Int): List<User>
+
+}
+class Handler {
+    + nextHandler : Handler
+    + handle(user: User, eid: Int) : void
+}
+class EmailTicketHandler {
+    -user: User
+  	-eid: String
+    + handle(user: User, eid: Int) : void
+}
+class RegistrationHandler {
+    -user: User
+  	-eid: String
+    + handle(user: User, eid: Int) : void
+}
+
+class Event_Attendee{
+    - attendee: User
+    - event :  Event
+}
+class Attendee_TDG{
+    +addAttendee(uid, eid): JSON
+ 	+getAllEvent(uid) :  JSON
+}
+
+
+
+class Event_Detail{
+    - sponsorInfo: String
+    - speakerInf :  String
 }
 
 
@@ -236,15 +300,32 @@ class Review_Answer{
 class Review_Catalog{
 
 }
+class Mailgun_Service{
+    -mailgun: MailgunClient
+  	-client: MailgunClient
 
+}
 
 'Promotion
 Main_Controller  -->"1"User_Catalog
 Main_Controller  -->"1"Event_Catalog
 Main_Controller  -->"1"Email_Campaigner
-User_Catalog *-- User
-Event_Catalog *-- Event
 Email_Campaigner *-- User_newsletter
+'users
+User_Catalog *-- User
+User-->"1"User_TDG
+
+'Event
+Event_Catalog *-- Event
+Event_Catalog -->"1"Event_Factory
+Event_Factory ..>Event
+Event -->"1"Event_Agenda
+Event -->"1"Event_TDG
+Event -->"1"Event_Detail
+Event -->"1..*"Event_Content
+Email_Campaigner *-- Participant_Feedback
+Email_Campaigner -->"1"Feedback_Form
+
 'Engagement and Networking
 Event_Catalog -->"1"Filtering_Controller
 Filtering_Controller -->"1"EventFilter
@@ -254,12 +335,17 @@ EventFilterDecorator <|-- Keyword_EventFilterDecorator
 EventFilterDecorator <|-- Category_EventFilterDecorator
 EventFilterDecorator <|-- EventType_EventFilterDecorator
 EventFilterDecorator <|-- Date_EventFilterDecorator
-Event -->"1"Event_Agenda
-Event -->"1..*"Event_Content
-Email_Campaigner *-- Participant_Feedback
-Email_Campaigner -->"1"Feedback_Form
-Participant_Catalog *-- User
-Event  "1"-->"1"Participant_Catalog
+
+'attendees and events' 
+Event_Attendee-->"1"User
+Event_Attendee-->"1"Event
+User_Catalog"1"-->"1"Attendee_Catalog
+Attendee_Catalog *-- Event_Attendee
+Attendee_Catalog *-- Handler
+Handler <|-- EmailTicketHandler
+Handler <|-- RegistrationHandler 
+EmailTicketHandler --> Mailgun_Service
+Attendee_Catalog -->"1"Attendee_TDG 
 Event -->"1"Engagement_Manager
 Engagement_Manager -->Chatroom
 Engagement_Manager -->Review_Catalog
@@ -268,7 +354,7 @@ Review_Catalog -->"1"Review_Form
 'Ressource management
 Main_Controller -->FileManager
 FileManager -->"1"DatabaseController
-Event -->"1..*"Promotional_Content
+Event -->"1"Promotional_Content
 'reporting
 Event -->"1..*"Report
 'payment management

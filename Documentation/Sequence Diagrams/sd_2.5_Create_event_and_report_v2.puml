@@ -1,0 +1,42 @@
+
+
+@startuml 
+
+title: Organizer creates events and receives reports
+
+ 
+actor "Organizer" as organizer
+participant "__:MainController__" as mainctrl
+participant "__:Event_Catalog__" as eventCat
+participant "__:Event_Factory__" as eventFactory
+participant "__:Event__" as event
+participant "__:Event_TDG__" as eventtdg
+collections "__Events__" as sees_events
+database "app_event" as eventdb
+participant "__:Report__" as report
+collections "Reports" as reports
+
+organizer --> mainctrl: createEvent(name, startDate, endDate, startTime, endTime)
+mainctrl --> eventCat : createEvent(name, startDate, endDate, startTime, endTime)
+eventCat --> eventFactory : createEvent(name, startDate, endDate, startTime, endTime)
+eventFactory --> event **: createEvent(name, startDate, endDate, startTime, endTime)
+eventFactory --> eventCat : return e:event
+event--> eventtdg : addevent(name, startDate, endDate, startTime, endTime)
+eventtdg -->eventdb : add(name, startDate, endDate, startTime, endTime)
+eventCat --> sees_events: addEvent(E)
+eventCat --> mainctrl: confirmation
+mainctrl --> organizer: confirmation
+
+organizer --> mainctrl: finishEvent(e)
+mainctrl --> report**: createReport(e, organizer)
+report --> mainctrl: return r:report
+mainctrl --> reports: addReport(r)
+reports --> mainctrl: confirmation
+mainctrl--> organizer: confirmation
+
+
+
+
+
+
+@enduml 
