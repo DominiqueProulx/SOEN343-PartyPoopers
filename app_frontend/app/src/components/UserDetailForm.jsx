@@ -88,7 +88,7 @@ export default function UserDetailForm({ user }) {
       
       // API call to update user categories
       const port =  5001;
-      const response = await fetch(`http://localhost:${port}/api/user/updatePref/${user.id}`, {
+      const response = await fetch(`http://localhost:${port}/api/user/updatePref/${user.uid}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ export default function UserDetailForm({ user }) {
       </Typography>
       
       <Box sx={{ mb: 3 }}>
-        <Typography variant="subtitle1">User ID: {user.id}</Typography>
+        <Typography variant="subtitle1">User ID: {user.uid}</Typography>
         <Typography variant="subtitle1">Email: {user.email}</Typography>
         <Typography variant="subtitle1">Name: {user.user_name}</Typography>
       </Box>

@@ -96,8 +96,8 @@ class User_Catalog extends User_Manager {
             return !isNaN(num) && Number.isInteger(num);
           });
      
-          const userTDG = new User_TDG();
-          const result = await userTDG.updatePreferences(uid, loggedUserId, validFavorites);
+          
+          const result = await User_TDG.updatePreferences(uid, loggedUserId, validFavorites);
           return result;
         } catch (error) {
           console.error('Error in User_Catalog.updatePreferences:', error);

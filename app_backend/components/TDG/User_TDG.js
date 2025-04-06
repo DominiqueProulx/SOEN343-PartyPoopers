@@ -1,5 +1,7 @@
 import pool from "../../db.js"
 class User_TDG {
+    
+
     async getAllUsers() {
         const query = 'SELECT * FROM app_user';
         try {
@@ -54,31 +56,44 @@ class User_TDG {
         }
     }
    
-async updatePreferences(uid, loggedUserId, favorites) {
-    try {
-      // Ensure favorites is an array and not undefined
-      const favoritesArray = Array.isArray(favorites) ? favorites : [];
-      
-      // Convert favorites array to a proper PostgreSQL integer array format
-      // This prevents PostgreSQL from trying to convert 'undefined' to an integer
-      const favoritesString = favoritesArray.length > 0 
-        ? `ARRAY[${favoritesArray.join(',')}]` 
-        : 'ARRAY[]::integer[]';
-      
-      const query = `
-        UPDATE users 
-        SET favorites = ${favoritesString}
-        WHERE id = $1
-        RETURNING *
-      `;
-      
-      const result = await pool.query(query, [uid]);
-      return result.rows[0];
-    } catch (error) {
-      console.error('Error updating user preferences:', error);
-      throw error;
-    }
-  }
+    async updatePreferences(uid, loggedUserId, favorites) {
+        try {
+          // Validate uid is a valid integer
+          const userId = parseInt(uid);
+          if (isNaN(userId)) {
+            throw new Error(`Invalid user ID: ${uid}`);
+          }
+          
+          // Ensure favorites is an array of strings and not undefined
+          const favoritesArray = Array.isArray(favorites) 
+            ? favorites.filter(item => item !== undefined && item !== null)
+                    .map(item => String(item)) 
+            : [];
+          
+          console.log(`Updating preferences for user ${userId}`);
+          console.log(`Favorites array: ${JSON.stringify(favoritesArray)}`);
+          
+          // Use a parameterized query
+          const query = `
+            UPDATE app_user
+            SET favorites = $2::category[]
+            WHERE uid = $1
+            RETURNING *
+          `;
+          
+          // Pass the validated userId and favoritesArray
+          const result = await pool.query(query, [userId, favoritesArray]);
+          
+          if (result.rows.length === 0) {
+            throw new Error(`User with ID ${userId} not found`);
+          }
+          
+          return result.rows[0];
+        } catch (error) {
+          console.error('Error updating user preferences:', error);
+          throw error;
+        }
+      }
     async deleteUserByEmail(email) {
         const query = 'DELETE FROM app_user WHERE email = $1 RETURNING *';
         try {

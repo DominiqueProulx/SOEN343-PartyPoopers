@@ -22,6 +22,7 @@ class User_Catalog_Proxy extends User_Manager {
     if (uid != loggedUser) {
       throw new Error("User not allowed to update preferences");
     }
+    return true;
   }
   
   updatePreferences(uid, loggedUser = null, favorites) {
