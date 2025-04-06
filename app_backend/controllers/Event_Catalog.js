@@ -1,5 +1,8 @@
-import FilteringController from "./FilteringController.js";
+
+import FilteringController from "./FilteringController.js"
+import EventFactory from "./EventFactory.js"
 import Event from "../components/Event.js";
+
 
 class Event_Catalog{
  static sees_events = [];
@@ -68,6 +71,11 @@ createEvent(title, description, date, location, category, type, uid, eid = null)
     return newEvent;
   }
 
+async createEvent(eventData) {
+    const event = EventFactory.createEvent(eventData)
+    const eid = await event.saveToDatabase()
+    return { eid, message: 'Event created successfully.' }
+  }
 
 }
 

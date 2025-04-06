@@ -5,7 +5,7 @@ import {   Box  } from '@mui/material';
 
 
 // The EventGrid displays all the eent cards
-const  EventGrid = ({ events }) => {
+const EventGrid = ({ events, onViewDetails }) => {
     return (
       <Box sx={{ flexGrow: 1, p: 3 }}>
         <Grid 
@@ -15,7 +15,7 @@ const  EventGrid = ({ events }) => {
         >
           {events.map((event) => (
             <Grid xs={4} sm={4} md={4} key={event.eid}>
-              <EventCard event={event} />
+              <EventCard event={event} onViewDetails={onViewDetails} />
             </Grid>
           ))}
         </Grid>
