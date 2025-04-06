@@ -13,6 +13,11 @@ class Main_Controller{
        return Main_Controller.instance;
      }
 
+async createEvent(eventData) {
+    const catalog = Event_Catalog.getInstance()
+    const result = await catalog.createEvent(eventData)
+    return result
+  }
 
 async browseEvents(filterDetails){
         const eventCatalog = Event_Catalog.getInstance();

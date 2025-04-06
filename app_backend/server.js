@@ -1,13 +1,18 @@
 import express from "express";
 import cors from "cors";
+
 import session from "express-session";
+
 import pool from "./db.js";
 import attendeeRoutes from "./routes/attendeeRoutes.js";
 import organizerRoutes from "./routes/organizerRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
-import userRoutes from "./routes/userRoutes.js";
+
 import testRoutes from "./routes/testRoutes.js";
+import path from "path";
+import userRoutes from "./routes/userRoutes.js";
+
 
 const app = express();
 
@@ -36,12 +41,16 @@ app.use(
 // mount the routes
 app.use("/api/attendee", attendeeRoutes);
 app.use("/api/organizer", organizerRoutes);
-app.use("/api/user", userRoutes);
 app.use("/api/event", eventRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api/test", testRoutes);
+app.use("/uploads", express.static(path.resolve("./uploads")));
+app.use("/api/user", userRoutes);
+
+
 
 const PORT = 5001;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
+
 });
