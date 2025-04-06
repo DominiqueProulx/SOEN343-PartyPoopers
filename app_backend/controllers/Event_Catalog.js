@@ -45,7 +45,7 @@ class Event_Catalog {
             
             if(existingEvent) {
                 filtered_eventsArray.push(existingEvent);
-                console.log('Event already exist')
+               // console.log('Event already exist')
             } else {
                 // Changed method name from createEvent to createEventObject
                 let instanciatedEvent = this.createEventObject(title, description, date, location, category, type, uid);

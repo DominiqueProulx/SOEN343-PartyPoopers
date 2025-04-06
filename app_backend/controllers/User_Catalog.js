@@ -64,6 +64,7 @@ class User_Catalog{
             res.json({ message: "Logged out successfully" });
         });
     }
+    
 }
 
 export default new User_Catalog;

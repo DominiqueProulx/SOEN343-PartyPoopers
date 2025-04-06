@@ -24,6 +24,7 @@ export default function Header() {
         }
       })
       .catch((err) => console.error('Error fetching session:', err));
+      console.log('yes');
   }, []);
 
   return (
@@ -75,12 +76,15 @@ export default function Header() {
               About Us
             </a>
             <span className="text-white text-xl">|</span>
-            <a href="/myaccount" className="hover:text-sky-200 transition-colors">
+          
+            <a href="/myaccount" className="hover:text-sky-200 transition-colors"> {/* TODO: Remove this when login works*/}
               My Account
             </a>
-
             {user ? (
               <>
+                <a href="/myaccount" className="hover:text-sky-200 transition-colors">
+              My Account
+            </a>
                 <span className="text-white text-xl">|</span>
                 <a
                   href="http://localhost:5000/dashboard"
