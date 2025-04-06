@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "../components/Header";
+import HomePageTab from "../components/HomePageTab";
 
 export default function HomePage() {
   return (
@@ -16,6 +17,9 @@ export default function HomePage() {
           </p>
           <a href="#register" className="inline-block bg-[var(--color-orange)] text-[var(--color-navy)] px-6 py-3 rounded-lg text-lg font-medium shadow-md hover:bg-[var(--color-blue)] transition">Get Started</a>
         </div>
+      </section>
+      <section id="event grid">
+      <HomePageTab/>
       </section>
 
       {/* Features Section */}
