@@ -15,7 +15,8 @@ export default function HomePage() {
           <p className="text-lg mb-6 text-[var(--color-navy)]">
             Discover, connect, and grow with the Smart Education Events System. Personalized recommendations, real-time chatrooms, and dynamic agendas — all in one place.
           </p>
-          <a href="#register" className="inline-block bg-[var(--color-orange)] text-[var(--color-navy)] px-6 py-3 rounded-lg text-lg font-medium shadow-md hover:bg-[var(--color-blue)] transition">Get Started</a>
+          
+         
         </div>
       </section>
       <section id="event grid">
@@ -46,6 +47,7 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="bg-[var(--color-navy)] text-white py-6">
         <div className="container text-center">
+        <a href="#register" className="inline-block bg-[var(--color-orange)] text-[var(--color-navy)] px-6 py-3 rounded-lg text-lg font-medium shadow-md hover:bg-[var(--color-blue)] transition">Get Started</a>
           <p>&copy; {new Date().getFullYear()} Smart Education Events System. All rights reserved.</p>
         </div>
       </footer>

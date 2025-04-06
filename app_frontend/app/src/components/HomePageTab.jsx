@@ -34,7 +34,12 @@ export default function HomePageTab() {
         color: (theme) => theme.palette.secondary.main, // Normal tab text color
         '&.Mui-selected': {
           color: (theme) => theme.palette.accent.main, // Selected tab text color
-        }}
+        },
+        '&:hover': {
+          color: (theme) => '#ffffff', // Hover text color
+          transition: 'color 0.2s, background-color 0.2s', // Smooth transition
+        }
+      }
           }}
       >
         <Tab value="one" label="Recommended for me" />
