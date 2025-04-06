@@ -2,10 +2,16 @@ import React from 'react';
 import { useState, useEffect } from "react";
 import { useTheme } from '@mui/material/styles';
 import theme from '../styles/theme';
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+} from "@mui/material";
+
 
 export default function Header() {
   const theme = useTheme();
   const [user, setUser] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:5000/api/user/getCurrentUser", {
@@ -65,6 +71,23 @@ export default function Header() {
             </>
           )}
         </nav>
+         {/* Create Event Button */}
+      <div className="flex justify-end p-4">
+      <Button
+        variant="contained"
+        onClick={() => navigate('/create-event')}
+        style={{
+          backgroundColor: "#F7AA00",
+          color: "#235784",
+          fontWeight: "bold",
+          borderRadius: "8px",
+          boxShadow: "2px 2px 8px rgba(0,0,0,0.1)",
+          whiteSpace: "nowrap",
+        }}
+      >
+         Become an Organizer! Create an Event now!
+      </Button>
+      </div>
       </div>
     </header>
   );

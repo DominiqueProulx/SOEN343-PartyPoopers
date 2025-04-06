@@ -77,22 +77,7 @@ function BrowseEvents() {
     <div>
       <Header />
 
-      {/* Create Event Button */}
-      <div className="flex justify-end p-4">
-        <Button
-          variant="contained"
-          onClick={() => navigate("/create-event")}
-          style={{
-            backgroundColor: "#F7AA00",
-            color: "#235784",
-            fontWeight: "bold",
-            borderRadius: "8px",
-            boxShadow: "2px 2px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          + Create Event
-        </Button>
-      </div>
+      
 
       <Searchbar setFilterDetails={setFilterDetails} />
 
