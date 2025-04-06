@@ -126,8 +126,8 @@ class Date_EventFilterDecorator{
       +buildFilter() : List<Event>
     }
 
-interface User_Controller{
-    +updateUserCategories(uid : Int, user_name : String, email: String, password: String) : boolean
+interface User_Manager{
+    +updateUserCategories(uid : Int, loggedUsed : Int,List<Category>) : boolean
 }
 
 class User_Catalog_Proxy{
@@ -322,9 +322,9 @@ Main_Controller  -->"1"Email_Campaigner
 Email_Campaigner *-- User_newsletter
 'users
 Main_Controller  -->"1"User_Catalog_Proxy
-User_Controller<|..- User_Catalog_Proxy
+User_Manager<|..- User_Catalog_Proxy
 User_Catalog_Proxy -->"1"User_Catalog
-User_Controller<|..- User_Catalog
+User_Manager|..- User_Catalog
 User_Catalog *-- User
 User-->"1"User_TDG
 

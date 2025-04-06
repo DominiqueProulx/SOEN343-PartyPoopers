@@ -53,6 +53,32 @@ class User_TDG {
             throw err;
         }
     }
+   
+async updatePreferences(uid, loggedUserId, favorites) {
+    try {
+      // Ensure favorites is an array and not undefined
+      const favoritesArray = Array.isArray(favorites) ? favorites : [];
+      
+      // Convert favorites array to a proper PostgreSQL integer array format
+      // This prevents PostgreSQL from trying to convert 'undefined' to an integer
+      const favoritesString = favoritesArray.length > 0 
+        ? `ARRAY[${favoritesArray.join(',')}]` 
+        : 'ARRAY[]::integer[]';
+      
+      const query = `
+        UPDATE users 
+        SET favorites = ${favoritesString}
+        WHERE id = $1
+        RETURNING *
+      `;
+      
+      const result = await pool.query(query, [uid]);
+      return result.rows[0];
+    } catch (error) {
+      console.error('Error updating user preferences:', error);
+      throw error;
+    }
+  }
     async deleteUserByEmail(email) {
         const query = 'DELETE FROM app_user WHERE email = $1 RETURNING *';
         try {

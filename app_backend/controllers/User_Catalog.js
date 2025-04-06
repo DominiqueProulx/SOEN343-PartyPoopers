@@ -3,8 +3,19 @@ import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 import User_TDG from '../components/TDG/User_TDG.js';
 import session from 'express-session';
-class User_Catalog{
+import User_Manager from './User_Manager.js';
 
+class User_Catalog extends User_Manager {
+    static instance = null;
+    
+    // Proper singleton pattern implementation
+    static getInstance() {
+        if (!User_Catalog.instance) {
+            User_Catalog.instance = new User_Catalog();
+        }
+        return User_Catalog.instance;
+    }
+    
     async register(req, res) {
         console.log(req.body);
         try {
@@ -19,6 +30,7 @@ class User_Catalog{
             res.status(500).json({ message: err.message });
         }
     }
+    
     async login(req, res) {
         try {
             const {email, user_password} = req.body;
@@ -32,6 +44,7 @@ class User_Catalog{
             res.status(500).json({ message: err.message });
         }
     }
+    
     async getCurrentUser(req, res) {
         try {
             console.log(req.session)
@@ -46,6 +59,7 @@ class User_Catalog{
             res.status(500).json({message: err.message})
         }
     }
+    
     async getAllUser(req,res) {
         try {
             const users = await User_TDG.getAllUsers();
@@ -55,6 +69,7 @@ class User_Catalog{
             res.status(500).json({message: err.message})
         }
     }
+    
     async logout(req, res) {
         req.session.destroy((err) => {
             if (err) {
@@ -65,6 +80,31 @@ class User_Catalog{
         });
     }
     
+    async updatePreferences(uid, loggedUserId, favorites) {
+        try {
+          // Validate user ID
+          if (!uid) {
+            throw new Error('User ID is required');
+          }
+         
+          // Ensure favorites is always an array
+          const favoritesArray = Array.isArray(favorites) ? favorites : [];
+         
+          // Validate that each favorite is a valid integer
+          const validFavorites = favoritesArray.filter(fav => {
+            const num = parseInt(fav);
+            return !isNaN(num) && Number.isInteger(num);
+          });
+     
+          const userTDG = new User_TDG();
+          const result = await userTDG.updatePreferences(uid, loggedUserId, validFavorites);
+          return result;
+        } catch (error) {
+          console.error('Error in User_Catalog.updatePreferences:', error);
+          throw error;
+        }
+    }
 }
 
-export default new User_Catalog;
+// Export the singleton instance
+export default User_Catalog.getInstance();

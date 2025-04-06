@@ -1,4 +1,5 @@
 import Event_Catalog from './Event_Catalog.js';
+import User_Catalog_Proxy from './User_Catalog_Proxy.js';
 
 
 class Main_Controller{
@@ -24,6 +25,12 @@ async browseEvents(filterDetails){
         const events = await eventCatalog.filterEvents(filterDetails);
         
         return events;
+    }
+
+    async updatePreferences(uid, loggedUserId = null, favorites = []) {
+      const userCatalog = User_Catalog_Proxy.getInstance();
+      const result = await userCatalog.updatePreferences(uid, loggedUserId, favorites);
+      return result;
     }
 }
 
