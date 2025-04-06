@@ -1,12 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
-import theme from '../styles/theme';
-import { useNavigate } from "react-router-dom";
-import {
-  Button,
-} from "@mui/material";
-
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+import Logo from './Logo';
 
 export default function Header() {
   const theme = useTheme();
@@ -14,12 +10,12 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/user/getCurrentUser", {
-      method: "GET",
+    fetch('http://localhost:5000/api/user/getCurrentUser', {
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      credentials: "include",
+      credentials: 'include',
     })
       .then((res) => res.json())
       .then((data) => {
@@ -27,67 +23,106 @@ export default function Header() {
           setUser(data.user);
         }
       })
-      .catch((err) => console.error("Error fetching session:", err));
+      .catch((err) => console.error('Error fetching session:', err));
   }, []);
 
   return (
     <header className="w-full shadow-md bg-[#235784]">
       <div className="max-w-7xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
-        <h1 className="text-3xl font-semibold text-white tracking-wider">SEES</h1>
-        <nav className="flex flex-wrap items-center gap-4 md:gap-6 mt-3 md:mt-0 text-white font-medium text-base">
-          <a href="/" className="hover:text-sky-200 transition-colors">Home</a>
-          <a href="/browse-events" className="hover:text-sky-200 transition-colors">Events</a>
-          <a href="/about" className="hover:text-sky-200 transition-colors">About Us</a>
-          <a href="/myaccount" className="hover:text-sky-200 transition-colors">My Account</a>
+        {/* Logo container */}
+        <div className="w-16 h-16 flex items-center justify-center" style={{ width: '500px' }}>
+          <Logo className="w-full h-full object-contain" />
+        </div>
 
-          {user ? (
-            <>
-              <a href="http://localhost:5000/dashboard" className="hover:text-sky-200 transition-colors">Dashboard</a>
-              <button
-                onClick={() => {
-                  fetch("http://localhost:5000/api/user/logout", { method: "POST", credentials: "include" })
-                    .then(() => setUser(null))
-                    .catch((err) => console.error("Logout failed:", err));
-                }}
-                className="hover:text-sky-200 transition-colors"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <a 
-                href="/login" 
-                className="bg-white text-[#235784] px-4 py-1.5 rounded-md font-semibold hover:bg-gray-100 transition-all"
-              >
-                Login
-              </a>
-              <a 
-                href="/register" 
-                className="border border-white px-4 py-1.5 rounded-md hover:bg-white hover:text-[#235784] transition-all"
-              >
-                Register
-              </a>
-            </>
-          )}
-        </nav>
-         {/* Create Event Button */}
-      <div className="flex justify-end p-4">
-      <Button
-        variant="contained"
-        onClick={() => navigate('/create-event')}
-        style={{
-          backgroundColor: "#F7AA00",
-          color: "#235784",
-          fontWeight: "bold",
-          borderRadius: "8px",
-          boxShadow: "2px 2px 8px rgba(0,0,0,0.1)",
-          whiteSpace: "nowrap",
-        }}
-      >
-         Become an Organizer! Create an Event now!
-      </Button>
-      </div>
+        {/* Create Event Button */}
+        <div className="flex justify-end p-4">
+          <Button
+            variant="contained"
+            onClick={() => navigate('/create-event')}
+            style={{
+              backgroundColor: '#F7AA00',
+              color: '#235784',
+              fontSize: '16px',
+              fontWeight: 'bold',
+              borderRadius: '8px',
+              boxShadow: '2px 2px 8px rgba(0,0,0,0.1)',
+              whiteSpace: 'nowrap',
+              marginTop: '-30px',
+              marginBottom: '10px',
+              padding: '20px 30px',
+              float: 'right',
+            }}
+          >
+            Become an Organizer! Create an Event now!
+          </Button>
+        </div>
+
+        {/* Navigation */}
+        <div
+          style={{ flexGrow: 1, backgroundColor: '#235784', padding: 25, fontSize: 20 }}
+          className="flex justify-center"
+        >
+          <nav className="flex flex-wrap items-center gap-4 md:gap-6 mt-3 md:mt-0 text-white font-medium text-base">
+            <a href="/" className="hover:text-sky-200 transition-colors">
+              Home
+            </a>
+            <span className="text-white text-xl">|</span>
+            <a href="/browse-events" className="hover:text-sky-200 transition-colors">
+              Events
+            </a>
+            <span className="text-white text-xl">|</span>
+            <a href="/about" className="hover:text-sky-200 transition-colors">
+              About Us
+            </a>
+            <span className="text-white text-xl">|</span>
+            <a href="/myaccount" className="hover:text-sky-200 transition-colors">
+              My Account
+            </a>
+
+            {user ? (
+              <>
+                <span className="text-white text-xl">|</span>
+                <a
+                  href="http://localhost:5000/dashboard"
+                  className="hover:text-sky-200 transition-colors"
+                >
+                  Dashboard
+                </a>
+                <span className="text-white text-xl">|</span>
+                <button
+                  onClick={() => {
+                    fetch('http://localhost:5000/api/user/logout', {
+                      method: 'POST',
+                      credentials: 'include',
+                    })
+                      .then(() => setUser(null))
+                      .catch((err) => console.error('Logout failed:', err));
+                  }}
+                  className="hover:text-sky-200 transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <span className="text-white text-xl">|</span>
+                <a
+                  href="/login"
+                  className="bg-white text-[#235784] px-4 py-1.5 rounded-md font-semibold hover:bg-gray-100 transition-all"
+                >
+                  Login
+                </a>
+                <span className="text-white text-xl">|</span>
+                <a
+                  href="/register"
+                  className="border border-white px-4 py-1.5 rounded-md hover:bg-white hover:text-[#235784] transition-all"
+                >
+                  Register
+                </a>
+              </>
+            )}
+          </nav>
+        </div>
       </div>
     </header>
   );

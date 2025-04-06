@@ -15,7 +15,7 @@ class Main_Controller{
 
 async createEvent(eventData) {
     const catalog = Event_Catalog.getInstance()
-    const result = await catalog.createEvent(eventData)
+    const result = await catalog.createEventInDatabase(eventData)
     return result
   }
 
