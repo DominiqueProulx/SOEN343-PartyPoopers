@@ -1,6 +1,5 @@
 import Event_TDG from "./TDG/Event_TDG.js";
 
-
 class Event {
 
 static event_TDG = new Event_TDG();

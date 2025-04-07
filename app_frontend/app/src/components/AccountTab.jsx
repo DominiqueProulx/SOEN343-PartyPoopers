@@ -14,9 +14,8 @@ import UserDetailForm from './UserDetailForm';
 export default function AccountTab() {
   const [value, setValue] = React.useState('one');
    const [user, setUser] = useState();
-
-  useEffect(() => {
- /*   fetch('http://localhost:5001/api/user/getCurrentUser', {
+   useEffect(() => {
+    fetch('http://localhost:5001/api/user/getCurrentUser', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -26,22 +25,21 @@ export default function AccountTab() {
       .then((res) => res.json())
       .then((data) => {
         if (data.user) {
-          setUser(data.user);
+          setUser(data.user.user);
+          console.log(data.user.user)
         }
       })
-      .catch((err) => console.error('Error fetching session:', err));*/
+      .catch((err) => console.error('Error fetching session:', err));
       //Hardcoded for now 
-      setUser({
-        uid: 1,
-        user_name: 'John Doe',
-        email: 'john.doe@example.com',
-        user_password: 'password123',
-        favorites: '{Mathematics,"Computer Science"}',
-        email_subscribed: true
-      })
-      
+      // setUser({
+      //   uid: 1,
+      //   user_name: 'John Doe',
+      //   email: 'john.doe@example.com',
+      //   user_password: 'password123',
+      //   favorites: '{Mathematics,"Computer Science"}',
+      //   email_subscribed: true
+      // })
   }, []);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

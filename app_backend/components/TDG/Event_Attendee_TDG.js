@@ -10,6 +10,18 @@ class Event_Attendee_TDG {
             throw err;
         }
     }
+    async getAllEvent(uid) {
+        const query = "SELECT * FROM app_event WHERE eid IN (SELECT eid FROM attendee_event WHERE uid = $1)";
+        try {
+            const res = await pool.query(query, [uid]);
+            return res.rows;
+        }
+        catch(err){
+            throw err;
+        }
+    }
 }
 
-export default Event_Attendee_TDG;
+
+
+export default new Event_Attendee_TDG();

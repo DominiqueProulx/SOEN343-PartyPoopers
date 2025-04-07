@@ -2,6 +2,7 @@ import User from '../components/User.js';
 import pool from '../db.js'
 import Attendee_Catalog from './Attendee_Catalog.js';
 import User_TDG from '../components/TDG/User_TDG.js';
+import Event_Attendee_TDG from '../components/TDG/Event_Attendee_TDG.js';
 import session from 'express-session';
 import User_Manager from './User_Manager.js';
 
@@ -24,6 +25,7 @@ class User_Catalog extends User_Manager {
                 return res.status(400).json({message: "Missing user_name, email or user_password"})
             }
             const newUser = await User.register(user_name, email, user_password);
+            console.log("Sending newly created user to frontend", newUser)
             res.status(201).json({ message: 'User registered successfully', user: newUser });
         }
         catch(err) {
@@ -37,7 +39,7 @@ class User_Catalog extends User_Manager {
             const user = await User.login(email, user_password);
             req.session.user = user;
             req.session.save((err) => {});
-            console.log(req.session.user)
+            console.log("Handling user login for frontend cookies", req.session.user)
             res.status(201).json({message: 'User login successfully', user: user})
         }
         catch (err){
@@ -47,7 +49,6 @@ class User_Catalog extends User_Manager {
     
     async getCurrentUser(req, res) {
         try {
-            console.log(req.session)
             if(req.session.user) {
                 res.status(201).json({message: "User logged in", user:req.session})
             }
@@ -90,14 +91,17 @@ class User_Catalog extends User_Manager {
           // Ensure favorites is always an array
           const favoritesArray = Array.isArray(favorites) ? favorites : [];
          
+
+        //THIS BREAKS IT DONT UNCOMMENT
           // Validate that each favorite is a valid integer
-          const validFavorites = favoritesArray.filter(fav => {
-            const num = parseInt(fav);
-            return !isNaN(num) && Number.isInteger(num);
-          });
-     
-          
-          const result = await User_TDG.updatePreferences(uid, loggedUserId, validFavorites);
+        //   const validFavorites = favoritesArray.filter(fav => {
+        //     const num = parseInt(fav);
+        //     return !isNaN(num) && Number.isInteger(num);
+        //   });
+
+
+          const result = await User_TDG.updatePreferences(uid, loggedUserId, favoritesArray);
+
           return result;
         } catch (error) {
           console.error('Error in User_Catalog.updatePreferences:', error);

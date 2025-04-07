@@ -22,6 +22,7 @@ export default function Header() {
         if (data.user) {
           setUser(data.user);
         }
+        console.log(data.user);
       })
       .catch((err) => console.error('Error fetching session:', err));
       console.log('yes');

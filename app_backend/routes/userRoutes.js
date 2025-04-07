@@ -1,5 +1,6 @@
 import express from 'express';
 import User_Catalog from '../controllers/User_Catalog.js';
+import Attendee_Catalog from '../controllers/Attendee_Catalog.js';
 import pool from '../db.js';
 import Main_Controller from '../controllers/Main_Controller.js';
 
@@ -13,7 +14,6 @@ router.get('/all', User_Catalog.getAllUser);
 router.put('/updatePref/:id', async (req, res) => {
     try {
       const uid = req.params.id;
-      
       // Validate uid
       if (!uid) {
         return res.status(400).json({ success: false, message: 'User ID is required' });
@@ -21,9 +21,12 @@ router.put('/updatePref/:id', async (req, res) => {
       
       //const loggedUserId = req.user ? req.user.id : null;  // TODO:  Uncomment this when login works
       const loggedUserId = uid; // THIS IS FOR TESTING
-      
-      const favorites = Array.isArray(req.body.favorites) ? req.body.favorites : [];
-      
+      // const favorites = Array.isArray(req.body.favorites) ? req.body.favorites : [];
+      const str = req.body.favorites;
+      const cleanedStr = str.replace(/[{}]/g, '');
+      const favorites = cleanedStr.split(',').map(item => item.trim());
+
+
       const mainController = Main_Controller.getInstance();
       const result = await mainController.updatePreferences(uid, loggedUserId, favorites);
       

@@ -324,7 +324,7 @@ Email_Campaigner *-- User_newsletter
 Main_Controller  -->"1"User_Catalog_Proxy
 User_Manager<|..- User_Catalog_Proxy
 User_Catalog_Proxy -->"1"User_Catalog
-User_Manager|..- User_Catalog
+User_Manager<|..- User_Catalog
 User_Catalog *-- User
 User-->"1"User_TDG
 

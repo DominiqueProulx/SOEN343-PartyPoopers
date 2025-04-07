@@ -5,22 +5,26 @@ dotenv.config();
 
 class mailgunService{
     constructor() {
+        if (mailgunService.instance) {
+          return mailgunService.instance;
+        }
         this.mailgun = new Mailgun(FormData);
         this.client = this.mailgun.client({
           username: 'api',
-          key: process.env.MAILGUN_API_KEY, 
+          key: "3d21ba47d697823a7cdb8ee914154c76-f6202374-c9bc205c", 
         }); 
+
+        mailgunService.instance = this;
     }
-    static async sendTicketEmail(user_name, email, message) {
+    async sendTicketEmail(user_name, email, message) {
       try {
-        const data = await client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
+        const data = await this.client.messages.create("sandboxb35e96234b634069a2452247883c8e20.mailgun.org", {
           from: "Mailgun Sandbox <postmaster@sandboxb35e96234b634069a2452247883c8e20.mailgun.org>",
           to: [`${user_name} <${email}>`],
           subject: `Ticket to ${user_name}`,
-          text: message,
+          text: `Ticket sent to ${user_name} for event ${message}`,
         });
     
-        console.log(data); // logs response data
     
       } catch (error) {
         console.log(error); //logs any error
@@ -28,4 +32,4 @@ class mailgunService{
     }
 }
 
-export default mailgunService;
+export default new mailgunService();
