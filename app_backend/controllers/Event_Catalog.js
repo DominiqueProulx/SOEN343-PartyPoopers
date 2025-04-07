@@ -1,6 +1,8 @@
-import Event from '../components/Event.js'
-import pool from '../db.js'
-import EventFactory from '../components/EventFactory.js'
+
+import FilteringController from "./FilteringController.js"
+import EventFactory from "./EventFactory.js"
+import Event from "../components/Event.js";
+
 
 class Event_Catalog {
   static instance = null

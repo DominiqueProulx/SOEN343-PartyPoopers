@@ -1,0 +1,29 @@
+@startuml
+hide empty members
+class PaymentPage {
+    - paymentMethod: PaymentMethod
+}
+
+abstract class PaymentMethod{
+    + processPayment()
+}
+
+class CreditCard{
+    + card_number
+    + expiration_date
+    + CVV
+}
+class ApplePay {
+    + apple_email
+}
+class PayPal{
+    + paypal_email
+}
+
+PaymentMethod <|-- CreditCard
+PaymentMethod <|-- ApplePay
+PaymentMethod <|-- PayPal
+
+PaymentPage --> PaymentMethod
+
+@enduml

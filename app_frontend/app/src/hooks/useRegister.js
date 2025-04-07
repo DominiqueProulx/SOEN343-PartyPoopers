@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import apiUrl from "./apiUrl";
 // hooks/useEventFilter.js
 export default function useRegister() {
   const [user, setUser] = useState();

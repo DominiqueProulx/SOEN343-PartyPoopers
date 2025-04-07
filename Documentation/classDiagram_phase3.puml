@@ -128,30 +128,49 @@ class Date_EventFilterDecorator{
 
 
 class User_Catalog{
-    +addUser(user : User) : boolean
-    +login(email : String,  password : String) : User
-    -validateLogin(email : String,  password : String) : boolean
+    - user_catalog :  User_Catalog
     +addPreferences(attendee : User, pref : Category) : boolean
     +getSubscribed() : List<User>
     +getInstance() :  User_Catalog
+    +register(user_name : String , password : String, gender : Enum , email: String, email_subscribed: boolean) : boolean
+  	+login(user_name : String , password : String) : User
+  	+getCurrentUser(uid : Int) : User
+  	+getAllUser() : User
+  	+logout() : boolean
+    +getInstance() : User_Catalog
+  	+getUserEvents(uid : Int) : List<Event> 
+    + setPreferences(Categories[4])
 
 }
 class User {
     {static} user_TDG : User_TDG
      - uid : Int
     - FavoriteCategories: Category[4]
-    - name : String
+    - user_name : String
     - password : String
+    - gender: Enum 
     - email : String
     - email_subscribed  : Boolean
     +getAllPreferences() : List<Category>
     +displayPreferences() : String
     +addPreferences(pref : Category) : boolean
     +getCategories() : List<Category>
+    +register(user_name, email, user_password, gender):boolean
+ 	+login(email, user_password) : boolean
+ 	+get_user_name() : String
+  	+get_email() : String
+ 	+get_password() : String
+
 }
 class User_TDG{
      + getLatest(): int
-     + addUser(user: User): void
+ 	 +getUserByUid(uid) : JSON
+ 	 +getUserByEmail(email): JSON
+ 	 +createUser(user_name, email, user_password): boolean
+	 +updateUser(uid, user_name, email, user_password): boolean
+	 +deleteUserByEmail(email): JSON
+	 +deleteUserByUid(uid): boolean
+	 +loginUser(email, user_password): boolean
 
 }
 
@@ -168,9 +187,7 @@ class User_newsletter{
     - event_Description: String[4]
 
 }
-class Participan_Feedback{
 
-}
 class Feedback_Form{
 
 }
@@ -225,16 +242,37 @@ class Event_Factory{
      + createEvent(...): boolean
 }
 
-class Participant_Catalog{
-    +addParticipant( attendee: User) : void
-    +getParticipants(eid : Int) : List<User>
+class Attendee_Catalog{
+    +addAttendee(attendee: User, event: Event ) : boolean
+  	+getAttendees(eid : Int): List<User>
 
+}
+class Handler {
+    + nextHandler : Handler
+    + handle(user: User, eid: Int) : void
+}
+class EmailTicketHandler {
+    -user: User
+  	-eid: String
+    + handle(user: User, eid: Int) : void
+}
+class RegistrationHandler {
+    -user: User
+  	-eid: String
+    + handle(user: User, eid: Int) : void
 }
 
 class Event_Attendee{
     - attendee: User
     - event :  Event
 }
+class Attendee_TDG{
+    +addAttendee(uid, eid): JSON
+ 	+getAllEvent(uid) :  JSON
+}
+
+
+
 class Event_Detail{
     - sponsorInfo: String
     - speakerInf :  String
@@ -262,7 +300,11 @@ class Review_Answer{
 class Review_Catalog{
 
 }
+class Mailgun_Service{
+    -mailgun: MailgunClient
+  	-client: MailgunClient
 
+}
 
 'Promotion
 Main_Controller  -->"1"User_Catalog
@@ -294,11 +336,16 @@ EventFilterDecorator <|-- Category_EventFilterDecorator
 EventFilterDecorator <|-- EventType_EventFilterDecorator
 EventFilterDecorator <|-- Date_EventFilterDecorator
 
-'attendees and events'
-Participant_Catalog *-- Event_Attendee
+'attendees and events' 
 Event_Attendee-->"1"User
 Event_Attendee-->"1"Event
-User_Catalog"1"-->"1"Participant_Catalog
+User_Catalog"1"-->"1"Attendee_Catalog
+Attendee_Catalog *-- Event_Attendee
+Attendee_Catalog *-- Handler
+Handler <|-- EmailTicketHandler
+Handler <|-- RegistrationHandler 
+EmailTicketHandler --> Mailgun_Service
+Attendee_Catalog -->"1"Attendee_TDG 
 Event -->"1"Engagement_Manager
 Engagement_Manager -->Chatroom
 Engagement_Manager -->Review_Catalog

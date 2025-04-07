@@ -20,15 +20,26 @@ class Event {
     'NetworkingEvent', 'CareerFair', 'Lectures'
   ]
 
-  constructor(title, description, date, location, category, type, uid, eid = null) {
-    this.eid = eid
-    this.title = title
-    this.description = description
-    this.date = date
-    this.location = location
-    this.category = category
-    this.type = type
-    this.uid = uid
+constructor(title, description, date, location, category, type, uid, eid = null) {
+// Type checking
+  // if (!Event.possibleCategories.includes(category)) {
+   //   throw new TypeError('category is not accepted');
+  //  }
+    
+   // if (!Event.possibleTypes.includes(type)) {
+  ////    throw new TypeError('type is not accepted');
+  //  }
+    
+    
+    
+    this.eid = eid;
+    this.title = title;
+    this.description = description;
+    this.date = date;
+    this.location = location;
+    this.category = category;
+    this.type = type;
+    this.uid = uid;
 
     // Auto-persist to DB if eid is not yet set
     this.addEvent()
