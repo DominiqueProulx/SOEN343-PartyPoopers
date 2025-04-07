@@ -11,10 +11,13 @@ import {
   Stack,
   Typography,
   IconButton,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateEventForm() {
   const [formData, setFormData] = useState({
@@ -33,6 +36,10 @@ export default function CreateEventForm() {
   const [agendaItems, setAgendaItems] = useState([{ time: "", topic: "" }]);
   const [bannerFile, setBannerFile] = useState(null);
   const [message, setMessage] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+  const navigate = useNavigate();
 
   const categories = [
     "Mathematics",
@@ -86,6 +93,14 @@ export default function CreateEventForm() {
     setAgendaItems(updated);
   };
 
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+    // Navigate after snackbar closes
+    if (snackbarSeverity === "success") {
+      navigate('/');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(null);
@@ -123,7 +138,12 @@ export default function CreateEventForm() {
         }
       }
 
-      setMessage("Event created successfully!");
+      // Show success message on event creation
+      setSnackbarMessage("Event created successfully!");
+      setSnackbarSeverity("success");
+      setSnackbarOpen(true);
+      
+      // Reset form data
       setFormData({
         title: "",
         description: "",
@@ -138,9 +158,13 @@ export default function CreateEventForm() {
       });
       setAgendaItems([{ time: "", topic: "" }]);
       setBannerFile(null);
+      
+      // Navigation will happen after snackbar closes
     } catch (err) {
       console.error(err);
-      setMessage("FAILURE" + err.message);
+      setSnackbarMessage("Error: " + err.message);
+      setSnackbarSeverity("error");
+      setSnackbarOpen(true);
     }
   };
 
@@ -335,6 +359,22 @@ export default function CreateEventForm() {
           </Button>
         </Stack>
       </Box>
+
+      {/* Snackbar for notifications */}
+      <Snackbar 
+        open={snackbarOpen} 
+        autoHideDuration={3000} 
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert 
+          onClose={handleSnackbarClose} 
+          severity={snackbarSeverity} 
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Paper>
   );
 }

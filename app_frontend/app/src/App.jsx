@@ -9,9 +9,13 @@ import AboutPage from './screens/AboutPage'
 import BrowseEvents from './screens/BrowseEvents'
 import CreateEvent from './screens/CreateEvent'
 import RegistrationPage from './screens/RegistrationPage'
+import MyAccount from './screens/MyAccount'
+import { ThemeProvider } from '@mui/material/styles';
+import theme from "./styles/theme.js";
 
 export default function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
       <Routes>
         <Route path='/' element={<HomePage />} />
@@ -21,9 +25,11 @@ export default function App() {
         <Route path='/about' element={<AboutPage />} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path='/register' element={<RegistrationPage />} />
+        <Route path='/myaccount' element={<MyAccount />} />
 
       </Routes>
     </Router>
+    </ThemeProvider>
   )
 }
 
