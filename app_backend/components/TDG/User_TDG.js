@@ -70,6 +70,7 @@ class User_TDG {
             ? favorites.filter(item => item !== undefined && item !== null)
                     .map(item => String(item)) 
             : [];
+        
           
           console.log(`Updating preferences for user ${userId}`);
           console.log(`Favorites array: ${JSON.stringify(favoritesArray)}`);

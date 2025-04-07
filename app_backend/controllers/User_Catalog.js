@@ -49,7 +49,6 @@ class User_Catalog extends User_Manager {
     
     async getCurrentUser(req, res) {
         try {
-            console.log(req.session)
             if(req.session.user) {
                 res.status(201).json({message: "User logged in", user:req.session})
             }
@@ -92,14 +91,16 @@ class User_Catalog extends User_Manager {
           // Ensure favorites is always an array
           const favoritesArray = Array.isArray(favorites) ? favorites : [];
          
+
+        //THIS BREAKS IT DONT UNCOMMENT
           // Validate that each favorite is a valid integer
-          const validFavorites = favoritesArray.filter(fav => {
-            const num = parseInt(fav);
-            return !isNaN(num) && Number.isInteger(num);
-          });
-     
-          
-          const result = await User_TDG.updatePreferences(uid, loggedUserId, validFavorites);
+        //   const validFavorites = favoritesArray.filter(fav => {
+        //     const num = parseInt(fav);
+        //     return !isNaN(num) && Number.isInteger(num);
+        //   });
+
+
+          const result = await User_TDG.updatePreferences(uid, loggedUserId, favoritesArray);
           return result;
         } catch (error) {
           console.error('Error in User_Catalog.updatePreferences:', error);
