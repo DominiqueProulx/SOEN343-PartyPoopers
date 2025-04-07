@@ -1,20 +1,10 @@
 import React from "react";
-
+import Header from "../components/Header";
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
       {/* Header */}
-      <header className="bg-[var(--color-navy)] text-white shadow-md">
-        <div className="container flex justify-between items-center py-4">
-          <h1 className="text-2xl font-bold">SEES</h1>
-          <nav className="flex gap-6 items-center">
-            <a href="/" className="hover:text-[var(--color-orange)]">Home</a>
-            <a href="/events" className="hover:text-[var(--color-orange)]">Events</a>
-            <a href="/about" className="hover:text-[var(--color-orange)]">About Us</a>
-            <a href="/login" className="bg-[var(--color-orange)] text-[var(--color-navy)] px-4 py-2 rounded hover:bg-[var(--color-blue)]">Login</a>
-          </nav>
-        </div>
-      </header>
+      <Header/>
 
 
     <section class="container section-container mb-5">
