@@ -61,7 +61,8 @@ CREATE TABLE IF NOT EXISTS app_event (
     event_date TIMESTAMP NOT NULL,
     location VARCHAR(200),
     max_attendees INTEGER,
-    type event_type
+    type event_type,
+    ticket_price DECIMAL(10, 2)
 );
 
 -- Create Payment table
@@ -85,3 +86,26 @@ CREATE TABLE IF NOT EXISTS ticket (
 CREATE INDEX IF NOT EXISTS idx_event_organizer ON app_event(organizer_id);
 CREATE INDEX IF NOT EXISTS idx_ticket_event ON ticket(event_id);
 CREATE INDEX IF NOT EXISTS idx_ticket_attendee ON ticket(attendee_id);
+
+
+-------------------------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS event_detail (
+    eid INTEGER PRIMARY KEY REFERENCES app_event(eid),
+    sponsor_infos TEXT,
+    speaker_infos TEXT
+);
+
+CREATE TABLE IF NOT EXISTS event_agenda (
+    agenda_id SERIAL PRIMARY KEY,
+    eid INTEGER REFERENCES app_event(eid),
+    time_slot TIME NOT NULL,
+    topic TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS promotional_content (
+    id SERIAL PRIMARY KEY,
+    file_path TEXT NOT NULL,
+    uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

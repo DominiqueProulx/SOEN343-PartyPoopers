@@ -126,7 +126,15 @@ class Date_EventFilterDecorator{
       +buildFilter() : List<Event>
     }
 
+interface User_Manager{
+    +updateUserCategories(uid : Int, loggedUsed : Int,List<Category>) : boolean
+}
 
+class User_Catalog_Proxy{
+-user_catalog : User_Catalog
++verifiedAllowed(uid : Int) : boolean
++updateUserCategories(uid : Int, user_name : String, email: String, password: String) : boolean
+}
 class User_Catalog{
     - user_catalog :  User_Catalog
     +addPreferences(attendee : User, pref : Category) : boolean
@@ -140,6 +148,7 @@ class User_Catalog{
     +getInstance() : User_Catalog
   	+getUserEvents(uid : Int) : List<Event> 
     + setPreferences(Categories[4])
+    +updateUserCategories(uid : Int, user_name : String, email: String, password: String) : boolean
 
 }
 class User {
@@ -312,6 +321,10 @@ Main_Controller  -->"1"Event_Catalog
 Main_Controller  -->"1"Email_Campaigner
 Email_Campaigner *-- User_newsletter
 'users
+Main_Controller  -->"1"User_Catalog_Proxy
+User_Manager<|..- User_Catalog_Proxy
+User_Catalog_Proxy -->"1"User_Catalog
+User_Manager|..- User_Catalog
 User_Catalog *-- User
 User-->"1"User_TDG
 

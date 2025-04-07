@@ -1,0 +1,33 @@
+@startuml 
+
+title: Update User Preferences with Proxy
+
+ 
+actor "Attendee" as attendee
+
+participant "_:Main_Controller__" as mainctrl 
+participant "_:User_Catalog_Proxy__" as proxy
+participant "_:User_Catalog_" as usercat
+participant "_:User_TDG_" as tdg
+database "app_user" as db
+
+
+
+attendee -> mainctrl : updatePreferences(List<Categories>)
+mainctrl -> proxy : updatePreferences(List<Categories>)
+proxy -> proxy : verifyAllowedUser()
+alt user is allowed
+proxy -> usercat : updatePreferences(List<Categories>)
+usercat -> tdg : updatePreferences(List<Categories>)
+tdg -> db : updatePreferences(List<Categories>)
+tdg --> usercat : confirmation
+usercat --> proxy : confirmation
+proxy --> mainctrl : confirmation
+mainctrl --> attendee : confirmation
+else user not allowed
+proxy --> mainctrl : user not allowed
+mainctrl --> attendee : denied
+end
+
+
+@enduml 

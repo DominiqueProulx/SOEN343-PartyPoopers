@@ -1,5 +1,5 @@
 import { useState } from "react";
-//import apiUrl from "./apiUrl";
+import apiUrl from "./apiUrl";
 
 export default function useLogin() {
   const [user, setUser] = useState();
@@ -9,7 +9,8 @@ export default function useLogin() {
     setError(null);
 
     try {
-      const response = await fetch("", {
+      const apiUrl = "http://localhost:5001/api/user/login";
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(register_body),
@@ -19,8 +20,6 @@ export default function useLogin() {
         .then((data) => console.log(data));
 
       if (!response.ok) throw new Error(data.error || "Failed to login");
-
-
     } catch (err) {
       console.error("Error in login:", err);
       setError(err.message || "An unknown error occurred");

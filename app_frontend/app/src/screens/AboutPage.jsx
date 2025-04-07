@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from '../components/Header';
+
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background-color)] text-[var(--text-color)]">
       {/* Header */}
       <Header/>
-
 
     <section class="container section-container mb-5">
     <br />    
