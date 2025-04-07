@@ -101,6 +101,7 @@ class User_Catalog extends User_Manager {
 
 
           const result = await User_TDG.updatePreferences(uid, loggedUserId, favoritesArray);
+
           return result;
         } catch (error) {
           console.error('Error in User_Catalog.updatePreferences:', error);

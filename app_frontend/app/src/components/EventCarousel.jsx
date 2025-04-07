@@ -22,7 +22,7 @@ const EventCarousel = () => {
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800));
-      
+
       
 
       // Mock data - replace with your actual API call
@@ -93,6 +93,7 @@ const EventCarousel = () => {
       //     event_date: '2025-06-10',
       //   }
       // ];
+
       
       setEvents(mockEvents);
       setLoading(false);

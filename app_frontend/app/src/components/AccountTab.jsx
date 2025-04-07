@@ -14,8 +14,7 @@ import UserDetailForm from './UserDetailForm';
 export default function AccountTab() {
   const [value, setValue] = React.useState('one');
    const [user, setUser] = useState();
-
-  useEffect(() => {
+   useEffect(() => {
     fetch('http://localhost:5001/api/user/getCurrentUser', {
       method: 'GET',
       headers: {
@@ -41,7 +40,6 @@ export default function AccountTab() {
       //   email_subscribed: true
       // })
   }, []);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
