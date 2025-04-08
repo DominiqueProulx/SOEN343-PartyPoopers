@@ -316,12 +316,12 @@ class Mailgun_Service{
 }
 
 'Promotion
-Main_Controller  -->"1"User_Catalog
+
 Main_Controller  -->"1"Event_Catalog
 Main_Controller  -->"1"Email_Campaigner
 Email_Campaigner *-- User_newsletter
 'users
-Main_Controller  -->"1"User_Catalog_Proxy
+Main_Controller  -->"1"User_Manager
 User_Manager<|..- User_Catalog_Proxy
 User_Catalog_Proxy -->"1"User_Catalog
 User_Manager<|..- User_Catalog
