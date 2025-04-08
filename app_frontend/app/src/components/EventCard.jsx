@@ -111,6 +111,7 @@ const EventCard = ({ event, onViewDetails }) => {
         <Button
           size="small"
           sx={{ backgroundColor: "#F7AA00", color: "#235784", padding: 1.5 }}
+          onClick={() => handleRegisterClick()}
         >
           Register
         </Button>

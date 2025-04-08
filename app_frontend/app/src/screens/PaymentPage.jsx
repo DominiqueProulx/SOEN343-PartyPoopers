@@ -14,6 +14,7 @@ import {
 import { CreditCard, ApplePay, PayPal } from "../components/PaymentMethods";
 import { useLocation } from "react-router-dom";
 import useRegisterForEvent from '../hooks/useRegisterForEvent';
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
     const location = useLocation();
@@ -21,25 +22,23 @@ const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const {error, registerForEvent} = useRegisterForEvent();
+  const navigate = useNavigate();
   
 
   // Handles form submission
-  const handlePayment = (e) => {
+  const handlePayment = async (e) => {
     e.preventDefault();
     console.log(`Processing payment with ${paymentMethod}`);
-
-    // Show success message
-    setOpenSnackbar(true);
-
+  
     const register_body = {
       eid: eventEID
-    }
-
+    };
+  
     try {
-      registerForEvent(register_body)
-    }
-    catch(err) {
-      console.log(err);
+      await registerForEvent(register_body);
+      setOpenSnackbar(true); // Move this inside the try block
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -109,7 +108,7 @@ const PaymentPage = () => {
       <Snackbar
         open={openSnackbar}
         autoHideDuration={4000}
-        onClose={() => setOpenSnackbar(false)}
+        onClose={() => {setOpenSnackbar(false);navigate("/home");}}
       >
         <Alert
           onClose={() => setOpenSnackbar(false)}

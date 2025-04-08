@@ -12,7 +12,7 @@ import RegistrationPage from './screens/RegistrationPage'
 import MyAccount from './screens/MyAccount'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "./styles/theme.js";
-import PaymentPage from './screens/PaymentPage.js'
+import PaymentPage from './screens/PaymentPage.jsx'
 
 export default function App() {
   return (
