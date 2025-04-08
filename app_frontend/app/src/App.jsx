@@ -18,7 +18,8 @@ export default function App() {
     <ThemeProvider theme={theme}>
     <Router>
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/events' element={<EventsPage />} />
         <Route path="/browse-events" element={<BrowseEvents />} />

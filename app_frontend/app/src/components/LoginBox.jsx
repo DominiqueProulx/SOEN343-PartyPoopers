@@ -78,10 +78,17 @@ function LoginBox() {
         <Button type="submit" variant="contained" color="primary">
           Login
         </Button>
+        <Typography variant="body2" align="center">
+          Don’t have an account?{' '}
+          <span style={{ color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
+          onClick={() => navigate('/register')}>
+            Register
+          </span>
+        </Typography>
       </Box>
       
       {/* Snackbar for success message */}
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => {setOpenSnackbar(false);navigate("/home");}}>
         <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
           Login successful!
         </Alert>
