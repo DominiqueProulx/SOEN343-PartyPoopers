@@ -7,12 +7,24 @@ import {
   Button,
 } from "@mui/material";
 import { format } from "date-fns";
+import { useNavigate } from "react-router-dom";
 
 // The EventCard component displays information for a single event
 const EventCard = ({ event, onViewDetails }) => {
   // Convert the date string to a Date object and format it
   // Use event_date field from API response, with a fallback to date for flexibility
   const eventDate = event.event_date || event.date;
+  const navigate = useNavigate();
+
+  const eventData = {
+    eventName: event.title,
+    ticketPrice: event.ticket_price || 19.99, 
+    eventEID: event.eid
+  }
+
+  const handleRegisterClick = () => {
+    navigate("/pay", { state: eventData });
+  };
 
   // Add error handling for date formatting
   let formattedDate = "Date unavailable";
