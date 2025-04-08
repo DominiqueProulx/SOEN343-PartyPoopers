@@ -12,6 +12,7 @@ import RegistrationPage from './screens/RegistrationPage'
 import MyAccount from './screens/MyAccount'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "./styles/theme.js";
+import PaymentPage from './screens/PaymentPage.js'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path='/register' element={<RegistrationPage />} />
         <Route path='/myaccount' element={<MyAccount />} />
+        <Route path="/pay" element={<PaymentPage/>} />
 
       </Routes>
     </Router>
