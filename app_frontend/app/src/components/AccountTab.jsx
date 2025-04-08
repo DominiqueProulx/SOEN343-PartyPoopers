@@ -8,6 +8,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useEffect, useState } from 'react';
 import UserDetailForm from './UserDetailForm';
+import MultipleGraphsPage from './Graphs';
+
 
 
 
@@ -92,6 +94,7 @@ export default function AccountTab() {
       <TabPanel value={value} index="three">
         <h2>Reports</h2>
         {/* Content for tab three */}
+        <MultipleGraphsPage />
         
         <Stack spacing={2}>
       

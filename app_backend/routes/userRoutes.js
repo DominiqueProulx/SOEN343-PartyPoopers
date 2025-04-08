@@ -6,6 +6,7 @@ import Main_Controller from '../controllers/Main_Controller.js';
 
 const router = express.Router();
 
+router.post('/registerEvent', Attendee_Catalog.addAttendee);
 router.post('/register', User_Catalog.register);
 router.post('/login', User_Catalog.login);
 router.get('/getCurrentUser', User_Catalog.getCurrentUser);
