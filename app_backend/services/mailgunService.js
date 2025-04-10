@@ -11,7 +11,7 @@ class mailgunService{
         this.mailgun = new Mailgun(FormData);
         this.client = this.mailgun.client({
           username: 'api',
-          key: "d6a6afa5984dbf1d65f1ab71d962d7ce-2b77fbb2-737f776c", 
+          key: "d", 
         }); 
 
         mailgunService.instance = this;
