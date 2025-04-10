@@ -31,11 +31,11 @@ class EventObservable {
   
     seedFakeData() {
       const events = [];
-      for(let i = 0; i < 50; i++) {
+      for(let i = 0; i < 1000; i++) {
         events.push(i.toString())
       }
 
-      
+
       const baseTime = new Date();
   
       for (let eid of events) {
