@@ -44,7 +44,6 @@ export default function HomePageTab() {
       >
         <Tab value="one" label="Recommended for me" />
         <Tab value="two" label="My registered Events" />
-        <Tab value="three" label="Past Events" />
       </Tabs>
             {/* Tab content panels */}
             <TabPanel value={value} index="one">
@@ -57,16 +56,6 @@ export default function HomePageTab() {
         <h2>My Registered Events</h2>
         {/* Content for tab two */}
         <EventGrid events={[{eid: 1}, {eid: 2}, {eid: 3}, {eid: 4}, {eid: 5}]} />
-      </TabPanel>
-      
-      <TabPanel value={value} index="three">
-        <h2>Past Events</h2>
-        {/* Content for tab three */}
-        <EventGrid events={[{eid: 1}, {eid: 2}]} />
-        <Stack spacing={2}>
-      <Pagination count={5} shape="rounded" />
-      
-    </Stack>
       </TabPanel>
     </Box>
   );
