@@ -195,6 +195,8 @@ router.get('/details/:eid', async (req, res) => {
       error: 'Failed to retrieve event details'
     });
   }
+
+  
 });
 
 export default router;

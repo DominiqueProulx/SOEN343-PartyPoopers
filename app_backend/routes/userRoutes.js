@@ -11,6 +11,26 @@ router.post('/login', User_Catalog.login);
 router.get('/getCurrentUser', User_Catalog.getCurrentUser);
 router.post('/logout', User_Catalog.logout);
 router.get('/all', User_Catalog.getAllUser);
+router.get('/recommended', async (req, res) => {
+    const user = req.session.user;
+    console.log(user);
+    try {
+      const result = await pool.query(
+        `SELECT e.*
+         FROM app_event e, app_user u
+         WHERE u.uid = $1
+         AND e.event_category = ANY(u.favorites)`,
+        [user.uid]
+      );
+      
+      res.status(200).json({success: true, events: result.rows});
+    }
+    catch (err) {
+      console.error('Error fetching recommended events:', err);
+      res.status(500).json({success: false, message: 'Failed to fetch recommended events'});
+    }
+  });
+
 router.put('/updatePref/:id', async (req, res) => {
     try {
       const uid = req.params.id;
