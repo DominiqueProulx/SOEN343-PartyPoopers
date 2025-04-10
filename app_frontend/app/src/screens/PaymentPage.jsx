@@ -36,7 +36,7 @@ const PaymentPage = () => {
   
     try {
       await registerForEvent(register_body);
-      setOpenSnackbar(true); // Move this inside the try block
+      setOpenSnackbar(true);
     } catch (err) {
       console.error(err);
     }
@@ -107,7 +107,7 @@ const PaymentPage = () => {
       {/* Snackbar for success message */}
       <Snackbar
         open={openSnackbar}
-        autoHideDuration={4000}
+        autoHideDuration={2000}
         onClose={() => {setOpenSnackbar(false);navigate("/home");}}
       >
         <Alert

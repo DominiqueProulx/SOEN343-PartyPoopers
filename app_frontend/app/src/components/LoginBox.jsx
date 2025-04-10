@@ -88,7 +88,7 @@ function LoginBox() {
       </Box>
       
       {/* Snackbar for success message */}
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => {setOpenSnackbar(false);navigate("/home");}}>
+      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={() => {setOpenSnackbar(false);navigate("/home");}}>
         <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
           Login successful!
         </Alert>

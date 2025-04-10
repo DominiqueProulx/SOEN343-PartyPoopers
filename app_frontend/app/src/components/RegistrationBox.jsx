@@ -91,7 +91,7 @@ function RegistrationBox() {
       </Box>
       
       {/* Snackbar for success message */}
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => {setOpenSnackbar(false);navigate("/login");}}>
+      <Snackbar open={openSnackbar} autoHideDuration={2000} onClose={() => {setOpenSnackbar(false);navigate("/login");}}>
         <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
           Registration successful!
         </Alert>
