@@ -12,13 +12,15 @@ import RegistrationPage from './screens/RegistrationPage'
 import MyAccount from './screens/MyAccount'
 import { ThemeProvider } from '@mui/material/styles';
 import theme from "./styles/theme.js";
+import PaymentPage from './screens/PaymentPage.jsx'
 
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
     <Router>
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={<LoginPage />} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/events' element={<EventsPage />} />
         <Route path="/browse-events" element={<BrowseEvents />} />
@@ -26,6 +28,7 @@ export default function App() {
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path='/register' element={<RegistrationPage />} />
         <Route path='/myaccount' element={<MyAccount />} />
+        <Route path="/pay" element={<PaymentPage/>} />
 
       </Routes>
     </Router>

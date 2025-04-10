@@ -1,0 +1,101 @@
+@startuml
+title: User Catalog Proxy Design Pattern
+skinparam classAttributeIconSize 0
+
+class Main_Controller{
+
+- loggedUser : User
+- instance : Main_Controller
+- preferences : List<Category>
++ getinstance()  : Main_Controller
+ +editEventPage(eid : int, newContent : Content) : void
+ +customizeEventPage(organizerId: int, eid : int, details :String) :boolean
+ +register(email :String, name :String, password :String ) : boolean
+ +requestEvents()
+ +registerEvent(eid : String, attendee: User) : boolean
+ +requestPreferences()
+ +addPreferences(pref : Category) : boolean
+ +createEvent(name:String, startDate:Date, endDate:Date, startTime: Time, endTime:Time)
+ +finishEvent(eid:String)
+ +uploadPromotionalContent(eid : Int, content : File) : boolean
+ -requestFeedback() : void
+ +completeReview()
+ +joinChatroom(eid : Int, user : User) : boolean
+ +chat(eid : Int, user : User, message : String) : boolean
+ +browseEvent(filteringDetails)
+ +sendNewsletter()
+}
+
+
+interface User_Manager{
+    +updateUserCategories(uid : Int, loggedUsed : Int,List<Category>) : boolean
+}
+
+class User_Catalog_Proxy{
+-user_catalog : User_Catalog
++verifiedAllowed(uid : Int) : boolean
++updateUserCategories(uid : Int, user_name : String, email: String, password: String) : boolean
+}
+class User_Catalog{
+    - user_catalog :  User_Catalog
+    +addPreferences(attendee : User, pref : Category) : boolean
+    +getSubscribed() : List<User>
+    +getInstance() :  User_Catalog
+    +register(user_name : String , password : String, gender : Enum , email: String, email_subscribed: boolean) : boolean
+  	+login(user_name : String , password : String) : User
+  	+getCurrentUser(uid : Int) : User
+  	+getAllUser() : User
+  	+logout() : boolean
+    +getInstance() : User_Catalog
+  	+getUserEvents(uid : Int) : List<Event> 
+    + setPreferences(Categories[4])
+    +updateUserCategories(uid : Int, user_name : String, email: String, password: String) : boolean
+
+}
+class User {
+    {static} user_TDG : User_TDG
+     - uid : Int
+    - FavoriteCategories: Category[4]
+    - user_name : String
+    - password : String
+    - gender: Enum 
+    - email : String
+    - email_subscribed  : Boolean
+    +getAllPreferences() : List<Category>
+    +displayPreferences() : String
+    +addPreferences(pref : Category) : boolean
+    +getCategories() : List<Category>
+    +register(user_name, email, user_password, gender):boolean
+ 	+login(email, user_password) : boolean
+ 	+get_user_name() : String
+  	+get_email() : String
+ 	+get_password() : String
+
+}
+class User_TDG{
+     + getLatest(): int
+ 	 +getUserByUid(uid) : JSON
+ 	 +getUserByEmail(email): JSON
+ 	 +createUser(user_name, email, user_password): boolean
+	 +updateUser(uid, user_name, email, user_password): boolean
+	 +deleteUserByEmail(email): JSON
+	 +deleteUserByUid(uid): boolean
+	 +loginUser(email, user_password): boolean
+
+}
+
+
+
+'Promotion
+
+
+'users
+Main_Controller  -->"1"User_Manager
+User_Manager<|..- User_Catalog_Proxy
+User_Catalog_Proxy -->"1"User_Catalog
+User_Manager<|..- User_Catalog
+User_Catalog *-- User
+User-->"1"User_TDG
+
+
+@enduml

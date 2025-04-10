@@ -9,6 +9,7 @@ import {
   Alert
 } from '@mui/material';
 import useRegister from '../hooks/useRegister';
+import { useNavigate } from 'react-router-dom';
 
 function RegistrationBox() {
   const [username, setUsername] = useState('');
@@ -17,6 +18,7 @@ function RegistrationBox() {
   const [helperText, setHelperText] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const { register } = useRegister();
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -79,10 +81,17 @@ function RegistrationBox() {
         <Button type="submit" variant="contained" color="primary">
           Register
         </Button>
+        <Typography variant="body2" align="center">
+          Already have an account?{' '}
+          <span style={{ color: '#1976d2', cursor: 'pointer', textDecoration: 'underline' }}
+          onClick={() => navigate('/login')}>
+            Login
+          </span>
+        </Typography>
       </Box>
       
       {/* Snackbar for success message */}
-      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => setOpenSnackbar(false)}>
+      <Snackbar open={openSnackbar} autoHideDuration={4000} onClose={() => {setOpenSnackbar(false);navigate("/login");}}>
         <Alert onClose={() => setOpenSnackbar(false)} severity="success" sx={{ width: '100%' }}>
           Registration successful!
         </Alert>

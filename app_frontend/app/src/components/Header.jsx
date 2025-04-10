@@ -65,7 +65,7 @@ export default function Header() {
           className="flex justify-center"
         >
           <nav className="flex flex-wrap items-center gap-4 md:gap-6 mt-3 md:mt-0 text-white font-medium text-base">
-            <a href="/" className="hover:text-sky-200 transition-colors">
+            <a href="/home" className="hover:text-sky-200 transition-colors">
               Home
             </a>
             <span className="text-white text-xl">|</span>
@@ -110,20 +110,6 @@ export default function Header() {
               </>
             ) : (
               <>
-                <span className="text-white text-xl">|</span>
-                <a
-                  href="/login"
-                  className="bg-white text-[#235784] px-4 py-1.5 rounded-md font-semibold hover:bg-gray-100 transition-all"
-                >
-                  Login
-                </a>
-                <span className="text-white text-xl">|</span>
-                <a
-                  href="/register"
-                  className="border border-white px-4 py-1.5 rounded-md hover:bg-white hover:text-[#235784] transition-all"
-                >
-                  Register
-                </a>
               </>
             )}
           </nav>
