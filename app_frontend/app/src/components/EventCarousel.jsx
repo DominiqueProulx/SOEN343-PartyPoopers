@@ -26,7 +26,7 @@ const EventCarousel = () => {
       
 
       // Mock data - replace with your actual API call
-      // Using the fields that match your EventCard component
+      // // Using the fields that match your EventCard component
       // const mockEvents = [
       //   { 
       //     eid: 1, 
@@ -94,8 +94,22 @@ const EventCarousel = () => {
       //   }
       // ];
 
+      const response = await fetch('http://localhost:5001/api/user/recommended', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include' // This is important to include cookies for session authentication
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to fetch recommended events');
+      }
+  
+      const data = await response.json();
+
       
-      setEvents(mockEvents);
+      setEvents(data.events);
       setLoading(false);
     } catch (err) {
       setError('Failed to load recommended events');
