@@ -97,7 +97,7 @@ export default function CreateEventForm() {
     setSnackbarOpen(false);
     // Navigate after snackbar closes
     if (snackbarSeverity === "success") {
-      navigate('/');
+      navigate('/home');
     }
   };
 
