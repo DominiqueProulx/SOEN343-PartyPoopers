@@ -12,6 +12,44 @@ router.post('/login', User_Catalog.login);
 router.get('/getCurrentUser', User_Catalog.getCurrentUser);
 router.post('/logout', User_Catalog.logout);
 router.get('/all', User_Catalog.getAllUser);
+router.get('/organized', async (req, res) => {
+  const user = req.session.user;
+  
+  try {
+    const result = await pool.query(
+      `SELECT * 
+       FROM app_event 
+       WHERE organizer_id = $1
+       ORDER BY event_date ASC`,
+      [user.uid]
+    );
+    
+    res.status(200).json({success: true, events: result.rows});
+  }
+  catch (err) {
+    console.error('Error fetching organized events:', err);
+    res.status(500).json({success: false, message: 'Failed to fetch organized events'});
+  }
+});
+router.get('/registered', async (req, res) => {
+  const user = req.session.user;
+  
+  try {
+    const result = await pool.query(
+      `SELECT e.* 
+       FROM app_event e
+       JOIN attendee_event ae ON e.eid = ae.eid
+       WHERE ae.uid = $1`,
+      [user.uid]
+    );
+    
+    res.status(200).json({success: true, events: result.rows});
+  }
+  catch (err) {
+    console.error('Error fetching registered events:', err);
+    res.status(500).json({success: false, message: 'Failed to fetch registered events'});
+  }
+});
 router.get('/recommended', async (req, res) => {
     const user = req.session.user;
     console.log(user);

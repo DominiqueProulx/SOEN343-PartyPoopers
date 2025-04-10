@@ -30,7 +30,12 @@ class EventObservable {
     }
   
     seedFakeData() {
-      const events = ["E1", "E2", "E3"];
+      const events = [];
+      for(let i = 0; i < 50; i++) {
+        events.push(i.toString())
+      }
+
+      
       const baseTime = new Date();
   
       for (let eid of events) {

@@ -8,13 +8,61 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import EventCarousel from './EventCarousel';
 
+import { useEffect, useState } from 'react';
+
 
 export default function HomePageTab() {
   const [value, setValue] = React.useState('one');
+  const [myEvents, setMyEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+
+    if (newValue === 'two') {
+      fetchRegisteredEvents();
+    }
   };
+
+  const fetchRegisteredEvents = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await fetch('http://localhost:5001/api/user/registered', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include' 
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch registered events');
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        setMyEvents(data.events);
+      } else {
+        throw new Error(data.message || 'Failed to load events');
+      }
+      
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching registered events:', err);
+      setError(err.message || 'Failed to load registered events');
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (value === 'two') {
+      fetchRegisteredEvents();
+    }
+  }, []);
+
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -54,8 +102,13 @@ export default function HomePageTab() {
       
       <TabPanel value={value} index="two">
         <h2>My Registered Events</h2>
-        {/* Content for tab two */}
-        <EventGrid events={[{eid: 1}, {eid: 2}, {eid: 3}, {eid: 4}, {eid: 5}]} />
+        {loading ? (
+          <p>Loading your registered events...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          <EventGrid events={myEvents} />
+        )}
       </TabPanel>
     </Box>
   );

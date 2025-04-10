@@ -4,18 +4,58 @@ import { eventObservable } from "../hooks/observable";
 
 const MultipleGraphsPage = () => {
   const [allData, setAllData] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
 
   useEffect(() => {
     eventObservable.subscribe(setAllData);
-    eventObservable.seedFakeData(); // For demo purposes
+    eventObservable.seedFakeData();
+    fetchOrganizedEvents(); // For demo purposes
   }, []);
 
   // Example: Event info
-  const events = [
-    { eid: "E1", name: "Tech Conference" },
-    { eid: "E2", name: "AI Workshop" },
-    { eid: "E3", name: "Design Meetup" },
-  ];
+  const fetchOrganizedEvents = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await fetch('http://localhost:5001/api/user/organized', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include' // Include cookies for session authentication
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch organized events');
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        const formattedEvents = data.events.map(event => ({
+          eid: event.eid.toString(),
+          name: event.title || event.name 
+        }));
+        
+        setEvents(formattedEvents);
+      } else {
+        throw new Error(data.message || 'Failed to load events');
+      }
+    } catch (err) {
+      console.error('Error fetching organized events:', err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <div>Loading events...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (events.length === 0) return <div>You haven't organized any events yet.</div>;
+
 
   return (
     <>
